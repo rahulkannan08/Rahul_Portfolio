@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -92,7 +93,6 @@
     to { box-shadow: 0 0 20px rgba(251, 191, 36, 0.4); }
   }
 
-  /* Wave animations */
   .wave {
     animation: wave 2s ease-in-out infinite;
   }
@@ -102,7 +102,6 @@
     50% { transform: translateX(10px); }
   }
 
-  /* Professional gradient backgrounds */
   .gradient-brown {
     background: linear-gradient(135deg, #8B7355 0%, #A0937D 50%, #6B5B47 100%);
   }
@@ -119,12 +118,10 @@
   }
 }
 
-/* Smooth scrolling */
 html {
   scroll-behavior: smooth;
 }
 
-/* Custom hover effects */
 .hover-lift:hover {
   transform: translateY(-5px);
   transition: transform 0.3s ease;
@@ -135,7 +132,6 @@ html {
   transition: box-shadow 0.3s ease;
 }
 
-/* Loading animation for skill bars */
 @keyframes skillProgress {
   from {
     width: 0%;
@@ -145,7 +141,6 @@ html {
   }
 }
 
-/* Card hover effects */
 .card-hover {
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -155,7 +150,6 @@ html {
   box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
 }
 
-/* Button pulse effect */
 .btn-pulse:hover {
   animation: pulse 1s infinite;
 }
@@ -165,5 +159,3 @@ html {
   50% { transform: scale(1.05); }
   100% { transform: scale(1); }
 }
-
-</edits_to_apply>
