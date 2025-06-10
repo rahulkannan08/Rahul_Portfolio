@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -138,6 +139,40 @@
       opacity: 1;
       transform: translateY(0);
     }
+  }
+
+  /* Gen Z Navigation Effects */
+  .nav-glow {
+    animation: navGlow 3s ease-in-out infinite alternate;
+  }
+  
+  @keyframes navGlow {
+    from { 
+      box-shadow: 0 0 10px rgba(147, 51, 234, 0.2), 0 0 20px rgba(236, 72, 153, 0.1); 
+    }
+    to { 
+      box-shadow: 0 0 20px rgba(147, 51, 234, 0.4), 0 0 40px rgba(236, 72, 153, 0.2); 
+    }
+  }
+
+  .emoji-bounce {
+    animation: emojiBounce 2s ease-in-out infinite;
+  }
+  
+  @keyframes emojiBounce {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    25% { transform: translateY(-5px) rotate(5deg); }
+    50% { transform: translateY(0px) rotate(0deg); }
+    75% { transform: translateY(-3px) rotate(-3deg); }
+  }
+
+  .sparkle {
+    animation: sparkle 1.5s ease-in-out infinite;
+  }
+  
+  @keyframes sparkle {
+    0%, 100% { opacity: 0; transform: scale(0.8) rotate(0deg); }
+    50% { opacity: 1; transform: scale(1.2) rotate(180deg); }
   }
 }
 
