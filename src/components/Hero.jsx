@@ -16,7 +16,7 @@ const Hero = () => {
   };
 
   return (
-    <section className="min-h-screen flex items-center justify-center relative overflow-hidden bg-gradient-to-br from-background via-background to-muted">
+    <section id="hero" className="min-h-screen flex items-center justify-center relative overflow-hidden bg-gradient-to-br from-background via-background to-muted">
       {/* Enhanced floating 3D-like elements */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute top-20 left-10 w-20 h-20 bg-gradient-to-br from-amber-200 to-amber-300 rounded-full opacity-30 animate-float animate-glow"></div>
@@ -25,6 +25,20 @@ const Hero = () => {
         <div className="absolute bottom-20 right-10 w-12 h-12 bg-gradient-to-br from-amber-300 to-amber-400 rounded-full opacity-30 animate-pulse"></div>
         <div className="absolute top-1/2 left-1/4 w-8 h-8 bg-gradient-to-br from-amber-100 to-amber-200 rounded-full opacity-25 animate-float" style={{animationDelay: '2s'}}></div>
         <div className="absolute top-1/3 right-1/3 w-14 h-14 bg-gradient-to-br from-stone-100 to-stone-200 rounded-full opacity-20 animate-bounce" style={{animationDelay: '0.5s'}}></div>
+      </div>
+
+      {/* Wave effect */}
+      <div className="absolute bottom-0 left-0 w-full overflow-hidden">
+        <svg
+          className="relative block w-full h-20"
+          viewBox="0 0 1200 120"
+          preserveAspectRatio="none"
+        >
+          <path
+            d="M985.66,92.83C906.67,72,823.78,31,743.84,14.19c-82.26-17.34-168.06-16.33-250.45.39-57.84,11.73-114,31.07-172,41.86A600.21,600.21,0,0,1,0,27.35V120H1200V95.8C1132.19,118.92,1055.71,111.31,985.66,92.83Z"
+            fill="rgba(245,245,244,0.3)"
+          ></path>
+        </svg>
       </div>
       
       <div className="container mx-auto px-6 text-center relative z-10">
