@@ -1,11 +1,11 @@
 
 import React from 'react';
-import Hero from '../components/Hero';
-import About from '../components/About';
-import Skills from '../components/Skills';
-import Projects from '../components/Projects';
-import Education from '../components/Education';
-import Contact from '../components/Contact';
+import Hero from '../components/Hero.jsx';
+import About from '../components/About.jsx';
+import Skills from '../components/Skills.jsx';
+import Projects from '../components/Projects.jsx';
+import Education from '../components/Education.jsx';
+import Contact from '../components/Contact.jsx';
 
 const Index = () => {
   return (

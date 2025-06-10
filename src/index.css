@@ -74,6 +74,24 @@
       transform: translateY(0);
     }
   }
+  
+  .animate-float {
+    animation: float 3s ease-in-out infinite;
+  }
+  
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+  }
+  
+  .animate-glow {
+    animation: glow 2s ease-in-out infinite alternate;
+  }
+  
+  @keyframes glow {
+    from { box-shadow: 0 0 5px rgba(251, 191, 36, 0.2); }
+    to { box-shadow: 0 0 20px rgba(251, 191, 36, 0.4); }
+  }
 }
 
 /* Smooth scrolling */
@@ -87,6 +105,11 @@ html {
   transition: transform 0.3s ease;
 }
 
+.hover-glow:hover {
+  box-shadow: 0 10px 30px rgba(251, 191, 36, 0.3);
+  transition: box-shadow 0.3s ease;
+}
+
 /* Loading animation for skill bars */
 @keyframes skillProgress {
   from {
@@ -95,4 +118,25 @@ html {
   to {
     width: var(--target-width);
   }
+}
+
+/* Card hover effects */
+.card-hover {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card-hover:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+}
+
+/* Button pulse effect */
+.btn-pulse:hover {
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
 }
