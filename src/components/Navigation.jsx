@@ -15,13 +15,17 @@ const Navigation = () => {
   }, []);
 
   const scrollToSection = (sectionId) => {
+    console.log('Scrolling to section:', sectionId);
     const element = document.getElementById(sectionId);
+    console.log('Element found:', element);
     if (element) {
       element.scrollIntoView({ 
         behavior: 'smooth',
         block: 'start'
       });
       setIsMobileMenuOpen(false);
+    } else {
+      console.error('Element not found with ID:', sectionId);
     }
   };
 
@@ -68,13 +72,15 @@ const Navigation = () => {
               <button
                 key={item.id}
                 onClick={() => scrollToSection(item.id)}
-                className="group relative px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 hover:bg-amber-900/10 hover:shadow-lg hover:scale-105"
+                className="group relative px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 hover:bg-amber-900/20 hover:shadow-lg"
               >
-                <span className="text-foreground group-hover:text-amber-900 transition-colors duration-300">
+                <span className="relative text-foreground group-hover:text-amber-900 transition-colors duration-300 z-10">
                   {item.label}
                 </span>
                 {/* Professional underline effect */}
-                <div className="absolute bottom-1 left-1/2 transform -translate-x-1/2 w-0 h-0.5 bg-gradient-to-r from-amber-800 to-amber-600 group-hover:w-3/4 transition-all duration-300 ease-out"></div>
+                <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-0 h-0.5 bg-gradient-to-r from-amber-800 to-amber-600 group-hover:w-4/5 transition-all duration-300 ease-out rounded-full"></div>
+                {/* Background hover effect */}
+                <div className="absolute inset-0 bg-gradient-to-r from-amber-900/10 to-amber-800/10 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               </button>
             ))}
           </div>
