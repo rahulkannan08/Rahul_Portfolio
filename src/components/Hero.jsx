@@ -71,20 +71,20 @@ const Hero = () => {
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
             <button 
               onClick={scrollToProjects}
-              className="px-8 py-4 bg-primary text-primary-foreground rounded-lg hover:scale-105 transition-all duration-300 hover:shadow-lg btn-pulse hover-glow"
+              className="px-8 py-4 bg-gradient-to-r from-amber-600 to-amber-700 text-white rounded-lg hover:from-amber-700 hover:to-amber-800 hover:scale-105 transition-all duration-300 hover:shadow-lg font-semibold"
             >
               View My Work
             </button>
             <button 
               onClick={downloadResume}
-              className="px-8 py-4 gradient-brown text-white rounded-lg hover:scale-105 transition-all duration-300 hover:shadow-lg flex items-center justify-center space-x-2"
+              className="px-8 py-4 bg-gradient-to-r from-stone-600 to-stone-700 text-white rounded-lg hover:from-stone-700 hover:to-stone-800 hover:scale-105 transition-all duration-300 hover:shadow-lg flex items-center justify-center space-x-2 font-semibold"
             >
               <Download size={20} />
               <span>Download Resume</span>
             </button>
             <button 
               onClick={scrollToContact}
-              className="px-8 py-4 border-2 border-border rounded-lg hover:bg-accent hover:scale-105 transition-all duration-300 card-hover"
+              className="px-8 py-4 bg-gradient-to-r from-amber-500 to-stone-600 text-white rounded-lg hover:from-amber-600 hover:to-stone-700 hover:scale-105 transition-all duration-300 hover:shadow-lg font-semibold"
             >
               Get In Touch
             </button>
@@ -92,10 +92,11 @@ const Hero = () => {
         </div>
         
         <div 
-          className="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce cursor-pointer hover:scale-110 transition-transform"
+          className="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce cursor-pointer hover:scale-125 hover:text-amber-600 transition-all duration-300 group"
           onClick={scrollToAbout}
         >
-          <ArrowDown className="w-6 h-6 text-muted-foreground" />
+          <ArrowDown className="w-6 h-6 text-muted-foreground group-hover:text-amber-600 transition-colors duration-300" />
+          <div className="absolute -inset-2 bg-amber-100 rounded-full opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
         </div>
       </div>
     </section>
