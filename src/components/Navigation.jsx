@@ -63,18 +63,18 @@ const Navigation = () => {
           </div>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-2 bg-card/60 backdrop-blur-md rounded-full px-6 py-3 border border-border/50 shadow-lg">
+          <div className="hidden md:flex items-center space-x-1 bg-card/60 backdrop-blur-md rounded-full px-6 py-3 border border-border/50 shadow-lg">
             {navItems.map((item) => (
               <button
                 key={item.id}
                 onClick={() => scrollToSection(item.id)}
                 className="group relative px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 hover:bg-amber-900/10 hover:shadow-lg hover:scale-105"
               >
-                <span className="text-foreground group-hover:text-amber-900 transition-all duration-300">
+                <span className="text-foreground group-hover:text-amber-900 transition-colors duration-300">
                   {item.label}
                 </span>
                 {/* Professional underline effect */}
-                <div className="absolute bottom-1 left-1/2 transform -translate-x-1/2 w-0 h-0.5 bg-amber-800 group-hover:w-3/4 transition-all duration-300"></div>
+                <div className="absolute bottom-1 left-1/2 transform -translate-x-1/2 w-0 h-0.5 bg-gradient-to-r from-amber-800 to-amber-600 group-hover:w-3/4 transition-all duration-300 ease-out"></div>
               </button>
             ))}
           </div>
