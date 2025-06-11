@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { ArrowDown } from 'lucide-react';
+import { ArrowDown, Download } from 'lucide-react';
 
 const Hero = () => {
   const scrollToAbout = () => {
@@ -13,6 +13,14 @@ const Hero = () => {
 
   const scrollToContact = () => {
     document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const downloadResume = () => {
+    // Create a dummy PDF download link
+    const link = document.createElement('a');
+    link.href = '/resume.pdf'; // You'll need to add your actual resume PDF to the public folder
+    link.download = 'Rahul_Resume.pdf';
+    link.click();
   };
 
   return (
@@ -44,8 +52,8 @@ const Hero = () => {
       <div className="container mx-auto px-6 text-center relative z-10">
         <div className="animate-fade-in">
           <div className="mb-8">
-            <div className="w-32 h-32 bg-gradient-to-br from-amber-200 to-amber-400 rounded-full mx-auto mb-6 flex items-center justify-center shadow-2xl animate-glow">
-              <span className="text-4xl font-bold text-amber-900">R</span>
+            <div className="w-32 h-32 gradient-brown rounded-full mx-auto mb-6 flex items-center justify-center shadow-2xl animate-glow">
+              <span className="text-4xl font-bold text-white">R</span>
             </div>
           </div>
           
@@ -66,6 +74,13 @@ const Hero = () => {
               className="px-8 py-4 bg-primary text-primary-foreground rounded-lg hover:scale-105 transition-all duration-300 hover:shadow-lg btn-pulse hover-glow"
             >
               View My Work
+            </button>
+            <button 
+              onClick={downloadResume}
+              className="px-8 py-4 gradient-brown text-white rounded-lg hover:scale-105 transition-all duration-300 hover:shadow-lg flex items-center justify-center space-x-2"
+            >
+              <Download size={20} />
+              <span>Download Resume</span>
             </button>
             <button 
               onClick={scrollToContact}
