@@ -121,10 +121,11 @@ Message: ${formData.message}
 
       <div className="container mx-auto px-6 relative z-10">
         <div className="text-center mb-16">
-          <h2 className="text-5xl font-black mb-4">
+          <h2 className="text-5xl font-black mb-4 group cursor-pointer transition-all duration-300 hover:text-amber-900 relative">
             <span className="gradient-text-brown">
               Let's Connect
             </span>
+            <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-0 h-1 bg-gradient-to-r from-amber-800 to-amber-600 group-hover:w-40 transition-all duration-300 ease-out rounded-full"></div>
           </h2>
           <p className="text-xl text-muted-foreground font-medium">Professional collaboration and networking</p>
         </div>
@@ -142,7 +143,7 @@ Message: ${formData.message}
             
             <div className="space-y-4 mb-8">
               {contactInfo.map((contact, index) => (
-                <div key={index} className="group bg-card/80 backdrop-blur-sm p-6 rounded-2xl shadow-lg border border-border/50 hover:shadow-2xl hover:shadow-amber-900/20 transition-all duration-300 hover:scale-105 card-hover">
+                <div key={index} className="bg-card/80 backdrop-blur-sm p-6 rounded-2xl shadow-lg border border-border/50">
                   <div className="flex items-center space-x-4">
                     <div className="flex-1">
                       <h4 className="font-bold mb-2 text-card-foreground text-lg">{contact.type}</h4>
@@ -164,10 +165,11 @@ Message: ${formData.message}
             {/* Resume Download Button */}
             <button
               onClick={downloadResume}
-              className="w-full px-8 py-4 gradient-brown text-white rounded-xl hover:scale-105 transition-all duration-300 hover:shadow-lg flex items-center justify-center space-x-2 mb-8"
+              className="w-full px-8 py-4 bg-gradient-to-r from-amber-700 to-amber-900 text-white rounded-xl font-bold text-lg transition-all duration-300 hover:from-amber-800 hover:to-amber-950 hover:scale-105 hover:shadow-xl hover:shadow-amber-900/50 active:scale-95 flex items-center justify-center space-x-2 mb-8 relative overflow-hidden group"
             >
-              <Download size={20} />
-              <span className="font-bold">Download Resume</span>
+              <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              <Download size={20} className="relative z-10" />
+              <span className="relative z-10">Download Resume</span>
             </button>
 
             {/* Form submission info */}
@@ -189,7 +191,7 @@ Message: ${formData.message}
             <h3 className="text-3xl font-bold mb-8 text-card-foreground">
               Send a Message
             </h3>
-            <form onSubmit={handleSubmit} className="bg-card/80 backdrop-blur-sm p-8 rounded-2xl shadow-lg border border-border/50 card-hover space-y-6">
+            <form onSubmit={handleSubmit} className="bg-card/80 backdrop-blur-sm p-8 rounded-2xl shadow-lg border border-border/50 space-y-6">
               <div>
                 <label htmlFor="name" className="block text-sm font-bold mb-3 text-card-foreground">
                   Your Name
@@ -241,9 +243,10 @@ Message: ${formData.message}
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full px-8 py-4 gradient-brown text-white rounded-xl hover:scale-105 transition-all duration-300 hover:shadow-2xl hover:shadow-amber-900/50 disabled:opacity-50 disabled:cursor-not-allowed font-bold text-lg flex items-center justify-center space-x-2"
+                className="w-full px-8 py-4 bg-gradient-to-r from-amber-700 to-amber-900 text-white rounded-xl font-bold text-lg transition-all duration-300 hover:from-amber-800 hover:to-amber-950 hover:scale-105 hover:shadow-xl hover:shadow-amber-900/50 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2 relative overflow-hidden group"
               >
-                <span>{isSubmitting ? 'Sending...' : 'Send Message'}</span>
+                <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <span className="relative z-10">{isSubmitting ? 'Sending...' : 'Send Message'}</span>
               </button>
             </form>
           </div>

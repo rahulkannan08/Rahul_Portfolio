@@ -51,7 +51,10 @@ const Education = () => {
   return (
     <section id="education" className="py-20 bg-background">
       <div className="container mx-auto px-6">
-        <h2 className="text-4xl font-bold text-center mb-16 text-foreground">Education & Certifications</h2>
+        <h2 className="text-4xl font-bold text-center mb-16 text-foreground group cursor-pointer transition-all duration-300 hover:text-amber-900 relative">
+          Education & Certifications
+          <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-0 h-1 bg-gradient-to-r from-amber-800 to-amber-600 group-hover:w-56 transition-all duration-300 ease-out rounded-full"></div>
+        </h2>
         
         <div className="grid lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
           {/* Education */}
@@ -59,7 +62,7 @@ const Education = () => {
             <h3 className="text-2xl font-semibold mb-8 text-center text-card-foreground">Education</h3>
             <div className="space-y-6">
               {education.map((edu, index) => (
-                <div key={index} className="bg-card p-6 rounded-xl shadow-sm border hover:shadow-md transition-all duration-300 hover:scale-105">
+                <div key={index} className="bg-card p-6 rounded-xl shadow-sm border">
                   <h4 className="text-lg font-semibold mb-2 text-card-foreground">{edu.degree}</h4>
                   <p className="text-amber-600 font-medium mb-2">{edu.period}</p>
                   <p className="text-muted-foreground">{edu.status}</p>
@@ -73,7 +76,7 @@ const Education = () => {
             <h3 className="text-2xl font-semibold mb-8 text-center text-card-foreground">Certifications</h3>
             <div className="space-y-4">
               {certifications.map((cert, index) => (
-                <div key={index} className="bg-card p-6 rounded-xl shadow-sm border hover:shadow-md transition-all duration-300 hover:scale-105">
+                <div key={index} className="bg-card p-6 rounded-xl shadow-sm border">
                   <h4 className="text-lg font-semibold mb-2 text-card-foreground">{cert.title}</h4>
                   <div className="flex justify-between items-center">
                     <p className="text-amber-600 font-medium">{cert.provider}</p>

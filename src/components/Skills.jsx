@@ -64,11 +64,14 @@ const Skills = () => {
   return (
     <section id="skills" className="py-20 bg-background">
       <div className="container mx-auto px-6">
-        <h2 className="text-4xl font-bold text-center mb-16 text-foreground">Skills & Technologies</h2>
+        <h2 className="text-4xl font-bold text-center mb-16 text-foreground group cursor-pointer transition-all duration-300 hover:text-amber-900 relative">
+          Skills & Technologies
+          <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-0 h-1 bg-gradient-to-r from-amber-800 to-amber-600 group-hover:w-48 transition-all duration-300 ease-out rounded-full"></div>
+        </h2>
         
         <div className="grid md:grid-cols-2 lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
           {skillCategories.map((category, categoryIndex) => (
-            <div key={categoryIndex} className="bg-card p-8 rounded-xl shadow-sm border card-hover hover-glow">
+            <div key={categoryIndex} className="bg-card p-8 rounded-xl shadow-sm border">
               <h3 className="text-xl font-semibold mb-6 text-card-foreground text-center">{category.title}</h3>
               <div className="space-y-6">
                 {category.skills.map((skill, skillIndex) => (

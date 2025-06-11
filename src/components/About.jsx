@@ -6,11 +6,14 @@ const About = () => {
     <section id="about" className="py-20 bg-muted/30">
       <div className="container mx-auto px-6">
         <div className="max-w-4xl mx-auto">
-          <h2 className="text-4xl font-bold text-center mb-12 text-foreground animate-fade-in">About Me</h2>
+          <h2 className="text-4xl font-bold text-center mb-12 text-foreground animate-fade-in group cursor-pointer transition-all duration-300 hover:text-amber-900 relative">
+            About Me
+            <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-0 h-1 bg-gradient-to-r from-amber-800 to-amber-600 group-hover:w-32 transition-all duration-300 ease-out rounded-full"></div>
+          </h2>
           
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div className="space-y-6">
-              <div className="bg-card p-8 rounded-xl shadow-sm border card-hover hover-glow">
+              <div className="bg-card p-8 rounded-xl shadow-sm border">
                 <h3 className="text-2xl font-semibold mb-4 text-card-foreground">Background</h3>
                 <p className="text-muted-foreground leading-relaxed">
                   I'm currently pursuing my BCA degree (2023-2026), diving deep into the world of computer applications 
@@ -18,7 +21,7 @@ const About = () => {
                 </p>
               </div>
               
-              <div className="bg-card p-8 rounded-xl shadow-sm border card-hover hover-glow">
+              <div className="bg-card p-8 rounded-xl shadow-sm border">
                 <h3 className="text-2xl font-semibold mb-4 text-card-foreground">Interests & Focus</h3>
                 <p className="text-muted-foreground leading-relaxed">
                   I'm passionate about full-stack development, particularly interested in creating user-friendly web applications. 
@@ -27,7 +30,7 @@ const About = () => {
               </div>
             </div>
             
-            <div className="bg-gradient-to-br from-amber-50 to-stone-50 p-8 rounded-xl border card-hover hover-glow">
+            <div className="bg-gradient-to-br from-amber-50 to-stone-50 p-8 rounded-xl border">
               <div className="text-center">
                 <div className="w-32 h-32 bg-gradient-to-br from-amber-200 to-stone-200 rounded-full mx-auto mb-6 flex items-center justify-center animate-glow">
                   <span className="text-4xl font-bold text-amber-800">R</span>

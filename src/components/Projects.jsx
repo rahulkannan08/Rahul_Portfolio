@@ -24,11 +24,14 @@ const Projects = () => {
   return (
     <section id="projects" className="py-20 bg-muted/30">
       <div className="container mx-auto px-6">
-        <h2 className="text-4xl font-bold text-center mb-16 text-foreground">Featured Projects</h2>
+        <h2 className="text-4xl font-bold text-center mb-16 text-foreground group cursor-pointer transition-all duration-300 hover:text-amber-900 relative">
+          Featured Projects
+          <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-0 h-1 bg-gradient-to-r from-amber-800 to-amber-600 group-hover:w-44 transition-all duration-300 ease-out rounded-full"></div>
+        </h2>
         
         <div className="grid lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
           {projects.map((project, index) => (
-            <div key={index} className="group bg-card rounded-xl shadow-sm border overflow-hidden card-hover hover-glow">
+            <div key={index} className="group bg-card rounded-xl shadow-sm border overflow-hidden">
               {/* Project header with gradient */}
               <div className={`h-2 bg-gradient-to-r ${project.gradient}`}></div>
               
