@@ -8,6 +8,7 @@ import Skills from '../components/Skills';
 import Projects from '../components/Projects';
 import Education from '../components/Education';
 import Contact from '../components/Contact';
+import CursorFollower from '../components/CursorFollower';
 
 const Index = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -31,6 +32,7 @@ const Index = () => {
 
   return (
     <div className="min-h-screen">
+      <CursorFollower />
       <Navigation />
       <Hero />
       <About />
