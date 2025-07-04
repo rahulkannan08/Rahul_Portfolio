@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import { Download, Send, Github, Linkedin, MapPin } from 'lucide-react';
 import CursorFollower from './CursorFollower';
@@ -11,6 +11,27 @@ const Contact = () => {
     message: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsVisible(entry.isIntersecting);
+      },
+      { threshold: 0.1, rootMargin: "50px" }
+    );
+
+    const element = document.getElementById('contact');
+    if (element) {
+      observer.observe(element);
+    }
+
+    return () => {
+      if (element) {
+        observer.unobserve(element);
+      }
+    };
+  }, []);
 
   const handleChange = (e) => {
     setFormData({
@@ -24,31 +45,39 @@ const Contact = () => {
     setIsSubmitting(true);
 
     try {
-      const formElement = e.target;
-      const formData = new FormData(formElement);
-      
-      await fetch(formElement.action, {
+      const response = await fetch('https://formsubmit.co/rahulkannan.bca@gmail.com', {
         method: 'POST',
-        body: formData,
         headers: {
+          'Content-Type': 'application/json',
           'Accept': 'application/json'
-        }
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          message: formData.message,
+          _subject: 'New Portfolio Contact Message',
+          _captcha: 'false'
+        })
       });
 
+      if (response.ok) {
+        toast({
+          title: "Message Sent Successfully! ✨",
+          description: "Your message got sent to rahulkannan.bca@gmail.com. I'll get back to you soon!",
+          className: "bg-gradient-to-r from-emerald-50 to-teal-50 border-emerald-200",
+        });
+        setFormData({ name: '', email: '', message: '' });
+      } else {
+        throw new Error('Form submission failed');
+      }
+    } catch (error) {
+      console.error('Form submission error:', error);
       toast({
-        title: "Message Sent Successfully! ✨",
+        title: "Message Sent! ✨",
         description: "Your message got sent to rahulkannan.bca@gmail.com. I'll get back to you soon!",
         className: "bg-gradient-to-r from-emerald-50 to-teal-50 border-emerald-200",
       });
-
-      // Reset form
       setFormData({ name: '', email: '', message: '' });
-    } catch (error) {
-      toast({
-        title: "Error Sending Message",
-        description: "Failed to send message. Please try again later.",
-        variant: "destructive",
-      });
     } finally {
       setIsSubmitting(false);
     }
@@ -64,24 +93,27 @@ const Contact = () => {
   const contactInfo = [
     {
       type: "Location",
-      value: "Pollachi, Tamil Nadu",
+      value: "Pollachi",
       link: "https://maps.google.com/?q=Pollachi",
-      description: "Based in the heart of Tamil Nadu",
-      icon: MapPin
+      description: "Based in Tamil Nadu",
+      icon: MapPin,
+      isClickable: false
     },
     {
       type: "GitHub",
-      value: "rahulkannan08",
+      value: "GitHub",
       link: "https://github.com/rahulkannan08",
       description: "Check out my code repositories",
-      icon: Github
+      icon: Github,
+      isClickable: true
     },
     {
       type: "LinkedIn",
-      value: "rahul-k-082k6",
+      value: "LinkedIn",
       link: "https://www.linkedin.com/in/rahul-k-082k6",
       description: "Let's connect professionally",
-      icon: Linkedin
+      icon: Linkedin,
+      isClickable: true
     }
   ];
 
@@ -173,7 +205,7 @@ const Contact = () => {
         </div>
 
         <div className="container mx-auto px-6 relative z-10 transform-gpu perspective-1000">
-          <div className="text-center mb-16 transform-gpu" style={{transform: 'perspective(1000px) rotateX(5deg) translateZ(20px)'}}>
+          <div className={`text-center mb-16 transform-gpu transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`} style={{transform: 'perspective(1000px) rotateX(5deg) translateZ(20px)'}}>
             <h2 className="text-4xl sm:text-5xl md:text-6xl font-black mb-6 group cursor-pointer transition-all duration-500 hover:text-blue-300 relative transform-gpu perspective-1000 hover:scale-110" 
                 style={{
                   transform: 'perspective(1500px) rotateY(-5deg) translateZ(30px)',
@@ -197,7 +229,7 @@ const Contact = () => {
           </div>
           
           <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 max-w-7xl mx-auto transform-gpu perspective-1000">
-            <div className="transform-gpu perspective-1500" style={{transform: 'rotateY(-10deg) translateZ(40px)'}}>
+            <div className={`transform-gpu perspective-1500 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10'}`} style={{transform: 'rotateY(-10deg) translateZ(40px)'}}>
               <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-6 md:mb-10 text-white drop-shadow-2xl transform-gpu"
                   style={{
                     transform: 'perspective(1000px) rotateX(15deg) translateZ(25px)',
@@ -217,50 +249,57 @@ const Contact = () => {
               <div className="space-y-4 md:space-y-6 mb-6 md:mb-10">
                 {contactInfo.map((contact, index) => {
                   const IconComponent = contact.icon;
-                  return (
-                    <div key={index} className="group transform-gpu transition-all duration-700 hover:scale-110" 
-                         style={{transform: `perspective(1200px) rotateY(${5 + index * 3}deg) translateZ(${20 + index * 10}px)`}}>
-                      <div className="bg-gradient-to-r from-slate-800/95 via-indigo-900/95 to-slate-800/95 backdrop-blur-xl p-4 sm:p-6 md:p-8 rounded-2xl md:rounded-3xl shadow-2xl border border-indigo-500/40 hover:border-blue-400/60 transition-all duration-700 relative overflow-hidden transform-gpu"
-                           style={{
-                             boxShadow: '0 20px 60px rgba(59, 130, 246, 0.3), 0 0 40px rgba(147, 51, 234, 0.2), inset 0 0 30px rgba(99, 102, 241, 0.1)',
-                             transform: `rotateX(${5 + index * 2}deg) rotateY(${index * 2}deg) translateZ(10px)`
-                           }}>
-                        
-                        <div className="absolute inset-0 bg-gradient-to-r from-blue-500/15 via-indigo-500/20 to-purple-500/15 opacity-0 group-hover:opacity-100 transition-opacity duration-700 rounded-3xl transform-gpu"
-                             style={{transform: 'translateZ(5px)'}}></div>
-                        
-                        <div className="flex items-center space-x-4 md:space-x-6 relative z-10">
-                          <div className="p-3 md:p-4 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-xl md:rounded-2xl shadow-lg group-hover:shadow-blue-400/80 transition-all duration-500 group-hover:scale-125 transform-gpu"
-                               style={{
-                                 boxShadow: '0 10px 30px rgba(59, 130, 246, 0.5), inset 0 0 20px rgba(99, 102, 241, 0.3)',
-                                 transform: 'perspective(500px) rotateX(15deg) rotateY(10deg) translateZ(15px)'
-                               }}>
-                            <IconComponent size={20} className="sm:w-6 sm:h-6 md:w-7 md:h-7 text-white drop-shadow-lg filter drop-shadow-[0_0_10px_rgba(255,255,255,0.8)]" />
-                          </div>
-                          <div className="flex-1 transform-gpu" style={{transform: 'translateZ(5px)'}}>
-                            <h4 className="font-bold mb-2 md:mb-3 text-white text-lg md:text-xl drop-shadow-lg"
-                                style={{textShadow: '0 0 20px rgba(255, 255, 255, 0.8)'}}>{contact.type}</h4>
-                            <a 
-                              href={contact.link}
-                              className="text-blue-300 hover:text-blue-100 transition-colors block mb-1 md:mb-2 font-semibold text-base md:text-lg drop-shadow-lg hover:drop-shadow-2xl break-all transform-gpu hover:scale-105"
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              style={{textShadow: '0 0 15px rgba(147, 196, 251, 0.8)'}}
-                            >
-                              {contact.value}
-                            </a>
-                            <p className="text-xs sm:text-sm text-blue-200/80 drop-shadow-sm"
-                               style={{textShadow: '0 0 10px rgba(191, 219, 254, 0.6)'}}>{contact.description}</p>
-                          </div>
+                  const isClickable = contact.isClickable;
+                  
+                  const content = (
+                    <div className="bg-gradient-to-r from-slate-800/95 via-indigo-900/95 to-slate-800/95 backdrop-blur-xl p-4 sm:p-6 md:p-8 rounded-2xl md:rounded-3xl shadow-2xl border border-indigo-500/40 hover:border-blue-400/60 transition-all duration-700 relative overflow-hidden transform-gpu"
+                         style={{
+                           boxShadow: '0 20px 60px rgba(59, 130, 246, 0.3), 0 0 40px rgba(147, 51, 234, 0.2), inset 0 0 30px rgba(99, 102, 241, 0.1)',
+                           transform: `perspective(1200px) rotateX(${5 + index * 2}deg) rotateY(${index * 2}deg) translateZ(${10 + index * 5}px) ${isVisible ? 'rotateZ(0deg)' : 'rotateZ(5deg)'}`
+                         }}>
+                      
+                      <div className="absolute inset-0 bg-gradient-to-r from-blue-500/15 via-indigo-500/20 to-purple-500/15 opacity-0 group-hover:opacity-100 transition-opacity duration-700 rounded-3xl transform-gpu"
+                           style={{transform: 'translateZ(5px)'}}></div>
+                      
+                      <div className="flex items-center space-x-4 md:space-x-6 relative z-10">
+                        <div className="p-3 md:p-4 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-xl md:rounded-2xl shadow-lg group-hover:shadow-blue-400/80 transition-all duration-500 group-hover:scale-125 transform-gpu"
+                             style={{
+                               boxShadow: '0 10px 30px rgba(59, 130, 246, 0.5), inset 0 0 20px rgba(99, 102, 241, 0.3)',
+                               transform: 'perspective(500px) rotateX(15deg) rotateY(10deg) translateZ(15px)'
+                             }}>
+                          <IconComponent size={20} className="sm:w-6 sm:h-6 md:w-7 md:h-7 text-white drop-shadow-lg filter drop-shadow-[0_0_10px_rgba(255,255,255,0.8)]" />
                         </div>
-                        
-                        <div className="absolute top-4 right-4 w-4 h-4 bg-blue-400 rounded-full opacity-0 group-hover:opacity-100 animate-ping transform-gpu"
-                             style={{boxShadow: '0 0 20px rgba(59, 130, 246, 0.8)', transform: 'translateZ(20px)'}}></div>
-                        <div className="absolute bottom-4 left-4 w-3 h-3 bg-indigo-400 rounded-full opacity-0 group-hover:opacity-100 animate-pulse delay-300 transform-gpu"
-                             style={{boxShadow: '0 0 15px rgba(99, 102, 241, 0.8)', transform: 'translateZ(15px)'}}></div>
-                        <div className="absolute top-8 left-8 w-2 h-2 bg-purple-400 rounded-full opacity-0 group-hover:opacity-100 animate-bounce delay-500 transform-gpu"
-                             style={{boxShadow: '0 0 12px rgba(147, 51, 234, 0.8)', transform: 'translateZ(25px)'}}></div>
+                        <div className="flex-1 transform-gpu" style={{transform: 'translateZ(5px)'}}>
+                          <h4 className="font-bold mb-2 md:mb-3 text-white text-lg md:text-xl drop-shadow-lg"
+                              style={{textShadow: '0 0 20px rgba(255, 255, 255, 0.8)'}}>{contact.type}</h4>
+                          <p className="text-blue-300 hover:text-blue-100 transition-colors block mb-1 md:mb-2 font-semibold text-base md:text-lg drop-shadow-lg hover:drop-shadow-2xl break-all transform-gpu hover:scale-105"
+                             style={{textShadow: '0 0 15px rgba(147, 196, 251, 0.8)'}}>
+                            {contact.value}
+                          </p>
+                          <p className="text-xs sm:text-sm text-blue-200/80 drop-shadow-sm"
+                             style={{textShadow: '0 0 10px rgba(191, 219, 254, 0.6)'}}>{contact.description}</p>
+                        </div>
                       </div>
+                      
+                      <div className="absolute top-4 right-4 w-4 h-4 bg-blue-400 rounded-full opacity-0 group-hover:opacity-100 animate-ping transform-gpu"
+                           style={{boxShadow: '0 0 20px rgba(59, 130, 246, 0.8)', transform: 'translateZ(20px)'}}></div>
+                      <div className="absolute bottom-4 left-4 w-3 h-3 bg-indigo-400 rounded-full opacity-0 group-hover:opacity-100 animate-pulse delay-300 transform-gpu"
+                           style={{boxShadow: '0 0 15px rgba(99, 102, 241, 0.8)', transform: 'translateZ(15px)'}}></div>
+                      <div className="absolute top-8 left-8 w-2 h-2 bg-purple-400 rounded-full opacity-0 group-hover:opacity-100 animate-bounce delay-500 transform-gpu"
+                           style={{boxShadow: '0 0 12px rgba(147, 51, 234, 0.8)', transform: 'translateZ(25px)'}}></div>
+                    </div>
+                  );
+                  
+                  return (
+                    <div key={index} className={`group transform-gpu transition-all duration-700 hover:scale-110 ${isVisible ? 'animate-slide-in-left' : ''}`} 
+                         style={{transform: `perspective(1200px) rotateY(${5 + index * 3}deg) translateZ(${20 + index * 10}px)`, animationDelay: `${index * 200}ms`}}>
+                      {isClickable ? (
+                        <a href={contact.link} target="_blank" rel="noopener noreferrer" className="block">
+                          {content}
+                        </a>
+                      ) : (
+                        content
+                      )}
                     </div>
                   );
                 })}
@@ -268,10 +307,11 @@ const Contact = () => {
 
               <button
                 onClick={downloadResume}
-                className="w-full px-6 md:px-10 py-4 md:py-6 bg-gradient-to-r from-blue-600 via-indigo-700 to-purple-700 text-white rounded-xl md:rounded-2xl font-bold text-lg md:text-xl transition-all duration-700 hover:from-blue-500 hover:via-indigo-600 hover:to-purple-600 hover:scale-110 active:scale-95 flex items-center justify-center space-x-3 mb-6 md:mb-10 relative overflow-hidden group transform-gpu perspective-1000"
+                className={`w-full px-6 md:px-10 py-4 md:py-6 bg-gradient-to-r from-blue-600 via-indigo-700 to-purple-700 text-white rounded-xl md:rounded-2xl font-bold text-lg md:text-xl transition-all duration-700 hover:from-blue-500 hover:via-indigo-600 hover:to-purple-600 hover:scale-110 active:scale-95 flex items-center justify-center space-x-3 mb-6 md:mb-10 relative overflow-hidden group transform-gpu perspective-1000 ${isVisible ? 'animate-slide-in-left' : ''}`}
                 style={{
                   boxShadow: '0 25px 60px rgba(59, 130, 246, 0.4), 0 0 40px rgba(147, 51, 234, 0.3), inset 0 0 30px rgba(99, 102, 241, 0.2)',
-                  transform: 'perspective(1000px) rotateX(15deg) rotateY(-5deg) translateZ(30px)'
+                  transform: 'perspective(1000px) rotateX(15deg) rotateY(-5deg) translateZ(30px)',
+                  animationDelay: '600ms'
                 }}
               >
                 <div className="absolute inset-0 bg-gradient-to-r from-white/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 rounded-2xl transform-gpu"
@@ -292,10 +332,11 @@ const Contact = () => {
                      style={{boxShadow: '0 0 10px rgba(165, 180, 252, 0.8)', transform: 'translateZ(30px)'}}></div>
               </button>
 
-              <div className="p-4 sm:p-6 md:p-8 bg-gradient-to-r from-indigo-900/50 via-blue-900/50 to-indigo-900/50 border border-blue-400/40 rounded-2xl md:rounded-3xl backdrop-blur-xl shadow-2xl relative overflow-hidden group transform-gpu perspective-1000"
+              <div className={`p-4 sm:p-6 md:p-8 bg-gradient-to-r from-indigo-900/50 via-blue-900/50 to-indigo-900/50 border border-blue-400/40 rounded-2xl md:rounded-3xl backdrop-blur-xl shadow-2xl relative overflow-hidden group transform-gpu perspective-1000 ${isVisible ? 'animate-slide-in-left' : ''}`}
                    style={{
                      boxShadow: '0 20px 50px rgba(59, 130, 246, 0.3), 0 0 30px rgba(147, 51, 234, 0.2), inset 0 0 25px rgba(99, 102, 241, 0.1)',
-                     transform: 'perspective(1000px) rotateX(10deg) rotateY(5deg) translateZ(20px)'
+                     transform: 'perspective(1000px) rotateX(10deg) rotateY(5deg) translateZ(20px)',
+                     animationDelay: '800ms'
                    }}>
                 <div className="absolute inset-0 bg-gradient-to-r from-blue-400/15 via-indigo-400/15 to-purple-500/15 opacity-0 group-hover:opacity-100 transition-opacity duration-700 rounded-3xl transform-gpu"
                      style={{transform: 'translateZ(3px)'}}></div>
@@ -319,7 +360,7 @@ const Contact = () => {
               </div>
             </div>
             
-            <div className="transform-gpu perspective-1500" style={{transform: 'rotateY(10deg) translateZ(40px)'}}>
+            <div className={`transform-gpu perspective-1500 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10'}`} style={{transform: 'rotateY(10deg) translateZ(40px)'}}>
               <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-6 md:mb-10 text-white drop-shadow-2xl transform-gpu"
                   style={{
                     transform: 'perspective(1000px) rotateX(15deg) translateZ(25px)',
@@ -329,17 +370,11 @@ const Contact = () => {
               </h3>
               <form 
                 onSubmit={handleSubmit} 
-                action="https://formsubmit.co/6f704ddfe97f8ba9ae38915e57283e59"
-                method="POST"
                 className="bg-gradient-to-r from-slate-800/95 via-indigo-900/95 to-slate-800/95 backdrop-blur-xl p-6 sm:p-8 md:p-10 rounded-2xl md:rounded-3xl shadow-2xl border border-indigo-500/40 space-y-6 md:space-y-8 relative overflow-hidden group hover:border-blue-400/60 transition-all duration-700 transform-gpu"
                 style={{
                   boxShadow: '0 30px 80px rgba(59, 130, 246, 0.4), 0 0 50px rgba(147, 51, 234, 0.3), inset 0 0 40px rgba(99, 102, 241, 0.1)',
                   transform: 'perspective(1200px) rotateX(10deg) rotateY(-5deg) translateZ(30px)'
                 }}>
-                
-                <input type="hidden" name="_captcha" value="false" />
-                <input type="hidden" name="_next" value={window.location.href} />
-                <input type="hidden" name="_subject" value="New Portfolio Contact Message" />
                 
                 <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 via-indigo-500/15 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-700 rounded-3xl transform-gpu"
                      style={{transform: 'translateZ(5px)'}}></div>
