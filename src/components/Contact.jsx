@@ -24,16 +24,20 @@ const Contact = () => {
     setIsSubmitting(true);
 
     try {
-      // Create Gmail compose URL with pre-filled data
-      const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=rahulkannan.bca@gmail.com&su=${encodeURIComponent(`Portfolio Contact: Message from ${formData.name}`)}&body=${encodeURIComponent(`Name: ${formData.name}\nEmail: ${formData.email}\nMessage: ${formData.message}`)}`;
+      const formElement = e.target;
+      const formData = new FormData(formElement);
       
-      // Open Gmail in a new tab
-      window.open(gmailUrl, '_blank');
+      await fetch(formElement.action, {
+        method: 'POST',
+        body: formData,
+        headers: {
+          'Accept': 'application/json'
+        }
+      });
 
-      // Show success message
       toast({
-        title: "Gmail Opened Successfully! ✨",
-        description: "Your message has been pre-filled in Gmail. Please send it to complete your inquiry!",
+        title: "Message Sent Successfully! ✨",
+        description: "Thank you for reaching out! I'll get back to you soon.",
         className: "bg-gradient-to-r from-emerald-50 to-teal-50 border-emerald-200",
       });
 
@@ -41,8 +45,8 @@ const Contact = () => {
       setFormData({ name: '', email: '', message: '' });
     } catch (error) {
       toast({
-        title: "Error Opening Gmail",
-        description: "Failed to open Gmail. Please try again later.",
+        title: "Error Sending Message",
+        description: "Failed to send message. Please try again later.",
         variant: "destructive",
       });
     } finally {
@@ -323,11 +327,15 @@ const Contact = () => {
                   }}>
                 Start a Conversation 💌
               </h3>
-              <form onSubmit={handleSubmit} className="bg-gradient-to-r from-slate-800/95 via-indigo-900/95 to-slate-800/95 backdrop-blur-xl p-6 sm:p-8 md:p-10 rounded-2xl md:rounded-3xl shadow-2xl border border-indigo-500/40 space-y-6 md:space-y-8 relative overflow-hidden group hover:border-blue-400/60 transition-all duration-700 transform-gpu"
-                    style={{
-                      boxShadow: '0 30px 80px rgba(59, 130, 246, 0.4), 0 0 50px rgba(147, 51, 234, 0.3), inset 0 0 40px rgba(99, 102, 241, 0.1)',
-                      transform: 'perspective(1200px) rotateX(10deg) rotateY(-5deg) translateZ(30px)'
-                    }}>
+              <form 
+                onSubmit={handleSubmit} 
+                action="https://formspree.io/f/6f704ddfe97f8ba9ae38915e57283e59"
+                method="POST"
+                className="bg-gradient-to-r from-slate-800/95 via-indigo-900/95 to-slate-800/95 backdrop-blur-xl p-6 sm:p-8 md:p-10 rounded-2xl md:rounded-3xl shadow-2xl border border-indigo-500/40 space-y-6 md:space-y-8 relative overflow-hidden group hover:border-blue-400/60 transition-all duration-700 transform-gpu"
+                style={{
+                  boxShadow: '0 30px 80px rgba(59, 130, 246, 0.4), 0 0 50px rgba(147, 51, 234, 0.3), inset 0 0 40px rgba(99, 102, 241, 0.1)',
+                  transform: 'perspective(1200px) rotateX(10deg) rotateY(-5deg) translateZ(30px)'
+                }}>
                 
                 <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 via-indigo-500/15 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-700 rounded-3xl transform-gpu"
                      style={{transform: 'translateZ(5px)'}}></div>
@@ -404,17 +412,12 @@ const Contact = () => {
                     transform: 'perspective(1000px) rotateX(15deg) rotateY(-3deg) translateZ(25px)'
                   }}
                 >
-                  <div className="absolute inset-0 bg-gradient-to-r from-white/40 to-transparent opacity-0 group-hover/button:opacity-100 transition-opacity duration-700 rounded-2xl transform-gpu"
-                       style={{transform: 'translateZ(5px)'}}></div>
-                  <div className="absolute inset-0 bg-gradient-to-r from-blue-400/30 via-indigo-400/30 to-purple-400/30 opacity-0 group-hover/button:opacity-100 transition-opacity duration-700 blur-2xl transform-gpu"
-                       style={{transform: 'translateZ(-5px)'}}></div>
-                  
                   {isSubmitting ? (
                     <>
                       <div className="w-5 h-5 md:w-6 md:h-6 border-2 border-white border-t-transparent rounded-full animate-spin relative z-10 transform-gpu"
                            style={{transform: 'translateZ(10px)'}}></div>
                       <span className="relative z-10 drop-shadow-lg transform-gpu"
-                            style={{textShadow: '0 0 20px rgba(255, 255, 255, 0.8)', transform: 'translateZ(8px)'}}>Opening Gmail... 🚀</span>
+                            style={{textShadow: '0 0 20px rgba(255, 255, 255, 0.8)', transform: 'translateZ(8px)'}}>Sending Message... 🚀</span>
                     </>
                   ) : (
                     <>
