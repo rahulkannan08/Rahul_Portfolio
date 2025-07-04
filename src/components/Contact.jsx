@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
-import { Download, Send, Mail, Phone, MapPin } from 'lucide-react';
+import { Download, Send, Github, Linkedin, MapPin } from 'lucide-react';
 import CursorFollower from './CursorFollower';
 
 const Contact = () => {
@@ -24,27 +24,16 @@ const Contact = () => {
     setIsSubmitting(true);
 
     try {
-      // Simulate sending email automatically
-      const emailData = {
-        to: 'rahulkannan.bca@gmail.com',
-        subject: `Portfolio Contact: Message from ${formData.name}`,
-        body: `
-Name: ${formData.name}
-Email: ${formData.email}
-Message: ${formData.message}
-        `
-      };
-
-      // In a real implementation, this would call your backend API
-      console.log('Sending email:', emailData);
+      // Create Gmail compose URL with pre-filled data
+      const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=rahulkannan.bca@gmail.com&su=${encodeURIComponent(`Portfolio Contact: Message from ${formData.name}`)}&body=${encodeURIComponent(`Name: ${formData.name}\nEmail: ${formData.email}\nMessage: ${formData.message}`)}`;
       
-      // Simulate API call delay
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      // Open Gmail in a new tab
+      window.open(gmailUrl, '_blank');
 
       // Show success message
       toast({
-        title: "Message Sent Successfully! ✨",
-        description: "Your message has been delivered to rahulkannan.bca@gmail.com. I'll get back to you soon!",
+        title: "Gmail Opened Successfully! ✨",
+        description: "Your message has been pre-filled in Gmail. Please send it to complete your inquiry!",
         className: "bg-gradient-to-r from-emerald-50 to-teal-50 border-emerald-200",
       });
 
@@ -52,8 +41,8 @@ Message: ${formData.message}
       setFormData({ name: '', email: '', message: '' });
     } catch (error) {
       toast({
-        title: "Error Sending Message",
-        description: "Failed to send your message. Please try again later.",
+        title: "Error Opening Gmail",
+        description: "Failed to open Gmail. Please try again later.",
         variant: "destructive",
       });
     } finally {
@@ -70,25 +59,25 @@ Message: ${formData.message}
 
   const contactInfo = [
     {
-      type: "Email",
-      value: "rahulkannan.bca@gmail.com",
-      link: "mailto:rahulkannan.bca@gmail.com",
-      description: "Messages will be sent to this email",
-      icon: Mail
+      type: "Location",
+      value: "Pollachi, Tamil Nadu",
+      link: "https://maps.google.com/?q=Pollachi",
+      description: "Based in the heart of Tamil Nadu",
+      icon: MapPin
     },
     {
       type: "GitHub",
-      value: "rahulll.github",
-      link: "https://github.com/rahulll",
+      value: "rahulkannan08",
+      link: "https://github.com/rahulkannan08",
       description: "Check out my code repositories",
-      icon: MapPin
+      icon: Github
     },
     {
       type: "LinkedIn",
       value: "rahul-k-082k6",
       link: "https://www.linkedin.com/in/rahul-k-082k6",
       description: "Let's connect professionally",
-      icon: Phone
+      icon: Linkedin
     }
   ];
 
@@ -96,7 +85,6 @@ Message: ${formData.message}
     <>
       <CursorFollower />
       <section id="contact" className="py-20 bg-gradient-to-br from-indigo-950 via-slate-900 to-purple-950 relative overflow-hidden min-h-screen perspective-1000">
-        {/* Enhanced 3D animated background elements with ultra design-themed effects */}
         <div className="absolute inset-0 transform-gpu perspective-2000">
           {[...Array(40)].map((_, i) => (
             <div
@@ -118,7 +106,6 @@ Message: ${formData.message}
             </div>
           ))}
           
-          {/* Ultra 3D geometric floating shapes with enhanced perspective */}
           {[...Array(20)].map((_, i) => (
             <div
               key={`shape-${i}`}
@@ -149,7 +136,6 @@ Message: ${formData.message}
           ))}
         </div>
 
-        {/* Ultra 3D wave effect with enhanced depth */}
         <div className="absolute top-0 left-0 w-full overflow-hidden transform-gpu perspective-1000" style={{transform: 'rotateX(10deg) translateZ(50px)'}}>
           <svg
             className="relative block w-full h-40 drop-shadow-2xl"
@@ -207,7 +193,6 @@ Message: ${formData.message}
           </div>
           
           <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 max-w-7xl mx-auto transform-gpu perspective-1000">
-            {/* Enhanced Contact Info with ultra 3D cards */}
             <div className="transform-gpu perspective-1500" style={{transform: 'rotateY(-10deg) translateZ(40px)'}}>
               <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-6 md:mb-10 text-white drop-shadow-2xl transform-gpu"
                   style={{
@@ -237,7 +222,6 @@ Message: ${formData.message}
                              transform: `rotateX(${5 + index * 2}deg) rotateY(${index * 2}deg) translateZ(10px)`
                            }}>
                         
-                        {/* Ultra 3D glow overlay */}
                         <div className="absolute inset-0 bg-gradient-to-r from-blue-500/15 via-indigo-500/20 to-purple-500/15 opacity-0 group-hover:opacity-100 transition-opacity duration-700 rounded-3xl transform-gpu"
                              style={{transform: 'translateZ(5px)'}}></div>
                         
@@ -266,7 +250,6 @@ Message: ${formData.message}
                           </div>
                         </div>
                         
-                        {/* Ultra 3D sparkle effects */}
                         <div className="absolute top-4 right-4 w-4 h-4 bg-blue-400 rounded-full opacity-0 group-hover:opacity-100 animate-ping transform-gpu"
                              style={{boxShadow: '0 0 20px rgba(59, 130, 246, 0.8)', transform: 'translateZ(20px)'}}></div>
                         <div className="absolute bottom-4 left-4 w-3 h-3 bg-indigo-400 rounded-full opacity-0 group-hover:opacity-100 animate-pulse delay-300 transform-gpu"
@@ -279,7 +262,6 @@ Message: ${formData.message}
                 })}
               </div>
 
-              {/* Ultra 3D Resume Download Button */}
               <button
                 onClick={downloadResume}
                 className="w-full px-6 md:px-10 py-4 md:py-6 bg-gradient-to-r from-blue-600 via-indigo-700 to-purple-700 text-white rounded-xl md:rounded-2xl font-bold text-lg md:text-xl transition-all duration-700 hover:from-blue-500 hover:via-indigo-600 hover:to-purple-600 hover:scale-110 active:scale-95 flex items-center justify-center space-x-3 mb-6 md:mb-10 relative overflow-hidden group transform-gpu perspective-1000"
@@ -288,7 +270,6 @@ Message: ${formData.message}
                   transform: 'perspective(1000px) rotateX(15deg) rotateY(-5deg) translateZ(30px)'
                 }}
               >
-                {/* Ultra 3D glow overlay */}
                 <div className="absolute inset-0 bg-gradient-to-r from-white/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 rounded-2xl transform-gpu"
                      style={{transform: 'translateZ(5px)'}}></div>
                 <div className="absolute inset-0 bg-gradient-to-r from-blue-400/30 via-indigo-400/30 to-purple-400/30 opacity-0 group-hover:opacity-100 transition-opacity duration-700 blur-2xl transform-gpu"
@@ -299,7 +280,6 @@ Message: ${formData.message}
                 <span className="relative z-10 drop-shadow-lg transform-gpu"
                       style={{textShadow: '0 0 20px rgba(255, 255, 255, 0.8)', transform: 'translateZ(8px)'}}>Download Resume 📋</span>
                 
-                {/* Ultra 3D floating particles */}
                 <div className="absolute top-2 right-8 w-3 h-3 bg-white/80 rounded-full opacity-0 group-hover:opacity-100 animate-ping delay-100 transform-gpu"
                      style={{boxShadow: '0 0 15px rgba(255, 255, 255, 0.8)', transform: 'translateZ(25px)'}}></div>
                 <div className="absolute bottom-3 left-12 w-2 h-2 bg-blue-300/90 rounded-full opacity-0 group-hover:opacity-100 animate-pulse delay-500 transform-gpu"
@@ -308,7 +288,6 @@ Message: ${formData.message}
                      style={{boxShadow: '0 0 10px rgba(165, 180, 252, 0.8)', transform: 'translateZ(30px)'}}></div>
               </button>
 
-              {/* Ultra 3D info panel */}
               <div className="p-4 sm:p-6 md:p-8 bg-gradient-to-r from-indigo-900/50 via-blue-900/50 to-indigo-900/50 border border-blue-400/40 rounded-2xl md:rounded-3xl backdrop-blur-xl shadow-2xl relative overflow-hidden group transform-gpu perspective-1000"
                    style={{
                      boxShadow: '0 20px 50px rgba(59, 130, 246, 0.3), 0 0 30px rgba(147, 51, 234, 0.2), inset 0 0 25px rgba(99, 102, 241, 0.1)',
@@ -325,17 +304,17 @@ Message: ${formData.message}
                           style={{transform: 'translateZ(8px)'}}>
                     <Send size={16} className="sm:w-5 sm:h-5 animate-pulse" 
                           style={{filter: 'drop-shadow(0 0 8px rgba(59, 130, 246, 0.8))'}} />
-                    <span>Automatic Message Delivery! 🚀</span>
+                    <span>Professional Declaration 📝</span>
                   </strong>
-                  Messages sent through the contact form will be automatically delivered to: 
-                  <span className="font-bold text-blue-300 drop-shadow-lg break-all"> rahulkannan.bca@gmail.com</span>
+                  I, Rahul Kannan, am a dedicated web developer and designer committed to delivering high-quality digital solutions. 
+                  Based in <span className="font-bold text-blue-300">Pollachi, Tamil Nadu</span>, I specialize in creating modern, 
+                  responsive web applications that combine cutting-edge technology with exceptional user experience.
                   <br />
-                  <span className="text-blue-200">I typically respond within 24-48 hours. ⚡</span>
+                  <span className="text-blue-200 mt-2 block">Ready to transform your ideas into reality! 🚀</span>
                 </p>
               </div>
             </div>
             
-            {/* Ultra 3D Contact Form */}
             <div className="transform-gpu perspective-1500" style={{transform: 'rotateY(10deg) translateZ(40px)'}}>
               <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-6 md:mb-10 text-white drop-shadow-2xl transform-gpu"
                   style={{
@@ -350,7 +329,6 @@ Message: ${formData.message}
                       transform: 'perspective(1200px) rotateX(10deg) rotateY(-5deg) translateZ(30px)'
                     }}>
                 
-                {/* Ultra 3D glow overlay */}
                 <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 via-indigo-500/15 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-700 rounded-3xl transform-gpu"
                      style={{transform: 'translateZ(5px)'}}></div>
                 
@@ -426,7 +404,6 @@ Message: ${formData.message}
                     transform: 'perspective(1000px) rotateX(15deg) rotateY(-3deg) translateZ(25px)'
                   }}
                 >
-                  {/* Ultra 3D glow overlay */}
                   <div className="absolute inset-0 bg-gradient-to-r from-white/40 to-transparent opacity-0 group-hover/button:opacity-100 transition-opacity duration-700 rounded-2xl transform-gpu"
                        style={{transform: 'translateZ(5px)'}}></div>
                   <div className="absolute inset-0 bg-gradient-to-r from-blue-400/30 via-indigo-400/30 to-purple-400/30 opacity-0 group-hover/button:opacity-100 transition-opacity duration-700 blur-2xl transform-gpu"
@@ -437,7 +414,7 @@ Message: ${formData.message}
                       <div className="w-5 h-5 md:w-6 md:h-6 border-2 border-white border-t-transparent rounded-full animate-spin relative z-10 transform-gpu"
                            style={{transform: 'translateZ(10px)'}}></div>
                       <span className="relative z-10 drop-shadow-lg transform-gpu"
-                            style={{textShadow: '0 0 20px rgba(255, 255, 255, 0.8)', transform: 'translateZ(8px)'}}>Sending Message... 🚀</span>
+                            style={{textShadow: '0 0 20px rgba(255, 255, 255, 0.8)', transform: 'translateZ(8px)'}}>Opening Gmail... 🚀</span>
                     </>
                   ) : (
                     <>
@@ -448,7 +425,6 @@ Message: ${formData.message}
                     </>
                   )}
                   
-                  {/* Ultra 3D floating particles */}
                   <div className="absolute top-2 right-8 w-3 h-3 bg-white/80 rounded-full opacity-0 group-hover/button:opacity-100 animate-ping delay-100 transform-gpu"
                        style={{boxShadow: '0 0 15px rgba(255, 255, 255, 0.8)', transform: 'translateZ(30px)'}}></div>
                   <div className="absolute bottom-3 left-12 w-2 h-2 bg-blue-300/90 rounded-full opacity-0 group-hover/button:opacity-100 animate-pulse delay-500 transform-gpu"
@@ -459,7 +435,6 @@ Message: ${formData.message}
                        style={{boxShadow: '0 0 8px rgba(196, 181, 253, 0.8)', transform: 'translateZ(20px)'}}></div>
                 </button>
                 
-                {/* Ultra 3D floating sparkles around the form */}
                 <div className="absolute top-8 right-8 w-4 h-4 bg-blue-400/80 rounded-full opacity-0 group-hover:opacity-100 animate-ping delay-200 transform-gpu"
                      style={{boxShadow: '0 0 20px rgba(59, 130, 246, 0.8)', transform: 'translateZ(40px)'}}></div>
                 <div className="absolute bottom-12 left-8 w-3 h-3 bg-indigo-400/80 rounded-full opacity-0 group-hover:opacity-100 animate-pulse delay-500 transform-gpu"
