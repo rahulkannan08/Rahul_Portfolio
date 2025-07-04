@@ -37,7 +37,7 @@ const Contact = () => {
 
       toast({
         title: "Message Sent Successfully! ✨",
-        description: "Thank you for reaching out! I'll get back to you soon.",
+        description: "Your message got sent to rahulkannan.bca@gmail.com. I'll get back to you soon!",
         className: "bg-gradient-to-r from-emerald-50 to-teal-50 border-emerald-200",
       });
 
@@ -329,13 +329,17 @@ const Contact = () => {
               </h3>
               <form 
                 onSubmit={handleSubmit} 
-                action="https://formspree.io/f/6f704ddfe97f8ba9ae38915e57283e59"
+                action="https://formsubmit.co/6f704ddfe97f8ba9ae38915e57283e59"
                 method="POST"
                 className="bg-gradient-to-r from-slate-800/95 via-indigo-900/95 to-slate-800/95 backdrop-blur-xl p-6 sm:p-8 md:p-10 rounded-2xl md:rounded-3xl shadow-2xl border border-indigo-500/40 space-y-6 md:space-y-8 relative overflow-hidden group hover:border-blue-400/60 transition-all duration-700 transform-gpu"
                 style={{
                   boxShadow: '0 30px 80px rgba(59, 130, 246, 0.4), 0 0 50px rgba(147, 51, 234, 0.3), inset 0 0 40px rgba(99, 102, 241, 0.1)',
                   transform: 'perspective(1200px) rotateX(10deg) rotateY(-5deg) translateZ(30px)'
                 }}>
+                
+                <input type="hidden" name="_captcha" value="false" />
+                <input type="hidden" name="_next" value={window.location.href} />
+                <input type="hidden" name="_subject" value="New Portfolio Contact Message" />
                 
                 <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 via-indigo-500/15 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-700 rounded-3xl transform-gpu"
                      style={{transform: 'translateZ(5px)'}}></div>

@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -59,6 +60,7 @@
 }
 
 @layer utilities {
+  /* Enhanced Fade In Animation */
   .animate-fade-in {
     animation: fadeIn 1s ease-in-out;
   }
@@ -71,6 +73,89 @@
     to {
       opacity: 1;
       transform: translateY(0);
+    }
+  }
+
+  /* Stagger Animation for Cards */
+  .animate-stagger-in {
+    animation: staggerIn 0.8s ease-out forwards;
+  }
+  
+  @keyframes staggerIn {
+    0% {
+      opacity: 0;
+      transform: translateY(20px) scale(0.95);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  /* Slide Animations */
+  .animate-slide-in-left {
+    animation: slideInLeft 0.8s ease-out;
+  }
+  
+  @keyframes slideInLeft {
+    from {
+      opacity: 0;
+      transform: translateX(-30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  .animate-slide-in-right {
+    animation: slideInRight 0.8s ease-out;
+  }
+  
+  @keyframes slideInRight {
+    from {
+      opacity: 0;
+      transform: translateX(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  /* Scale Animations */
+  .animate-scale-in {
+    animation: scaleIn 0.6s ease-out;
+  }
+  
+  @keyframes scaleIn {
+    from {
+      opacity: 0;
+      transform: scale(0.8);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  /* Bounce Entrance */
+  .animate-bounce-in {
+    animation: bounceIn 0.8s ease-out;
+  }
+  
+  @keyframes bounceIn {
+    0% {
+      opacity: 0;
+      transform: scale(0.3);
+    }
+    50% {
+      opacity: 1;
+      transform: scale(1.1);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1);
     }
   }
   
@@ -251,6 +336,25 @@
 
   .animate-float-particle {
     animation: floatParticle 4s ease-in-out infinite;
+  }
+
+  /* New Hover Effects */
+  .hover-lift-rotate {
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .hover-lift-rotate:hover {
+    transform: translateY(-8px) rotate(2deg) scale(1.05);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  }
+
+  .hover-glow-amber {
+    transition: all 0.3s ease;
+  }
+
+  .hover-glow-amber:hover {
+    box-shadow: 0 0 30px rgba(251, 191, 36, 0.4), 0 0 60px rgba(251, 191, 36, 0.2);
+    transform: translateY(-2px);
   }
 }
 
