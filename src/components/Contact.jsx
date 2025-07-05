@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Mail, Phone, MapPin, Github, Linkedin, Download, FileText } from 'lucide-react';
 import TypeWriter from './TypeWriter';
@@ -55,15 +56,15 @@ const Contact = () => {
 
       <div className="container mx-auto px-6 relative z-10">
         <div className="text-center mb-16">
-          <h2 className={`text-4xl font-bold mb-6 text-amber-600 group cursor-pointer transition-all duration-1000 relative transform-3d ${
+          <h2 className={`text-4xl font-bold mb-6 group cursor-pointer transition-all duration-1000 relative transform-3d ${
             isVisible ? 'animate-emerge-3d opacity-100' : 'opacity-0 scale-75 rotateX-45'
           }`}>
-            <span className="inline-block hover:scale-110 hover:rotateY-10 transition-all duration-600 transform-3d bg-gradient-to-r from-amber-600 to-blue-600 bg-clip-text text-transparent">
+            <span className="inline-block hover:scale-110 hover:rotateY-10 transition-all duration-600 transform-3d bg-gradient-to-r from-amber-600 via-purple-600 to-blue-600 bg-clip-text text-transparent section-heading">
               <TypeWriter 
                 text="Connect With Me 🎨"
                 speed={100}
                 delay={500}
-                className="text-4xl font-bold bg-gradient-to-r from-amber-600 to-blue-600 bg-clip-text text-transparent"
+                className="text-4xl font-bold bg-gradient-to-r from-amber-600 via-purple-600 to-blue-600 bg-clip-text text-transparent section-heading"
               />
             </span>
             <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-0 h-1 bg-gradient-to-r from-amber-600 to-blue-600 group-hover:w-48 transition-all duration-700 ease-out rounded-full shadow-glow"></div>

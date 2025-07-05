@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { ArrowDown, Github, Linkedin, Mail } from 'lucide-react';
 import TypeWriter from './TypeWriter';

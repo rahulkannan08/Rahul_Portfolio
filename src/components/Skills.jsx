@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 
 const Skills = () => {
@@ -79,10 +80,10 @@ const Skills = () => {
       </div>
 
       <div className="container mx-auto px-6 relative z-10">
-        <h2 className={`text-4xl font-bold text-center mb-16 text-amber-600 group cursor-pointer transition-all duration-1000 relative transform-3d ${
+        <h2 className={`text-4xl font-bold text-center mb-16 group cursor-pointer transition-all duration-1000 relative transform-3d ${
           isVisible ? 'animate-emerge-3d opacity-100' : 'opacity-0 scale-75 rotateX-45'
         }`}>
-          <span className="inline-block hover:scale-110 hover:rotateY-10 transition-all duration-600 transform-3d bg-gradient-to-r from-amber-600 to-blue-600 bg-clip-text text-transparent drop-shadow-[0_0_10px_rgba(245,158,11,0.5)]">
+          <span className="inline-block hover:scale-110 hover:rotateY-10 transition-all duration-600 transform-3d bg-gradient-to-r from-amber-600 via-purple-600 to-blue-600 bg-clip-text text-transparent section-heading">
             Skills & Technologies
           </span>
           <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-0 h-1 bg-gradient-to-r from-amber-600 to-blue-600 group-hover:w-48 transition-all duration-700 ease-out rounded-full shadow-glow"></div>
