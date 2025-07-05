@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 
 const Projects = () => {
@@ -71,14 +70,14 @@ const Projects = () => {
       </div>
 
       <div className="container mx-auto px-6 relative z-10">
-        <h2 className={`text-4xl font-bold text-center mb-16 text-foreground group cursor-pointer transition-all duration-1200 relative transform-3d ${
+        <h2 className={`text-4xl font-bold text-center mb-16 text-amber-600 group cursor-pointer transition-all duration-1200 relative transform-3d ${
           isVisible ? 'animate-title-emerge opacity-100' : 'opacity-0 scale-50 rotateY-45'
         }`}>
-          <span className="inline-block hover:scale-110 hover:rotateX-10 hover:rotateY-5 transition-all duration-700 transform-3d bg-gradient-to-r from-foreground via-amber-800 to-blue-600 bg-clip-text text-transparent">
+          <span className="inline-block hover:scale-110 hover:rotateX-10 hover:rotateY-5 transition-all duration-700 transform-3d bg-gradient-to-r from-amber-600 via-blue-600 to-purple-600 bg-clip-text text-transparent drop-shadow-[0_0_15px_rgba(245,158,11,0.6)]">
             Featured Projects
           </span>
-          <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-0 h-1 bg-gradient-to-r from-amber-800 via-blue-500 to-amber-600 group-hover:w-44 transition-all duration-1000 ease-out rounded-full shadow-glow animate-shimmer"></div>
-          <div className="absolute -inset-6 bg-gradient-to-r from-amber-100/20 via-blue-100/10 to-stone-100/20 rounded-3xl opacity-0 group-hover:opacity-100 transition-all duration-1000 blur-2xl transform-3d"></div>
+          <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-0 h-1 bg-gradient-to-r from-amber-600 via-blue-500 to-purple-600 group-hover:w-44 transition-all duration-1000 ease-out rounded-full shadow-glow animate-shimmer"></div>
+          <div className="absolute -inset-6 bg-gradient-to-r from-amber-100/20 via-blue-100/10 to-purple-100/20 rounded-3xl opacity-0 group-hover:opacity-100 transition-all duration-1000 blur-2xl transform-3d"></div>
         </h2>
         
         <div className="grid lg:grid-cols-2 gap-12 max-w-6xl mx-auto perspective-2000">
