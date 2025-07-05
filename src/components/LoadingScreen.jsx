@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 
 const LoadingScreen = ({ onLoadingComplete }) => {
@@ -7,7 +6,7 @@ const LoadingScreen = ({ onLoadingComplete }) => {
 
   const loadingMessages = [
     "Initializing portfolio...",
-    "Loading projects...",
+    "Loading projects...", 
     "Setting up components...",
     "Almost ready...",
     "Welcome!"
@@ -39,7 +38,7 @@ const LoadingScreen = ({ onLoadingComplete }) => {
   }, []);
 
   return (
-    <div className="fixed inset-0 bg-gradient-to-br from-background via-muted/20 to-amber-50/30 flex items-center justify-center z-50 overflow-hidden perspective-2000">
+    <div className="fixed inset-0 bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center z-50 overflow-hidden">
       {/* 3D Floating Background Elements */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-20 left-20 w-32 h-32 bg-gradient-to-br from-amber-200/30 to-amber-400/20 rounded-full animate-float-3d blur-sm"></div>
@@ -55,19 +54,75 @@ const LoadingScreen = ({ onLoadingComplete }) => {
       </div>
 
       <div className="text-center space-y-12 px-6 relative z-10 transform-3d">
-        {/* Enhanced 3D Loading Icon */}
+        {/* 3D Laptop Opening Animation */}
         <div className="relative perspective-1500 group">
-          <div className="w-32 h-32 gradient-brown rounded-full mx-auto flex items-center justify-center shadow-2xl animate-float-3d-slow hover:animate-pulse-3d transition-all duration-700 transform-gpu">
-            <span className="text-4xl font-black text-white animate-letter-glow-3d transform hover:scale-110 transition-transform duration-500">R</span>
+          <div className="laptop-container relative w-80 h-48 mx-auto" style={{
+            transform: 'perspective(1000px) rotateX(20deg) rotateY(-10deg)',
+            animation: 'float 3s ease-in-out infinite'
+          }}>
+            {/* Laptop Base */}
+            <div className="absolute bottom-0 w-full h-8 bg-gradient-to-r from-slate-700 via-slate-600 to-slate-700 rounded-lg shadow-2xl" 
+                 style={{
+                   transform: 'rotateX(90deg) translateZ(-4px)',
+                   boxShadow: '0 20px 40px rgba(0,0,0,0.5)'
+                 }}>
+              {/* Trackpad */}
+              <div className="absolute top-1 left-1/2 transform -translate-x-1/2 w-16 h-4 bg-slate-800 rounded border border-slate-500"></div>
+            </div>
+            
+            {/* Laptop Screen */}
+            <div 
+              className="absolute bottom-8 w-full h-40 bg-gradient-to-br from-slate-800 via-slate-700 to-slate-800 rounded-t-lg border-4 border-slate-600 overflow-hidden shadow-2xl laptop-screen"
+              style={{
+                transformOrigin: 'bottom center',
+                transform: `rotateX(${-90 + (progress * 0.9)}deg)`,
+                transition: 'transform 0.3s ease-out',
+                boxShadow: '0 -10px 30px rgba(147, 51, 234, 0.3), inset 0 0 50px rgba(59, 130, 246, 0.1)'
+              }}
+            >
+              {/* Screen Content */}
+              <div className="relative w-full h-full bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center">
+                {/* Screen Glow Effect */}
+                <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 via-purple-500/20 to-pink-500/10 animate-pulse"></div>
+                
+                {/* Code Lines Animation */}
+                <div className="absolute top-4 left-4 space-y-2 opacity-60">
+                  <div className="h-1 bg-green-400 rounded animate-pulse" style={{width: `${Math.min(progress * 2, 100)}%`, maxWidth: '120px'}}></div>
+                  <div className="h-1 bg-blue-400 rounded animate-pulse delay-300" style={{width: `${Math.min(progress * 1.5, 80)}%`, maxWidth: '100px'}}></div>
+                  <div className="h-1 bg-purple-400 rounded animate-pulse delay-500" style={{width: `${Math.min(progress * 1.8, 90)}%`, maxWidth: '140px'}}></div>
+                </div>
+                
+                {/* Center Logo */}
+                <div className="relative z-10">
+                  <div className="w-16 h-16 bg-gradient-to-br from-purple-600 via-pink-600 to-cyan-600 rounded-full flex items-center justify-center shadow-2xl animate-pulse">
+                    <span className="text-2xl font-black text-white">R</span>
+                  </div>
+                </div>
+                
+                {/* Progress Bar on Screen */}
+                <div className="absolute bottom-4 left-4 right-4">
+                  <div className="bg-slate-700/50 rounded-full h-1 overflow-hidden">
+                    <div 
+                      className="h-full bg-gradient-to-r from-purple-400 via-pink-400 to-cyan-400 transition-all duration-300 rounded-full"
+                      style={{ width: `${progress}%` }}
+                    >
+                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent animate-slide-shine-3d"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            {/* Laptop Keyboard */}
+            <div className="absolute bottom-0 w-full h-8 bg-gradient-to-r from-slate-600 via-slate-500 to-slate-600 rounded-b-lg">
+              {/* Keyboard Keys */}
+              <div className="grid grid-cols-12 gap-px p-1 h-full">
+                {[...Array(12)].map((_, i) => (
+                  <div key={i} className="bg-slate-700 rounded-sm animate-pulse" style={{animationDelay: `${i * 0.1}s`}}></div>
+                ))}
+              </div>
+            </div>
           </div>
-          
-          {/* Multiple rotating rings */}
-          <div className="absolute inset-0 w-32 h-32 border-4 border-amber-200/60 rounded-full animate-spin-3d-slow border-t-transparent mx-auto"></div>
-          <div className="absolute inset-2 w-28 h-28 border-2 border-blue-300/40 rounded-full animate-spin-3d-reverse border-r-transparent mx-auto"></div>
-          <div className="absolute inset-4 w-24 h-24 border-2 border-purple-300/30 rounded-full animate-spin-3d-fast border-b-transparent mx-auto"></div>
-          
-          {/* Glowing orb effect */}
-          <div className="absolute inset-0 w-32 h-32 bg-gradient-to-r from-amber-400/20 to-blue-400/20 rounded-full animate-pulse-glow-3d blur-md mx-auto"></div>
         </div>
 
         {/* Enhanced 3D Brand */}

@@ -1,8 +1,11 @@
-
-import React from 'react';
+import React, { useState } from 'react';
 import { ArrowDown, Download, Sparkles, Zap, Code, Palette } from 'lucide-react';
+import TypeWriter from './TypeWriter';
 
 const Hero = () => {
+  const [showSecondLine, setShowSecondLine] = useState(false);
+  const [showThirdLine, setShowThirdLine] = useState(false);
+
   const scrollToAbout = () => {
     document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' });
   };
@@ -178,7 +181,7 @@ const Hero = () => {
             </div>
           </div>
           
-          {/* Enhanced text with 3D effect */}
+          {/* Enhanced text with TypeWriter effect */}
           <h1 className="text-6xl md:text-8xl font-black mb-6 animate-fade-in" style={{
             background: 'linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #f5576c 75%, #4facfe 100%)',
             WebkitBackgroundClip: 'text',
@@ -191,16 +194,35 @@ const Hero = () => {
           </h1>
           
           <div className="relative">
-            <p className="text-2xl md:text-3xl text-gray-100 mb-8 max-w-2xl mx-auto font-bold" style={{
+            <p className="text-2xl md:text-3xl text-gray-100 mb-4 max-w-2xl mx-auto font-bold min-h-[40px]" style={{
               textShadow: '0 0 20px rgba(255, 255, 255, 0.5)',
               transform: 'perspective(400px) rotateX(5deg)'
             }}>
-              BCA Student & Aspiring Full-Stack Developer
+              <TypeWriter 
+                text="BCA Student & Aspiring Full-Stack Developer"
+                speed={80}
+                onComplete={() => setShowSecondLine(true)}
+              />
             </p>
-            <p className="text-lg text-gray-200 mb-12 max-w-3xl mx-auto leading-relaxed opacity-90">
-              Passionate about creating innovative web solutions with Python, JavaScript, and modern frameworks. 
-              Currently exploring React and diving deep into the world of prompt engineering.
-            </p>
+            
+            {showSecondLine && (
+              <p className="text-lg text-gray-200 mb-4 max-w-3xl mx-auto leading-relaxed opacity-90 min-h-[60px]">
+                <TypeWriter 
+                  text="Passionate about creating innovative web solutions with Python, JavaScript, and modern frameworks."
+                  speed={50}
+                  onComplete={() => setShowThirdLine(true)}
+                />
+              </p>
+            )}
+            
+            {showThirdLine && (
+              <p className="text-lg text-gray-200 mb-12 max-w-3xl mx-auto leading-relaxed opacity-90">
+                <TypeWriter 
+                  text="Currently exploring React and diving deep into the world of prompt engineering."
+                  speed={50}
+                />
+              </p>
+            )}
           </div>
           
           {/* Enhanced 3D buttons */}

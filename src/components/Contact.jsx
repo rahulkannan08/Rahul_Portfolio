@@ -1,7 +1,9 @@
+
 import React, { useState, useEffect } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import { Download, Send, Github, Linkedin, MapPin } from 'lucide-react';
 import CursorFollower from './CursorFollower';
+import TypeWriter from './TypeWriter';
 
 const Contact = () => {
   const { toast } = useToast();
@@ -194,47 +196,110 @@ const Contact = () => {
         </div>
 
         <div className="container mx-auto px-6 relative z-10">
-          {/* Enhanced Title with 3D Parallax Effect */}
+          {/* Enhanced Title with TypeWriter Effect */}
           <div className={`text-center mb-16 transform-gpu transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-            <h2 className="text-4xl sm:text-5xl md:text-6xl font-black mb-6 group cursor-pointer transition-all duration-500 relative"
-                style={{
-                  transform: `perspective(1000px) rotateX(${mousePosition.y * 0.1}deg) rotateY(${mousePosition.x * 0.1}deg) translateZ(20px) translateY(${scrollY * 0.02}px)`,
-                  textShadow: '0 0 30px rgba(59, 130, 246, 0.8)'
-                }}>
-              <span className="bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-400 bg-clip-text text-transparent animate-pulse">
-                Connect With Me 🎨
-              </span>
+            <h2 className="text-4xl sm:text-5xl md:text-6xl font-black mb-6 group cursor-pointer transition-all duration-500 relative">
+              <TypeWriter 
+                text="Connect With Me 🎨"
+                speed={100}
+                className="bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-400 bg-clip-text text-transparent"
+              />
             </h2>
-            <p className="text-lg sm:text-xl md:text-2xl text-blue-100 font-medium"
-               style={{
-                 transform: `perspective(800px) rotateX(${mousePosition.y * 0.05}deg) translateZ(10px) translateY(${scrollY * 0.01}px)`,
-                 textShadow: '0 0 20px rgba(147, 196, 251, 0.6)'
-               }}>
-              Creative collaboration and innovative design solutions 🚀
+            <p className="text-lg sm:text-xl md:text-2xl text-blue-100 font-medium">
+              <TypeWriter 
+                text="Creative collaboration and innovative design solutions 🚀"
+                speed={80}
+                delay={2000}
+              />
             </p>
           </div>
           
           <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 max-w-7xl mx-auto">
-            {/* Contact Information with Enhanced 3D Effects */}
-            <div className={`transform-gpu transition-all duration-700 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10'}`}
-                 style={{
-                   transform: `perspective(1000px) rotateY(${mousePosition.x * 0.1}deg) translateZ(30px) translateY(${scrollY * 0.03}px)`
-                 }}>
-              <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-6 md:mb-10 text-white drop-shadow-2xl"
-                  style={{
-                    transform: `perspective(800px) rotateX(${mousePosition.y * 0.08}deg) translateZ(15px)`,
-                    textShadow: '0 0 25px rgba(255, 255, 255, 0.8)'
-                  }}>
+            {/* Contact Information */}
+            <div className={`transform-gpu transition-all duration-700 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10'}`}>
+              <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-6 md:mb-10 text-white drop-shadow-2xl">
                 Let's Create Together 🌟
               </h3>
-              <p className="text-blue-100 mb-6 md:mb-10 leading-relaxed text-lg sm:text-xl"
-                 style={{
-                   transform: `perspective(600px) rotateX(${mousePosition.y * 0.05}deg) translateZ(10px)`,
-                   textShadow: '0 0 15px rgba(147, 196, 251, 0.6)'
-                 }}>
+              <p className="text-blue-100 mb-6 md:mb-10 leading-relaxed text-lg sm:text-xl">
                 I'm passionate about creating innovative design solutions and collaborating on cutting-edge projects. 
                 Let's bring your creative vision to life with modern design principles! ✨
               </p>
+              
+              {/* Contact Cards */}
+              <div className="space-y-4 md:space-y-6 mb-6 md:mb-10">
+                {contactInfo.map((contact, index) => {
+                  const IconComponent = contact.icon;
+                  const isClickable = contact.isClickable;
+                  
+                  const content = (
+                    <div className="bg-gradient-to-r from-slate-800/90 via-indigo-900/90 to-slate-800/90 backdrop-blur-xl p-6 md:p-8 rounded-3xl shadow-2xl border border-indigo-500/30 hover:border-blue-400/50 transition-all duration-500 relative overflow-hidden group transform-gpu hover:scale-105">
+                      <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 via-indigo-500/15 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-all duration-500 rounded-3xl" />
+                      
+                      <div className="flex items-center space-x-6 relative z-10">
+                        <div className="p-4 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-2xl shadow-lg group-hover:shadow-blue-400/60 transition-all duration-500 group-hover:scale-125 transform-gpu">
+                          <IconComponent size={24} className="text-white drop-shadow-lg" />
+                        </div>
+                        <div className="flex-1">
+                          <h4 className="font-bold mb-2 text-white text-xl drop-shadow-lg">{contact.type}</h4>
+                          <p className="text-blue-300 hover:text-blue-100 transition-colors font-semibold text-lg mb-1">
+                            {contact.value}
+                          </p>
+                          <p className="text-sm text-blue-200/80">{contact.description}</p>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                  
+                  return (
+                    <div key={index} className="group transform-gpu transition-all duration-500">
+                      {isClickable ? (
+                        <a href={contact.link} target="_blank" rel="noopener noreferrer" className="block">
+                          {content}
+                        </a>
+                      ) : (
+                        content
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+
+              {/* Centered Download Button and Professional Declaration */}
+              <div className="flex flex-col items-center space-y-8">
+                {/* Enhanced 3D Download Button */}
+                <button
+                  onClick={downloadResume}
+                  className="w-full max-w-md px-10 py-6 bg-gradient-to-r from-blue-600 via-indigo-700 to-purple-700 text-white rounded-2xl font-bold text-xl transition-all duration-500 hover:from-blue-500 hover:via-indigo-600 hover:to-purple-600 hover:scale-110 active:scale-95 flex items-center justify-center space-x-3 relative overflow-hidden group transform-gpu"
+                >
+                  <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 rounded-2xl" />
+                  
+                  <Download size={24} className="relative z-10 drop-shadow-lg group-hover:animate-bounce" />
+                  <span className="relative z-10 drop-shadow-lg">Download Resume 📋</span>
+                </button>
+
+                {/* Enhanced Professional Declaration */}
+                <div className="w-full max-w-2xl p-8 bg-gradient-to-r from-indigo-900/40 via-blue-900/40 to-indigo-900/40 border border-blue-400/30 rounded-3xl backdrop-blur-xl shadow-2xl relative overflow-hidden group transform-gpu hover:scale-105">
+                  <div className="absolute inset-0 bg-gradient-to-r from-blue-400/10 via-indigo-400/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-all duration-500 rounded-3xl" />
+                  <p className="text-blue-100 font-medium relative z-10 drop-shadow-lg text-center">
+                    <strong className="flex items-center justify-center space-x-3 mb-4 text-blue-200">
+                      <Send size={20} className="animate-pulse" />
+                      <span>Professional Declaration 📝</span>
+                    </strong>
+                    I, Rahul Kannan, am a dedicated web developer and designer committed to delivering high-quality digital solutions. 
+                    Based in <span className="font-bold text-blue-300">Pollachi, Tamil Nadu</span>, I specialize in creating modern, 
+                    responsive web applications that combine cutting-edge technology with exceptional user experience.
+                    <br />
+                    <span className="text-blue-200 mt-2 block">Ready to transform your ideas into reality! 🚀</span>
+                  </p>
+                </div>
+              </div>
+            </div>
+            
+            {/* Contact Form */}
+            <div className={`transform-gpu transition-all duration-700 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10'}`}>
+              <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-6 md:mb-10 text-white drop-shadow-2xl">
+                Start a Conversation 💌
+              </h3>
               
               {/* Contact Cards with Advanced 3D Hover Effects */}
               <div className="space-y-4 md:space-y-6 mb-6 md:mb-10">
@@ -358,12 +423,7 @@ const Contact = () => {
               <form 
                 onSubmit={handleSubmit} 
                 className="bg-gradient-to-r from-slate-800/90 via-indigo-900/90 to-slate-800/90 backdrop-blur-xl p-10 rounded-3xl shadow-2xl border border-indigo-500/30 space-y-8 relative overflow-hidden group hover:border-blue-400/50 transition-all duration-500 transform-gpu"
-                style={{
-                  boxShadow: '0 30px 80px rgba(59, 130, 246, 0.3), inset 0 0 30px rgba(99, 102, 241, 0.1)',
-                  transform: `perspective(1000px) rotateX(${5 + mousePosition.y * 0.05}deg) rotateY(${mousePosition.x * -0.05}deg) translateZ(20px)`,
-                  animation: 'float 6s ease-in-out infinite'
-                }}>
-                
+              >
                 <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 via-indigo-500/10 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-all duration-500 rounded-3xl" />
                 
                 <div className="relative z-10">
@@ -379,10 +439,6 @@ const Contact = () => {
                     required
                     className="w-full px-8 py-5 border-2 border-indigo-500/30 rounded-2xl focus:ring-4 focus:ring-blue-500/30 focus:border-blue-400 transition-all duration-500 bg-slate-900/50 backdrop-blur-sm font-medium text-white placeholder-blue-200/60 shadow-inner hover:shadow-blue-500/20 transform-gpu focus:scale-105"
                     placeholder="Your full name"
-                    style={{
-                      boxShadow: 'inset 0 0 15px rgba(99, 102, 241, 0.1), 0 10px 30px rgba(59, 130, 246, 0.1)',
-                      transform: 'perspective(400px) rotateX(3deg) translateZ(5px)'
-                    }}
                   />
                 </div>
                 
@@ -399,10 +455,6 @@ const Contact = () => {
                     required
                     className="w-full px-8 py-5 border-2 border-indigo-500/30 rounded-2xl focus:ring-4 focus:ring-blue-500/30 focus:border-blue-400 transition-all duration-500 bg-slate-900/50 backdrop-blur-sm font-medium text-white placeholder-blue-200/60 shadow-inner hover:shadow-blue-500/20 transform-gpu focus:scale-105"
                     placeholder="your.email@example.com"
-                    style={{
-                      boxShadow: 'inset 0 0 15px rgba(99, 102, 241, 0.1), 0 10px 30px rgba(59, 130, 246, 0.1)',
-                      transform: 'perspective(400px) rotateX(3deg) translateZ(5px)'
-                    }}
                   />
                 </div>
                 
@@ -419,10 +471,6 @@ const Contact = () => {
                     rows="4"
                     className="w-full px-8 py-5 border-2 border-indigo-500/30 rounded-2xl focus:ring-4 focus:ring-blue-500/30 focus:border-blue-400 transition-all duration-500 bg-slate-900/50 backdrop-blur-sm font-medium resize-none text-white placeholder-blue-200/60 shadow-inner hover:shadow-blue-500/20 transform-gpu focus:scale-105"
                     placeholder="Tell me about your design project or creative opportunity..."
-                    style={{
-                      boxShadow: 'inset 0 0 15px rgba(99, 102, 241, 0.1), 0 10px 30px rgba(59, 130, 246, 0.1)',
-                      transform: 'perspective(400px) rotateX(3deg) translateZ(5px)'
-                    }}
                   ></textarea>
                 </div>
                 
@@ -430,11 +478,6 @@ const Contact = () => {
                   type="submit"
                   disabled={isSubmitting}
                   className="w-full px-10 py-6 bg-gradient-to-r from-blue-600 via-indigo-700 to-purple-700 text-white rounded-2xl font-bold text-xl transition-all duration-500 hover:from-blue-500 hover:via-indigo-600 hover:to-purple-600 hover:scale-110 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-3 relative overflow-hidden group/button transform-gpu"
-                  style={{
-                    boxShadow: '0 25px 60px rgba(59, 130, 246, 0.3), inset 0 0 20px rgba(99, 102, 241, 0.1)',
-                    transform: `perspective(1000px) rotateX(${10 + mousePosition.y * 0.1}deg) rotateY(${mousePosition.x * 0.05}deg) translateZ(15px)`,
-                    animation: 'float 3s ease-in-out infinite'
-                  }}
                 >
                   {isSubmitting ? (
                     <>
@@ -447,17 +490,7 @@ const Contact = () => {
                       <span className="relative z-10 drop-shadow-lg">Send Message ✨</span>
                     </>
                   )}
-                  
-                  {/* Enhanced Button Particles */}
-                  <div className="absolute top-2 right-8 w-3 h-3 bg-white/60 rounded-full opacity-0 group-hover/button:opacity-100 animate-ping" />
-                  <div className="absolute bottom-3 left-12 w-2 h-2 bg-blue-300/80 rounded-full opacity-0 group-hover/button:opacity-100 animate-pulse delay-300" />
-                  <div className="absolute top-4 left-20 w-2 h-2 bg-indigo-300/70 rounded-full opacity-0 group-hover/button:opacity-100 animate-bounce delay-500" />
                 </button>
-                
-                {/* Form Floating Elements */}
-                <div className="absolute top-8 right-8 w-4 h-4 bg-blue-400/60 rounded-full opacity-0 group-hover:opacity-100 animate-ping delay-200" />
-                <div className="absolute bottom-12 left-8 w-3 h-3 bg-indigo-400/60 rounded-full opacity-0 group-hover:opacity-100 animate-pulse delay-500" />
-                <div className="absolute top-20 left-12 w-2 h-2 bg-purple-400/60 rounded-full opacity-0 group-hover:opacity-100 animate-bounce delay-700" />
               </form>
             </div>
           </div>
