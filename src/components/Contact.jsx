@@ -10,7 +10,6 @@ const Contact = () => {
     email: '',
     message: ''
   });
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const [scrollY, setScrollY] = useState(0);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
@@ -63,50 +62,6 @@ const Contact = () => {
     });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-
-    try {
-      const response = await fetch('https://formsubmit.co/6f704ddfe97f8ba9ae38915e57283e59', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        },
-        body: JSON.stringify({
-          name: formData.name,
-          email: formData.email,
-          message: formData.message,
-          _subject: 'New Portfolio Contact Message from ' + formData.name,
-          _captcha: 'false',
-          _template: 'table'
-        })
-      });
-
-      if (response.ok) {
-        toast({
-          title: "Message Sent Successfully! ✨",
-          description: "Your message got sent to rahulkannan.bca@gmail.com. I'll get back to you soon!",
-          className: "bg-gradient-to-r from-emerald-50 to-teal-50 border-emerald-200",
-        });
-        setFormData({ name: '', email: '', message: '' });
-      } else {
-        throw new Error('Form submission failed');
-      }
-    } catch (error) {
-      console.error('Form submission error:', error);
-      toast({
-        title: "Message Sent! ✨",
-        description: "Your message got sent to rahulkannan.bca@gmail.com. I'll get back to you soon!",
-        className: "bg-gradient-to-r from-emerald-50 to-teal-50 border-emerald-200",
-      });
-      setFormData({ name: '', email: '', message: '' });
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
   const downloadResume = () => {
     const link = document.createElement('a');
     link.href = 'RAHUL_RESUME_.pdf';
@@ -142,10 +97,7 @@ const Contact = () => {
   ];
 
   const handleSocialClick = (link, platform) => {
-    console.log(`Opening ${platform} link:`, link);
     window.open(link, '_blank', 'noopener,noreferrer');
-    
-    // Show toast notification
     toast({
       title: `Opening ${platform} 🚀`,
       description: `Taking you to my ${platform} profile in a new tab!`,
@@ -427,16 +379,17 @@ const Contact = () => {
                 Start a Conversation 💌
               </h3>
               <form 
-                onSubmit={handleSubmit} 
+                action="https://formsubmit.co/6f704ddfe97f8ba9ae38915e57283e59"
+                method="POST"
                 className="bg-gradient-to-r from-slate-800/90 via-indigo-900/90 to-slate-800/90 backdrop-blur-xl p-4 sm:p-8 lg:p-10 rounded-2xl sm:rounded-3xl shadow-2xl border border-indigo-500/30 space-y-6 sm:space-y-8 relative overflow-hidden group hover:border-blue-400/50 transition-all duration-500 transform-gpu mb-8"
                 style={{
                   boxShadow: '0 30px 80px rgba(59, 130, 246, 0.3), inset 0 0 30px rgba(99, 102, 241, 0.1)',
                   transform: `perspective(1000px) rotateX(${5 + mousePosition.y * 0.05}deg) rotateY(${mousePosition.x * -0.05}deg) translateZ(20px)`,
                   animation: 'float 6s ease-in-out infinite'
                 }}>
-                
-                <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 via-indigo-500/10 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-all duration-500 rounded-2xl sm:rounded-3xl" />
-                
+                <input type="hidden" name="_subject" value="New Portfolio Contact Message from Rahul" />
+                <input type="hidden" name="_captcha" value="false" />
+                <input type="hidden" name="_template" value="table" />
                 <div className="relative z-10">
                   <label htmlFor="name" className="block text-base sm:text-lg font-bold mb-3 sm:mb-4 text-blue-200 drop-shadow-lg">
                     Your Name ✨
@@ -456,7 +409,6 @@ const Contact = () => {
                     }}
                   />
                 </div>
-                
                 <div className="relative z-10">
                   <label htmlFor="email" className="block text-base sm:text-lg font-bold mb-3 sm:mb-4 text-blue-200 drop-shadow-lg">
                     Your Email 📧
@@ -476,7 +428,6 @@ const Contact = () => {
                     }}
                   />
                 </div>
-                
                 <div className="relative z-10">
                   <label htmlFor="message" className="block text-base sm:text-lg font-bold mb-3 sm:mb-4 text-blue-200 drop-shadow-lg">
                     Your Message 💭
@@ -496,30 +447,17 @@ const Contact = () => {
                     }}
                   ></textarea>
                 </div>
-                
                 <button
                   type="submit"
-                  disabled={isSubmitting}
-                  className="w-full px-6 sm:px-8 lg:px-10 py-4 sm:py-5 lg:py-6 bg-gradient-to-r from-blue-600 via-indigo-700 to-purple-700 text-white rounded-xl sm:rounded-2xl font-bold text-lg sm:text-xl transition-all duration-500 hover:from-blue-500 hover:via-indigo-600 hover:to-purple-600 hover:scale-110 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2 sm:space-x-3 relative overflow-hidden group/button transform-gpu"
+                  className="w-full px-6 sm:px-8 lg:px-10 py-4 sm:py-5 lg:py-6 bg-gradient-to-r from-blue-600 via-indigo-700 to-purple-700 text-white rounded-xl sm:rounded-2xl font-bold text-lg sm:text-xl transition-all duration-500 hover:from-blue-500 hover:via-indigo-600 hover:to-purple-600 hover:scale-110 active:scale-95 flex items-center justify-center space-x-2 sm:space-x-3 relative overflow-hidden group/button transform-gpu"
                   style={{
                     boxShadow: '0 25px 60px rgba(59, 130, 246, 0.3), inset 0 0 20px rgba(99, 102, 241, 0.1)',
                     transform: `perspective(1000px) rotateX(${10 + mousePosition.y * 0.1}deg) rotateY(${mousePosition.x * 0.05}deg) translateZ(15px)`,
                     animation: 'float 3s ease-in-out infinite'
                   }}
                 >
-                  {isSubmitting ? (
-                    <>
-                      <div className="w-5 h-5 sm:w-6 sm:h-6 border-2 border-white border-t-transparent rounded-full animate-spin relative z-10" />
-                      <span className="relative z-10 drop-shadow-lg">Sending Message... 🚀</span>
-                    </>
-                  ) : (
-                    <>
-                      <Send size={20} className="sm:w-6 sm:h-6 relative z-10 drop-shadow-lg group-hover/button:animate-pulse" />
-                      <span className="relative z-10 drop-shadow-lg">Send Message ✨</span>
-                    </>
-                  )}
-                  
-                  {/* Enhanced Button Particles */}
+                  <Send size={20} className="sm:w-6 sm:h-6 relative z-10 drop-shadow-lg group-hover/button:animate-pulse" />
+                  <span className="relative z-10 drop-shadow-lg">Send Message ✨</span>
                   <div className="absolute top-2 right-6 sm:right-8 w-2 sm:w-3 h-2 sm:h-3 bg-white/60 rounded-full opacity-0 group-hover/button:opacity-100 animate-ping" />
                   <div className="absolute bottom-2 sm:bottom-3 left-8 sm:left-12 w-1.5 sm:w-2 h-1.5 sm:h-2 bg-blue-300/80 rounded-full opacity-0 group-hover/button:opacity-100 animate-pulse delay-300" />
                   <div className="absolute top-3 sm:top-4 left-16 sm:left-20 w-1.5 sm:w-2 h-1.5 sm:h-2 bg-indigo-300/70 rounded-full opacity-0 group-hover/button:opacity-100 animate-bounce delay-500" />
