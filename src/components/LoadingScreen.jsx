@@ -4,11 +4,15 @@ import React, { useState, useEffect } from 'react';
 const LoadingScreen = ({ onLoadingComplete }) => {
   const [progress, setProgress] = useState(0);
   const [currentMessage, setCurrentMessage] = useState(0);
+  const [showStars, setShowStars] = useState(false);
+  const [laptopAngle, setLaptopAngle] = useState(0);
 
   const loadingMessages = [
     "Initializing portfolio...",
     "Loading projects...",
     "Setting up components...",
+    "Optimizing performance...",
+    "Finalizing details...",
     "Almost ready...",
     "Welcome!"
   ];
@@ -20,12 +24,12 @@ const LoadingScreen = ({ onLoadingComplete }) => {
           clearInterval(interval);
           setTimeout(() => {
             onLoadingComplete();
-          }, 500);
+          }, 800);
           return 100;
         }
-        return prev + 2;
+        return prev + 1.5;
       });
-    }, 50);
+    }, 60);
 
     return () => clearInterval(interval);
   }, [onLoadingComplete]);
@@ -33,39 +37,179 @@ const LoadingScreen = ({ onLoadingComplete }) => {
   useEffect(() => {
     const messageInterval = setInterval(() => {
       setCurrentMessage(prev => (prev + 1) % loadingMessages.length);
-    }, 1000);
+    }, 800);
 
     return () => clearInterval(messageInterval);
   }, []);
 
+  useEffect(() => {
+    const starsTimer = setTimeout(() => {
+      setShowStars(true);
+    }, 1000);
+
+    const laptopTimer = setInterval(() => {
+      setLaptopAngle(prev => (prev + 2) % 360);
+    }, 100);
+
+    return () => {
+      clearTimeout(starsTimer);
+      clearInterval(laptopTimer);
+    };
+  }, []);
+
   return (
-    <div className="fixed inset-0 bg-gradient-to-br from-background via-muted/20 to-amber-50/30 flex items-center justify-center z-50">
-      <div className="text-center space-y-8 px-6">
-        {/* Loading Icon */}
-        <div className="relative">
-          <div className="w-24 h-24 gradient-brown rounded-full mx-auto flex items-center justify-center shadow-2xl animate-pulse">
-            <span className="text-3xl font-black text-white">R</span>
-          </div>
-          <div className="absolute inset-0 w-24 h-24 border-4 border-amber-200 rounded-full animate-spin border-t-transparent mx-auto"></div>
-        </div>
+    <div className="fixed inset-0 bg-gradient-to-br from-slate-900 via-purple-900 to-indigo-900 flex items-center justify-center z-50 overflow-hidden">
+      {/* Animated background grid */}
+      <div className="absolute inset-0 opacity-20">
+        <div className="absolute inset-0" style={{
+          backgroundImage: `
+            linear-gradient(rgba(139, 92, 246, 0.3) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(139, 92, 246, 0.3) 1px, transparent 1px)
+          `,
+          backgroundSize: '60px 60px',
+          animation: 'float 8s ease-in-out infinite'
+        }}></div>
+      </div>
 
-        {/* Brand */}
-        <div>
-          <h1 className="text-4xl font-black gradient-text-brown mb-2">Rahul</h1>
-          <p className="text-lg text-muted-foreground">Full Stack Developer</p>
-        </div>
+      {/* Floating orbs */}
+      <div className="absolute inset-0">
+        {[...Array(12)].map((_, i) => (
+          <div
+            key={i}
+            className="absolute w-4 h-4 bg-gradient-to-br from-purple-400 to-pink-500 rounded-full opacity-60 animate-float"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+              animation: `float ${4 + Math.random() * 3}s ease-in-out infinite`,
+              animationDelay: `${Math.random() * 2}s`
+            }}
+          />
+        ))}
+      </div>
 
-        {/* Progress Bar */}
-        <div className="w-80 max-w-full mx-auto">
-          <div className="bg-muted rounded-full h-2 overflow-hidden">
+      {/* Twinkling stars */}
+      {showStars && (
+        <div className="absolute inset-0">
+          {[...Array(30)].map((_, i) => (
+            <div
+              key={i}
+              className="absolute w-1 h-1 bg-white rounded-full animate-ping"
+              style={{
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+                animationDelay: `${Math.random() * 3}s`,
+                animationDuration: `${1 + Math.random() * 2}s`
+              }}
+            />
+          ))}
+        </div>
+      )}
+
+      <div className="text-center space-y-12 px-6 relative z-10">
+        {/* 3D Laptop Animation */}
+        <div className="relative perspective-1000">
+          <div 
+            className="w-32 h-24 mx-auto relative transform-gpu"
+            style={{
+              transform: `rotateY(${laptopAngle * 0.5}deg) rotateX(${Math.sin(laptopAngle * 0.02) * 10}deg)`
+            }}
+          >
+            {/* Laptop base */}
+            <div className="absolute bottom-0 w-32 h-4 bg-gradient-to-r from-gray-600 to-gray-800 rounded-lg shadow-2xl transform rotateX(60deg)"></div>
+            
+            {/* Laptop screen */}
             <div 
-              className="h-full gradient-brown transition-all duration-300 ease-out rounded-full"
+              className="absolute bottom-2 w-28 h-20 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-t-lg mx-auto left-2 shadow-2xl transform-origin-bottom transition-transform duration-500"
+              style={{
+                transform: `rotateX(${progress > 50 ? -100 + (progress - 50) : -20 - progress}deg)`
+              }}
+            >
+              {/* Screen content */}
+              <div className="absolute inset-2 bg-black rounded border border-gray-700 overflow-hidden">
+                <div className="absolute top-1 left-1 right-1 h-3 bg-gradient-to-r from-green-400 to-blue-500 rounded animate-pulse"></div>
+                <div className="absolute top-6 left-1 right-1 bottom-1 bg-gradient-to-b from-blue-900 to-purple-900 rounded">
+                  <div className="text-xs text-green-400 font-mono p-1 animate-pulse">
+                    {progress > 30 && <div>&gt; npm run dev</div>}
+                    {progress > 50 && <div>&gt; Starting server...</div>}
+                    {progress > 70 && <div>&gt; Ready! ✓</div>}
+                  </div>
+                </div>
+              </div>
+              
+              {/* Screen glow */}
+              <div className="absolute -inset-2 bg-gradient-to-r from-purple-400/20 to-pink-400/20 rounded-lg blur-xl animate-pulse"></div>
+            </div>
+          </div>
+        </div>
+
+        {/* Enhanced Brand Section */}
+        <div className="relative">
+          <div className="absolute -inset-8 bg-gradient-to-r from-purple-600/20 via-pink-600/20 to-indigo-600/20 rounded-full blur-2xl animate-pulse"></div>
+          <div className="relative">
+            <div className="w-20 h-20 gradient-brown rounded-full mx-auto flex items-center justify-center shadow-2xl animate-pulse mb-4 relative overflow-hidden">
+              <span className="text-2xl font-black text-white relative z-10">R</span>
+              <div className="absolute inset-0 bg-gradient-to-r from-amber-400/30 to-orange-500/30 animate-spin"></div>
+            </div>
+            <h1 className="text-5xl font-black gradient-text-brown mb-3 animate-pulse">Rahul</h1>
+            <p className="text-xl text-purple-200 animate-fade-in">Full Stack Developer</p>
+          </div>
+        </div>
+
+        {/* Enhanced Progress Section */}
+        <div className="w-96 max-w-full mx-auto space-y-6">
+          {/* Main progress bar */}
+          <div className="relative">
+            <div className="bg-gray-800/50 rounded-full h-4 overflow-hidden backdrop-blur-sm border border-purple-500/30">
+              <div 
+                className="h-full bg-gradient-to-r from-purple-500 via-pink-500 to-indigo-500 transition-all duration-300 ease-out rounded-full relative overflow-hidden"
+                style={{ width: `${progress}%` }}
+              >
+                <div className="absolute inset-0 bg-white/30 animate-pulse"></div>
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent animate-ping"></div>
+              </div>
+            </div>
+            
+            {/* Progress glow */}
+            <div 
+              className="absolute top-0 h-4 bg-gradient-to-r from-purple-500/50 to-pink-500/50 rounded-full blur-md transition-all duration-300"
               style={{ width: `${progress}%` }}
             ></div>
           </div>
-          <p className="text-sm text-muted-foreground mt-3 font-medium">
-            {progress}% • {loadingMessages[currentMessage]}
-          </p>
+
+          {/* Animated progress text */}
+          <div className="text-center">
+            <div className="text-3xl font-bold text-white mb-2 animate-pulse">
+              {progress.toFixed(0)}%
+            </div>
+            <p className="text-lg text-purple-200 font-medium animate-fade-in">
+              {loadingMessages[currentMessage]}
+            </p>
+          </div>
+
+          {/* Loading dots animation */}
+          <div className="flex justify-center space-x-2">
+            {[...Array(5)].map((_, i) => (
+              <div
+                key={i}
+                className="w-3 h-3 bg-gradient-to-r from-purple-400 to-pink-500 rounded-full animate-bounce"
+                style={{
+                  animationDelay: `${i * 0.2}s`,
+                  animationDuration: '1s'
+                }}
+              ></div>
+            ))}
+          </div>
+        </div>
+
+        {/* Code snippets floating around */}
+        <div className="absolute top-20 left-10 text-purple-300 font-mono text-sm opacity-60 animate-float">
+          {'{ code: "magic" }'}
+        </div>
+        <div className="absolute bottom-32 right-16 text-pink-300 font-mono text-sm opacity-60 animate-float" style={{ animationDelay: '1s' }}>
+          {'<Portfolio />'}
+        </div>
+        <div className="absolute top-40 right-12 text-indigo-300 font-mono text-sm opacity-60 animate-float" style={{ animationDelay: '0.5s' }}>
+          {'function() { return awesome; }'}
         </div>
       </div>
     </div>

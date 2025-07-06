@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 
 const About = () => {
@@ -25,7 +24,10 @@ const About = () => {
   }, []);
 
   return (
-    <section id="about" className="py-20 bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 relative overflow-hidden">
+    <section id="about" className="py-20 bg-gradient-to-br from-slate-900/50 via-blue-900 to-purple-900/80 relative overflow-hidden">
+      {/* Gradient blend from previous section */}
+      <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-amber-50/20 to-transparent pointer-events-none"></div>
+
       {/* Professional Tech Background */}
       <div className="absolute inset-0 opacity-20">
         <div className="absolute inset-0" style={{
@@ -125,6 +127,9 @@ const About = () => {
           </div>
         </div>
       </div>
+
+      {/* Gradient blend to next section */}
+      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-b from-transparent to-purple-900/50 pointer-events-none"></div>
     </section>
   );
 };
