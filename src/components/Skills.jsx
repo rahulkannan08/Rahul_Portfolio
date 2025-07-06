@@ -62,11 +62,59 @@ const Skills = () => {
   ];
 
   return (
-    <section id="skills" className="py-20 bg-background">
-      <div className="container mx-auto px-6">
-        <h2 className="text-4xl font-bold text-center mb-16 text-foreground group cursor-pointer transition-all duration-300 hover:text-amber-900 relative">
+    <section id="skills" className="py-20 bg-gradient-to-br from-gray-900 via-purple-900 to-gray-900 relative overflow-hidden">
+      {/* Code-themed background */}
+      <div className="absolute inset-0 opacity-15">
+        <div className="absolute inset-0" style={{
+          backgroundImage: `
+            linear-gradient(rgba(168, 85, 247, 0.1) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(168, 85, 247, 0.1) 1px, transparent 1px)
+          `,
+          backgroundSize: '30px 30px',
+          animation: 'float 10s ease-in-out infinite'
+        }}></div>
+      </div>
+
+      {/* Floating coding elements */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute top-16 left-16 w-28 h-28 bg-gradient-to-br from-purple-400 via-pink-500 to-red-500 rounded-lg opacity-20 animate-float shadow-2xl" style={{
+          animation: 'float 5s ease-in-out infinite, glow 3s ease-in-out infinite alternate'
+        }}></div>
+        
+        <div className="absolute top-32 right-24 w-20 h-20 bg-gradient-to-br from-green-400 via-blue-500 to-purple-600 rounded-lg opacity-25 animate-bounce shadow-xl" style={{
+          animation: 'bounce 3s ease-in-out infinite, pulse 2s ease-in-out infinite'
+        }}></div>
+
+        <div className="absolute bottom-24 left-32 w-24 h-24 bg-gradient-to-br from-yellow-400 via-orange-500 to-red-600 rounded-lg opacity-15" style={{
+          animation: 'float 6s ease-in-out infinite reverse, glow 4s ease-in-out infinite alternate'
+        }}></div>
+
+        {/* Code brackets and symbols */}
+        <div className="absolute top-1/3 left-1/5 text-6xl font-mono text-purple-300 opacity-10 animate-pulse">{'<>'}</div>
+        <div className="absolute bottom-1/3 right-1/4 text-5xl font-mono text-cyan-300 opacity-15 animate-float">{'{}'}</div>
+        <div className="absolute top-1/2 right-1/6 text-4xl font-mono text-green-300 opacity-20 animate-bounce">[]</div>
+
+        {/* Binary rain effect */}
+        {[...Array(15)].map((_, i) => (
+          <div
+            key={i}
+            className="absolute text-green-400 font-mono text-sm opacity-20"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+              animation: `float ${3 + Math.random() * 3}s ease-in-out infinite`,
+              animationDelay: `${Math.random() * 2}s`
+            }}
+          >
+            {Math.random() > 0.5 ? '1' : '0'}
+          </div>
+        ))}
+      </div>
+
+      <div className="container mx-auto px-6 relative z-10">
+        <h2 className="text-4xl font-bold text-center mb-16 text-white group cursor-pointer transition-all duration-300 hover:text-purple-300 relative">
           Skills & Technologies
-          <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-0 h-1 bg-gradient-to-r from-amber-800 to-amber-600 group-hover:w-48 transition-all duration-300 ease-out rounded-full"></div>
+          <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-0 h-1 bg-gradient-to-r from-purple-400 to-pink-600 group-hover:w-48 transition-all duration-300 ease-out rounded-full"></div>
         </h2>
         
         <div className="grid md:grid-cols-2 lg:grid-cols-2 gap-8 max-w-6xl mx-auto">

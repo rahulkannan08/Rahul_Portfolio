@@ -53,12 +53,78 @@ const Projects = () => {
   ];
 
   return (
-    <section id="projects" className="py-20 bg-muted/30">
-      <div className="container mx-auto px-6">
-        <h2 className={`text-4xl font-bold text-center mb-16 text-foreground group cursor-pointer transition-all duration-700 hover:text-amber-900 hover:scale-110 relative transform ${isVisible ? 'animate-fade-in' : 'opacity-0 translate-y-10'}`}>
+    <section id="projects" className="py-20 bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900 relative overflow-hidden">
+      {/* Project/Portfolio themed background */}
+      <div className="absolute inset-0 opacity-20">
+        <div className="absolute inset-0" style={{
+          backgroundImage: `
+            linear-gradient(rgba(139, 92, 246, 0.1) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(139, 92, 246, 0.1) 1px, transparent 1px)
+          `,
+          backgroundSize: '60px 60px',
+          animation: 'float 12s ease-in-out infinite'
+        }}></div>
+      </div>
+
+      {/* Floating project elements */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute top-20 left-10 w-32 h-20 bg-gradient-to-br from-violet-400 via-purple-500 to-pink-500 rounded-2xl opacity-25 animate-float shadow-2xl" style={{
+          animation: 'float 7s ease-in-out infinite, glow 4s ease-in-out infinite alternate'
+        }}></div>
+        
+        <div className="absolute top-40 right-16 w-24 h-24 bg-gradient-to-br from-cyan-400 via-indigo-500 to-purple-600 rounded-full opacity-30 animate-bounce shadow-xl" style={{
+          animation: 'bounce 4s ease-in-out infinite, pulse 3s ease-in-out infinite'
+        }}></div>
+
+        <div className="absolute bottom-32 right-32 w-28 h-16 bg-gradient-to-br from-pink-400 via-violet-500 to-indigo-600 rounded-xl opacity-20" style={{
+          animation: 'float 8s ease-in-out infinite reverse, glow 5s ease-in-out infinite alternate'
+        }}></div>
+
+        {/* Window/browser mockups */}
+        <div className="absolute top-1/4 right-1/4 w-20 h-16 bg-gradient-to-br from-gray-600 to-gray-800 rounded-lg opacity-15" style={{
+          animation: 'float 5s ease-in-out infinite'
+        }}>
+          <div className="flex space-x-1 p-2">
+            <div className="w-2 h-2 bg-red-400 rounded-full"></div>
+            <div className="w-2 h-2 bg-yellow-400 rounded-full"></div>
+            <div className="w-2 h-2 bg-green-400 rounded-full"></div>
+          </div>
+        </div>
+
+        <div className="absolute bottom-1/3 left-1/4 w-16 h-12 bg-gradient-to-br from-slate-600 to-slate-800 rounded-md opacity-20" style={{
+          animation: 'float 6s ease-in-out infinite reverse'
+        }}>
+          <div className="flex space-x-1 p-1">
+            <div className="w-1 h-1 bg-indigo-400 rounded-full"></div>
+            <div className="w-1 h-1 bg-purple-400 rounded-full"></div>
+            <div className="w-1 h-1 bg-pink-400 rounded-full"></div>
+          </div>
+        </div>
+
+        {/* Code snippets */}
+        <div className="absolute top-1/2 left-1/6 text-3xl font-mono text-indigo-300 opacity-15 animate-pulse">{'</>'}</div>
+        <div className="absolute bottom-1/4 right-1/5 text-2xl font-mono text-violet-300 opacity-20 animate-float">{'()'}</div>
+
+        {/* Floating dots */}
+        {[...Array(20)].map((_, i) => (
+          <div
+            key={i}
+            className="absolute w-1 h-1 bg-purple-300 rounded-full opacity-30"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+              animation: `float ${4 + Math.random() * 3}s ease-in-out infinite`,
+              animationDelay: `${Math.random() * 2}s`
+            }}
+          />
+        ))}
+      </div>
+
+      <div className="container mx-auto px-6 relative z-10">
+        <h2 className={`text-4xl font-bold text-center mb-16 text-white group cursor-pointer transition-all duration-700 hover:text-violet-300 hover:scale-110 relative transform ${isVisible ? 'animate-fade-in' : 'opacity-0 translate-y-10'}`}>
           Featured Projects
-          <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-0 h-1 bg-gradient-to-r from-amber-800 to-amber-600 group-hover:w-44 transition-all duration-500 ease-out rounded-full shadow-lg"></div>
-          <div className="absolute -inset-4 bg-gradient-to-r from-amber-100/20 to-stone-100/20 rounded-2xl opacity-0 group-hover:opacity-100 transition-all duration-500 blur-xl"></div>
+          <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-0 h-1 bg-gradient-to-r from-violet-400 to-pink-600 group-hover:w-44 transition-all duration-500 ease-out rounded-full shadow-lg"></div>
+          <div className="absolute -inset-4 bg-gradient-to-r from-violet-100/20 to-pink-100/20 rounded-2xl opacity-0 group-hover:opacity-100 transition-all duration-500 blur-xl"></div>
         </h2>
         
         <div className="grid lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
