@@ -1,23 +1,24 @@
+
 import React, { useState, useEffect } from 'react';
 
 const Projects = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [visibleCards, setVisibleCards] = useState([]);
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
           setIsVisible(true);
-          setTimeout(() => setVisibleCards([0]), 300);
-          setTimeout(() => setVisibleCards([0, 1]), 600);
+          // Stagger card animations
+          setTimeout(() => setVisibleCards([0]), 200);
+          setTimeout(() => setVisibleCards([0, 1]), 400);
         } else {
           setIsVisible(false);
           setVisibleCards([]);
         }
       },
-      { threshold: 0.2, rootMargin: '50px' }
+      { threshold: 0.3 }
     );
 
     const element = document.getElementById('projects');
@@ -32,13 +33,6 @@ const Projects = () => {
     };
   }, []);
 
-  const handleMouseMove = (e) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const x = (e.clientX - rect.left - rect.width / 2) / 30;
-    const y = (e.clientY - rect.top - rect.height / 2) / 30;
-    setMousePosition({ x, y });
-  };
-
   const projects = [
     {
       title: "PHOTO FLAPPY",
@@ -46,8 +40,7 @@ const Projects = () => {
       description: "Developed using HTML, CSS, JavaScript with touch/keyboard controls, sound effects, and customizable assets. Designed and implemented responsive layout and game logic.",
       technologies: ["HTML", "CSS", "JavaScript"],
       features: ["Touch/Keyboard Controls", "Sound Effects", "Responsive Design", "Game Logic"],
-      gradient: "from-blue-500 to-purple-600",
-      accentColor: "blue"
+      gradient: "from-blue-500 to-purple-600"
     },
     {
       title: "CAMPUS MANAGEMENT SYSTEM",
@@ -55,88 +48,55 @@ const Projects = () => {
       description: "Developed for college administration using advanced CSS and responsive design principles. Enabled efficient handling of student records, staff details, and administrative workflows.",
       technologies: ["HTML", "CSS", "JavaScript", "Responsive Design"],
       features: ["Student Records", "Staff Management", "Admin Dashboard", "Multi-Role Access"],
-      gradient: "from-green-500 to-teal-600",
-      accentColor: "green"
+      gradient: "from-green-500 to-teal-600"
     }
   ];
 
   return (
-    <section id="projects" className="py-20 bg-muted/30 relative overflow-hidden">
-      {/* Enhanced Floating Background Elements */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="project-orb absolute top-20 left-1/4 w-40 h-40 bg-gradient-to-br from-blue-200/10 to-purple-300/5 rounded-full animate-float-massive blur-3xl"></div>
-        <div className="project-orb absolute bottom-32 right-1/4 w-32 h-32 bg-gradient-to-br from-green-200/10 to-teal-300/5 rounded-full animate-float-reverse-slow blur-2xl"></div>
-        <div className="project-orb absolute top-1/2 left-10 w-24 h-24 bg-gradient-to-br from-amber-200/15 to-orange-300/10 rounded-full animate-pulse-gentle"></div>
-      </div>
-
-      <div className="container mx-auto px-6 relative z-10">
-        <h2 className={`text-4xl font-bold text-center mb-16 text-amber-600 group cursor-pointer transition-all duration-1200 relative transform-3d ${
-          isVisible ? 'animate-title-emerge opacity-100' : 'opacity-0 scale-50 rotateY-45'
-        }`}>
-          <span className="inline-block hover:scale-110 hover:rotateX-10 hover:rotateY-5 transition-all duration-700 transform-3d bg-gradient-to-r from-amber-600 via-blue-600 to-purple-600 bg-clip-text text-transparent drop-shadow-[0_0_15px_rgba(245,158,11,0.6)]">
-            Featured Projects
-          </span>
-          <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-0 h-1 bg-gradient-to-r from-amber-600 via-blue-500 to-purple-600 group-hover:w-44 transition-all duration-1000 ease-out rounded-full shadow-glow animate-shimmer"></div>
-          <div className="absolute -inset-6 bg-gradient-to-r from-amber-100/20 via-blue-100/10 to-purple-100/20 rounded-3xl opacity-0 group-hover:opacity-100 transition-all duration-1000 blur-2xl transform-3d"></div>
+    <section id="projects" className="py-20 bg-muted/30">
+      <div className="container mx-auto px-6">
+        <h2 className={`text-4xl font-bold text-center mb-16 text-foreground group cursor-pointer transition-all duration-700 hover:text-amber-900 hover:scale-110 relative transform ${isVisible ? 'animate-fade-in' : 'opacity-0 translate-y-10'}`}>
+          Featured Projects
+          <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-0 h-1 bg-gradient-to-r from-amber-800 to-amber-600 group-hover:w-44 transition-all duration-500 ease-out rounded-full shadow-lg"></div>
+          <div className="absolute -inset-4 bg-gradient-to-r from-amber-100/20 to-stone-100/20 rounded-2xl opacity-0 group-hover:opacity-100 transition-all duration-500 blur-xl"></div>
         </h2>
         
-        <div className="grid lg:grid-cols-2 gap-12 max-w-6xl mx-auto perspective-2000">
+        <div className="grid lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
           {projects.map((project, index) => (
             <div 
               key={index} 
-              className={`project-card-3d group bg-card rounded-2xl shadow-2xl border overflow-hidden transform-3d transition-all duration-1000 cursor-pointer relative ${
+              className={`group bg-card rounded-xl shadow-sm border overflow-hidden hover:shadow-2xl hover:scale-105 hover:-translate-y-4 transition-all duration-700 cursor-pointer transform ${
                 visibleCards.includes(index) 
-                  ? 'opacity-100 translate-y-0 rotateX-0 rotateY-0' 
-                  : 'opacity-0 translate-y-20 rotateX-20 rotateY-10'
+                  ? 'opacity-100 translate-y-0 rotate-0' 
+                  : 'opacity-0 translate-y-10 rotate-1'
               }`}
-              style={{ 
-                transitionDelay: `${index * 300}ms`,
-                transformStyle: 'preserve-3d'
-              }}
-              onMouseMove={handleMouseMove}
+              style={{ transitionDelay: `${index * 200}ms` }}
             >
-              {/* Enhanced project header with 3D gradient */}
-              <div className={`project-header h-3 bg-gradient-to-r ${project.gradient} relative overflow-hidden group-hover:h-6 transition-all duration-700`}>
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent animate-slide-shine"></div>
-                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                  <div className="w-full h-full bg-gradient-to-r from-transparent via-white/40 to-transparent animate-pulse-wave"></div>
-                </div>
-              </div>
+              {/* Project header with gradient */}
+              <div className={`h-2 bg-gradient-to-r ${project.gradient} group-hover:h-4 transition-all duration-500`}></div>
               
-              <div 
-                className="project-content p-8 relative overflow-hidden transform-3d"
-                style={{
-                  transform: `perspective(1200px) rotateX(${mousePosition.y * 0.3}deg) rotateY(${mousePosition.x * 0.3}deg) translateZ(10px)`
-                }}
-              >
-                {/* Dynamic background overlay */}
-                <div className="absolute inset-0 bg-gradient-to-br from-amber-50/20 via-transparent to-blue-50/20 opacity-0 group-hover:opacity-100 transition-opacity duration-700 transform-3d"></div>
+              <div className="p-8 relative overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-br from-amber-50/30 to-stone-50/30 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                 
-                <div className="project-title mb-6 relative z-10 transform-3d">
-                  <h3 className="text-2xl font-bold mb-2 text-card-foreground group-hover:text-primary transition-all duration-500 transform group-hover:scale-105 group-hover:translateZ-4">
+                <div className="mb-6 relative z-10">
+                  <h3 className="text-2xl font-bold mb-2 text-card-foreground group-hover:text-primary group-hover:scale-105 transition-all duration-500 transform-gpu">
                     {project.title}
                   </h3>
-                  <p className={`text-${project.accentColor}-600 font-medium group-hover:text-${project.accentColor}-700 transition-colors duration-500 relative`}>
-                    {project.subtitle}
-                    <div className={`absolute bottom-0 left-0 w-0 h-0.5 bg-${project.accentColor}-400 group-hover:w-full transition-all duration-700 rounded-full`}></div>
-                  </p>
+                  <p className="text-amber-600 font-medium group-hover:text-amber-700 transition-colors duration-300">{project.subtitle}</p>
                 </div>
                 
-                <p className="text-muted-foreground mb-6 leading-relaxed relative z-10 group-hover:text-gray-700 transition-colors duration-500 transform group-hover:translateZ-2">
+                <p className="text-muted-foreground mb-6 leading-relaxed relative z-10 group-hover:text-gray-700 transition-colors duration-300">
                   {project.description}
                 </p>
                 
-                <div className="technologies mb-6 relative z-10 transform-3d">
-                  <h4 className="font-semibold mb-3 text-card-foreground group-hover:text-amber-800 transition-colors duration-500">Technologies Used:</h4>
+                <div className="mb-6 relative z-10">
+                  <h4 className="font-semibold mb-3 text-card-foreground group-hover:text-amber-800 transition-colors duration-300">Technologies Used:</h4>
                   <div className="flex flex-wrap gap-2">
                     {project.technologies.map((tech, techIndex) => (
                       <span 
                         key={techIndex} 
-                        className="tech-tag px-3 py-1 bg-amber-100 text-amber-800 rounded-full text-sm transition-all duration-500 cursor-default transform-3d hover:scale-110 hover:translateZ-2 hover:shadow-lg"
-                        style={{ 
-                          transitionDelay: `${techIndex * 100}ms`,
-                          animation: `float-gentle 3s ease-in-out infinite ${techIndex * 0.5}s`
-                        }}
+                        className="px-3 py-1 bg-amber-100 text-amber-800 rounded-full text-sm hover:bg-amber-200 hover:scale-110 transition-all duration-300 cursor-default group-hover:shadow-lg"
+                        style={{ transitionDelay: `${techIndex * 50}ms` }}
                       >
                         {tech}
                       </span>
@@ -144,41 +104,39 @@ const Projects = () => {
                   </div>
                 </div>
                 
-                <div className="features mb-8 relative z-10 transform-3d">
-                  <h4 className="font-semibold mb-3 text-card-foreground group-hover:text-amber-800 transition-colors duration-500">Key Features:</h4>
+                <div className="mb-6 relative z-10">
+                  <h4 className="font-semibold mb-3 text-card-foreground group-hover:text-amber-800 transition-colors duration-300">Key Features:</h4>
                   <ul className="space-y-2">
                     {project.features.map((feature, featureIndex) => (
                       <li 
                         key={featureIndex} 
-                        className="flex items-center text-sm text-muted-foreground group-hover:text-gray-700 transition-all duration-500 transform group-hover:translate-x-2 group-hover:translateZ-1"
-                        style={{ transitionDelay: `${featureIndex * 150}ms` }}
+                        className="flex items-center text-sm text-muted-foreground group-hover:text-gray-700 transition-all duration-300 transform group-hover:translate-x-2"
+                        style={{ transitionDelay: `${featureIndex * 100}ms` }}
                       >
-                        <div className={`feature-dot w-2 h-2 bg-${project.accentColor}-500 rounded-full mr-3 animate-pulse-soft group-hover:bg-${project.accentColor}-600 group-hover:scale-125 transition-all duration-500 shadow-glow-sm`}></div>
+                        <div className="w-2 h-2 bg-amber-500 rounded-full mr-3 animate-pulse group-hover:bg-amber-600 group-hover:scale-125 transition-all duration-300"></div>
                         {feature}
                       </li>
                     ))}
                   </ul>
                 </div>
                 
-                <div className="project-actions flex gap-4 relative z-10 transform-3d">
-                  <button className="action-btn px-6 py-3 bg-primary text-primary-foreground rounded-lg transition-all duration-700 transform-3d hover:scale-110 hover:translateZ-4 hover:shadow-2xl hover:bg-amber-600 group-hover:animate-pulse-glow">
-                    <span className="relative z-10">View Project</span>
-                    <div className="absolute inset-0 bg-gradient-to-r from-amber-400/50 to-amber-600/50 rounded-lg opacity-0 hover:opacity-100 transition-opacity duration-500"></div>
+                <div className="flex gap-4 relative z-10">
+                  <button className="px-6 py-2 bg-primary text-primary-foreground rounded-lg hover:scale-110 hover:shadow-lg transition-all duration-500 btn-pulse hover-glow group-hover:bg-amber-600">
+                    View Project
                   </button>
-                  <button className="action-btn px-6 py-3 border border-border rounded-lg transition-all duration-700 transform-3d hover:bg-accent hover:scale-110 hover:translateZ-4 hover:shadow-xl hover:border-amber-300">
-                    <span className="relative z-10">GitHub</span>
+                  <button className="px-6 py-2 border border-border rounded-lg hover:bg-accent hover:scale-110 hover:shadow-lg transition-all duration-500 card-hover group-hover:border-amber-300">
+                    GitHub
                   </button>
                 </div>
               </div>
               
-              {/* Enhanced floating particles with 3D movement */}
-              <div className="particle absolute top-8 right-8 w-3 h-3 bg-amber-400/60 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-700 animate-float-3d"></div>
-              <div className="particle absolute top-16 right-16 w-2 h-2 bg-blue-500/60 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-900 animate-ping-3d"></div>
-              <div className="particle absolute bottom-8 left-8 w-1 h-1 bg-purple-600/60 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-1100 animate-pulse-3d"></div>
-              <div className="particle absolute bottom-16 left-16 w-2 h-2 bg-green-500/60 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-800 animate-bounce-3d"></div>
+              {/* Enhanced hover overlay effect */}
+              <div className="absolute inset-0 bg-gradient-to-br from-transparent via-amber-50/20 to-amber-100/30 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
               
-              {/* Project card glow effect */}
-              <div className={`absolute inset-0 bg-gradient-to-br from-${project.accentColor}-500/10 via-transparent to-amber-500/10 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-1000 blur-xl pointer-events-none`}></div>
+              {/* Floating particles on hover */}
+              <div className="absolute top-4 right-4 w-2 h-2 bg-amber-400 rounded-full opacity-0 group-hover:opacity-100 group-hover:animate-bounce transition-all duration-500" style={{ animationDelay: '0.2s' }}></div>
+              <div className="absolute top-8 right-8 w-1 h-1 bg-amber-500 rounded-full opacity-0 group-hover:opacity-100 group-hover:animate-ping transition-all duration-500" style={{ animationDelay: '0.5s' }}></div>
+              <div className="absolute bottom-6 left-6 w-1 h-1 bg-amber-600 rounded-full opacity-0 group-hover:opacity-100 group-hover:animate-pulse transition-all duration-500" style={{ animationDelay: '0.8s' }}></div>
             </div>
           ))}
         </div>
