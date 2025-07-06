@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 
 const Hero = () => {
@@ -5,8 +6,31 @@ const Hero = () => {
   const [isDeleting, setIsDeleting] = useState(false);
   const [wordIndex, setWordIndex] = useState(0);
   const [charIndex, setCharIndex] = useState(0);
+  const [isVisible, setIsVisible] = useState(false);
 
   const words = ['Full Stack Developer', 'Problem Solver', 'Tech Enthusiast', 'Code Craftsman'];
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+        }
+      },
+      { threshold: 0.3 }
+    );
+
+    const element = document.getElementById('hero');
+    if (element) {
+      observer.observe(element);
+    }
+
+    return () => {
+      if (element) {
+        observer.unobserve(element);
+      }
+    };
+  }, []);
 
   useEffect(() => {
     const typeSpeed = isDeleting ? 50 : 100;
@@ -30,8 +54,15 @@ const Hero = () => {
     return () => clearTimeout(timer);
   }, [charIndex, isDeleting, wordIndex, words]);
 
+  const scrollToSection = (sectionId) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
-    <section className="min-h-screen bg-gradient-to-br from-background via-muted/30 to-amber-50/40 flex items-center justify-center relative overflow-hidden">
+    <section id="hero" className="min-h-screen bg-gradient-to-br from-background via-muted/30 to-amber-50/40 flex items-center justify-center relative overflow-hidden">
       {/* Animated background grid */}
       <div className="absolute inset-0 opacity-20">
         <div className="absolute inset-0" style={{
@@ -80,10 +111,10 @@ const Hero = () => {
         ))}
       </div>
 
-      <div className="container mx-auto px-6 text-center relative z-10">
+      <div className={`container mx-auto px-4 sm:px-6 text-center relative z-10 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
         {/* Profile Section */}
         <div className="mb-8">
-          <div className="w-40 h-40 rounded-full mx-auto mb-6 relative overflow-hidden">
+          <div className="w-32 h-32 sm:w-40 sm:h-40 rounded-full mx-auto mb-6 relative overflow-hidden">
             <img 
               src="/profile.jpg"
               alt="Rahul"
@@ -91,20 +122,20 @@ const Hero = () => {
             />
             <div className="absolute inset-0 bg-gradient-to-br from-purple-500 to-blue-500 opacity-0 hover:opacity-40 transition-opacity duration-300"></div>
           </div>
-          <h1 className="text-5xl font-bold text-white mb-2">Rahul</h1>
-          <p className="text-xl text-muted-foreground mb-4">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-2">Rahul</h1>
+          <p className="text-lg sm:text-xl text-muted-foreground mb-4">
             <span className="mr-2">A passionate</span>
             <span className="gradient-text">{text}</span>
             <span className="cursor" style={{ opacity: 1 }}></span>
           </p>
           <div className="flex justify-center space-x-4">
-            <a href="#" className="text-gray-300 hover:text-white transition-colors duration-300">
+            <a href="https://github.com/rahulkannan08" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-white transition-colors duration-300">
               <i className="fab fa-github text-2xl"></i>
             </a>
-            <a href="#" className="text-gray-300 hover:text-white transition-colors duration-300">
+            <a href="https://www.linkedin.com/in/rahul-k-082k6" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-white transition-colors duration-300">
               <i className="fab fa-linkedin text-2xl"></i>
             </a>
-            <a href="#" className="text-gray-300 hover:text-white transition-colors duration-300">
+            <a href="#contact" className="text-gray-300 hover:text-white transition-colors duration-300">
               <i className="fab fa-twitter text-2xl"></i>
             </a>
           </div>
@@ -112,15 +143,21 @@ const Hero = () => {
 
         {/* Main Content */}
         <div className="max-w-2xl mx-auto">
-          <p className="text-lg text-gray-400 leading-relaxed mb-8">
+          <p className="text-base sm:text-lg text-gray-400 leading-relaxed mb-8 px-4">
             I'm a BCA student with a passion for crafting digital experiences.
             Explore my portfolio to see how I blend creativity with code to solve real-world problems.
           </p>
-          <div className="flex justify-center space-x-4">
-            <button className="bg-primary text-primary-foreground hover:bg-primary/80 font-medium rounded-md py-3 px-6 transition-colors duration-300">
+          <div className="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4 px-4">
+            <button 
+              onClick={() => scrollToSection('projects')}
+              className="bg-primary text-primary-foreground hover:bg-primary/80 font-medium rounded-md py-3 px-6 transition-colors duration-300 w-full sm:w-auto"
+            >
               View Projects
             </button>
-            <button className="border border-border text-muted-foreground hover:bg-secondary hover:text-secondary-foreground font-medium rounded-md py-3 px-6 transition-colors duration-300">
+            <button 
+              onClick={() => scrollToSection('about')}
+              className="border border-border text-muted-foreground hover:bg-secondary hover:text-secondary-foreground font-medium rounded-md py-3 px-6 transition-colors duration-300 w-full sm:w-auto"
+            >
               Learn More
             </button>
           </div>
