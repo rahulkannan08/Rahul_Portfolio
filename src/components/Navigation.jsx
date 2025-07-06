@@ -41,14 +41,21 @@ const Navigation = () => {
     console.log('Scrolling to section:', sectionId);
     const element = document.getElementById(sectionId);
     console.log('Element found:', element);
+    
     if (element) {
+      // Simple and reliable scroll method
       element.scrollIntoView({ 
         behavior: 'smooth',
         block: 'start'
       });
+      
+      // Close mobile menu
       setIsMobileMenuOpen(false);
     } else {
       console.error('Element not found with ID:', sectionId);
+      // List all available section IDs for debugging
+      const allSections = document.querySelectorAll('section[id]');
+      console.log('Available section IDs:', Array.from(allSections).map(s => s.id));
     }
   };
 
@@ -89,49 +96,38 @@ const Navigation = () => {
             </div>
           </div>
 
-          {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center space-x-1 bg-card/60 backdrop-blur-md rounded-full px-6 py-3 border border-border/50 shadow-lg">
+          {/* Desktop Navigation - Simple Text Links */}
+          <div className="hidden lg:flex items-center space-x-8">
             {navItems.map((item) => (
               <button
                 key={item.id}
                 onClick={() => scrollToSection(item.id)}
-                className="group relative px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 hover:bg-amber-900/20 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-amber-500/50"
+                className="text-sm font-medium text-foreground hover:text-amber-900 transition-colors duration-300 cursor-pointer focus:outline-none focus:ring-2 focus:ring-amber-500/50 rounded-md px-2 py-1"
                 aria-label={`Navigate to ${item.label} section`}
               >
-                <span className="relative text-foreground group-hover:text-amber-900 transition-colors duration-300 z-10">
-                  {item.label}
-                </span>
-                {/* Professional underline effect */}
-                <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-0 h-0.5 bg-gradient-to-r from-amber-800 to-amber-600 group-hover:w-4/5 transition-all duration-300 ease-out rounded-full"></div>
-                {/* Background hover effect */}
-                <div className="absolute inset-0 bg-gradient-to-r from-amber-900/10 to-amber-800/10 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                {item.label}
               </button>
             ))}
           </div>
 
-          {/* Tablet Navigation - Compact version */}
-          <div className="hidden md:flex lg:hidden items-center space-x-1 bg-card/60 backdrop-blur-md rounded-full px-4 py-2 border border-border/50 shadow-lg">
+          {/* Tablet Navigation - Compact */}
+          <div className="hidden md:flex lg:hidden items-center space-x-4">
             {navItems.slice(0, 4).map((item) => (
               <button
                 key={item.id}
                 onClick={() => scrollToSection(item.id)}
-                className="group relative px-3 py-1.5 rounded-full text-xs font-medium transition-all duration-300 hover:bg-amber-900/20 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-amber-500/50"
+                className="text-xs font-medium text-foreground hover:text-amber-900 transition-colors duration-300 cursor-pointer focus:outline-none focus:ring-2 focus:ring-amber-500/50 rounded-md px-2 py-1"
                 aria-label={`Navigate to ${item.label} section`}
               >
-                <span className="relative text-foreground group-hover:text-amber-900 transition-colors duration-300 z-10">
-                  {item.label}
-                </span>
-                <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-0 h-0.5 bg-gradient-to-r from-amber-800 to-amber-600 group-hover:w-4/5 transition-all duration-300 ease-out rounded-full"></div>
+                {item.label}
               </button>
             ))}
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="group relative px-3 py-1.5 rounded-full text-xs font-medium transition-all duration-300 hover:bg-amber-900/20 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-amber-500/50"
+              className="text-xs font-medium text-foreground hover:text-amber-900 transition-colors duration-300 cursor-pointer focus:outline-none focus:ring-2 focus:ring-amber-500/50 rounded-md px-2 py-1"
               aria-label="Open menu"
             >
-              <span className="relative text-foreground group-hover:text-amber-900 transition-colors duration-300 z-10">
-                More
-              </span>
+              More
             </button>
           </div>
 

@@ -141,10 +141,22 @@ const Contact = () => {
     }
   ];
 
+  const handleSocialClick = (link, platform) => {
+    console.log(`Opening ${platform} link:`, link);
+    window.open(link, '_blank', 'noopener,noreferrer');
+    
+    // Show toast notification
+    toast({
+      title: `Opening ${platform} 🚀`,
+      description: `Taking you to my ${platform} profile in a new tab!`,
+      className: "bg-gradient-to-r from-blue-50 to-indigo-50 border-blue-200",
+    });
+  };
+
   return (
     <>
       <CursorFollower />
-      <section id="contact" className="py-12 sm:py-20 bg-gradient-to-br from-indigo-950 via-slate-900 to-purple-950 relative overflow-hidden min-h-screen">
+      <section id="contact" className="py-8 sm:py-16 bg-gradient-to-br from-indigo-950 via-slate-900 to-purple-950 relative min-h-[80vh] overflow-y-auto">
         {/* Enhanced 3D Background Elements */}
         <div className="absolute inset-0 transform-gpu">
           {[...Array(20)].map((_, i) => (
@@ -193,7 +205,7 @@ const Contact = () => {
           </svg>
         </div>
 
-        <div className="container mx-auto px-4 sm:px-6 relative z-10">
+        <div className="container mx-auto px-2 sm:px-6 relative z-10">
           {/* Enhanced Title with 3D Parallax Effect */}
           <div className={`text-center mb-12 sm:mb-16 transform-gpu transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
             <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black mb-4 sm:mb-6 group cursor-pointer transition-all duration-500 relative"
@@ -216,7 +228,7 @@ const Contact = () => {
             </p>
           </div>
           
-          <div className="grid lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-16 max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-16 max-w-7xl mx-auto">
             {/* Contact Information with Enhanced 3D Effects */}
             <div className={`transform-gpu transition-all duration-700 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10'}`}
                  style={{
@@ -243,67 +255,112 @@ const Contact = () => {
                 {contactInfo.map((contact, index) => {
                   const IconComponent = contact.icon;
                   const isClickable = contact.link && contact.isClickable;
-                  const cardContent = (
-                    <div className="bg-gradient-to-r from-slate-800/90 via-indigo-900/90 to-slate-800/90 backdrop-blur-xl p-4 sm:p-6 md:p-8 rounded-2xl sm:rounded-3xl shadow-2xl border border-indigo-500/30 hover:border-blue-400/50 transition-all duration-500 relative overflow-hidden group transform-gpu hover:scale-105">
-                      <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 via-indigo-500/15 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-all duration-500 rounded-2xl sm:rounded-3xl pointer-events-none" />
-                      <div className="flex items-center space-x-4 sm:space-x-6 relative z-10">
-                        <div
-                          className="p-3 sm:p-4 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-xl sm:rounded-2xl shadow-lg group-hover:shadow-blue-400/60 transition-all duration-500 group-hover:scale-125 transform-gpu"
-                          style={{
-                            boxShadow: "0 10px 30px rgba(59, 130, 246, 0.4)",
-                            transform: `perspective(400px) rotateX(${mousePosition.y * 0.1}deg) rotateY(${mousePosition.x * 0.1}deg) translateZ(10px)`,
-                          }}
-                        >
-                          <IconComponent size={20} className="sm:w-6 sm:h-6 text-white drop-shadow-lg" />
+                  
+                  if (isClickable) {
+                    // Clickable social media cards
+                    return (
+                      <a
+                        key={index}
+                        href={contact.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="block cursor-pointer group transform-gpu transition-all duration-500 focus:outline-none focus:ring-4 focus:ring-blue-400/60 hover:scale-105"
+                        onClick={() => {
+                          console.log(`Opening ${contact.type}:`, contact.link);
+                          toast({
+                            title: `Opening ${contact.type} 🚀`,
+                            description: `Taking you to my ${contact.type} profile!`,
+                            className: "bg-gradient-to-r from-blue-50 to-indigo-50 border-blue-200",
+                          });
+                        }}
+                        style={{
+                          textDecoration: 'none',
+                          transform: `perspective(1000px) rotateX(${5 + mousePosition.y * 0.05}deg) rotateY(${mousePosition.x * 0.05}deg) translateZ(${10 + index * 5}px)`,
+                          animation: `float ${3 + index * 0.5}s ease-in-out infinite`,
+                          animationDelay: `${index * 0.2}s`,
+                        }}
+                      >
+                        <div className="bg-gradient-to-r from-slate-800/90 via-indigo-900/90 to-slate-800/90 backdrop-blur-xl p-4 sm:p-6 md:p-8 rounded-2xl sm:rounded-3xl shadow-2xl border border-indigo-500/30 hover:border-blue-400/50 transition-all duration-500 relative overflow-hidden group transform-gpu hover:scale-105 cursor-pointer">
+                          <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 via-indigo-500/15 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-all duration-500 rounded-2xl sm:rounded-3xl pointer-events-none" />
+                          <div className="flex items-center space-x-4 sm:space-x-6 relative z-10">
+                            <div
+                              className="p-3 sm:p-4 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-xl sm:rounded-2xl shadow-lg group-hover:shadow-blue-400/60 transition-all duration-500 group-hover:scale-125 transform-gpu"
+                              style={{
+                                boxShadow: "0 10px 30px rgba(59, 130, 246, 0.4)",
+                                transform: `perspective(400px) rotateX(${mousePosition.y * 0.1}deg) rotateY(${mousePosition.x * 0.1}deg) translateZ(10px)`,
+                              }}
+                            >
+                              <IconComponent size={20} className="sm:w-6 sm:h-6 text-white drop-shadow-lg" />
+                            </div>
+                            <div className="flex-1">
+                              <h4 className="font-bold mb-1 sm:mb-2 text-white text-lg sm:text-xl drop-shadow-lg"
+                                  style={{ textShadow: "0 0 20px rgba(255, 255, 255, 0.8)" }}>
+                                {contact.type}
+                              </h4>
+                              <p className="text-blue-300 hover:text-blue-100 transition-colors font-semibold text-base sm:text-lg mb-1"
+                                 style={{ textShadow: "0 0 15px rgba(147, 196, 251, 0.8)" }}>
+                                {contact.value}
+                              </p>
+                              <p className="text-xs sm:text-sm text-blue-200/80"
+                                 style={{ textShadow: "0 0 10px rgba(191, 219, 254, 0.6)" }}>
+                                {contact.description}
+                              </p>
+                            </div>
+                            <div className="flex items-center space-x-2">
+                              <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse" />
+                              <span className="text-xs text-blue-300 font-medium">Click to visit</span>
+                            </div>
+                          </div>
+                          <div className="absolute top-3 sm:top-4 right-3 sm:right-4 w-2 sm:w-3 h-2 sm:h-3 bg-blue-400 rounded-full opacity-0 group-hover:opacity-100 animate-ping pointer-events-none" />
+                          <div className="absolute bottom-3 sm:bottom-4 left-3 sm:left-4 w-1.5 sm:w-2 h-1.5 sm:h-2 bg-indigo-400 rounded-full opacity-0 group-hover:opacity-100 animate-pulse delay-300 pointer-events-none" />
                         </div>
-                        <div className="flex-1">
-                          <h4 className="font-bold mb-1 sm:mb-2 text-white text-lg sm:text-xl drop-shadow-lg"
-                              style={{ textShadow: "0 0 20px rgba(255, 255, 255, 0.8)" }}>
-                            {contact.type}
-                          </h4>
-                          <p className="text-blue-300 hover:text-blue-100 transition-colors font-semibold text-base sm:text-lg mb-1"
-                             style={{ textShadow: "0 0 15px rgba(147, 196, 251, 0.8)" }}>
-                            {contact.value}
-                          </p>
-                          <p className="text-xs sm:text-sm text-blue-200/80"
-                             style={{ textShadow: "0 0 10px rgba(191, 219, 254, 0.6)" }}>
-                            {contact.description}
-                          </p>
+                      </a>
+                    );
+                  } else {
+                    // Non-clickable location card
+                    return (
+                      <div
+                        key={index}
+                        className="group transform-gpu transition-all duration-500"
+                        style={{
+                          transform: `perspective(1000px) rotateX(${5 + mousePosition.y * 0.05}deg) rotateY(${mousePosition.x * 0.05}deg) translateZ(${10 + index * 5}px)`,
+                          animation: `float ${3 + index * 0.5}s ease-in-out infinite`,
+                          animationDelay: `${index * 0.2}s`,
+                        }}
+                      >
+                        <div className="bg-gradient-to-r from-slate-800/90 via-indigo-900/90 to-slate-800/90 backdrop-blur-xl p-4 sm:p-6 md:p-8 rounded-2xl sm:rounded-3xl shadow-2xl border border-indigo-500/30 hover:border-blue-400/50 transition-all duration-500 relative overflow-hidden group transform-gpu hover:scale-105">
+                          <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 via-indigo-500/15 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-all duration-500 rounded-2xl sm:rounded-3xl pointer-events-none" />
+                          <div className="flex items-center space-x-4 sm:space-x-6 relative z-10">
+                            <div
+                              className="p-3 sm:p-4 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-xl sm:rounded-2xl shadow-lg group-hover:shadow-blue-400/60 transition-all duration-500 group-hover:scale-125 transform-gpu"
+                              style={{
+                                boxShadow: "0 10px 30px rgba(59, 130, 246, 0.4)",
+                                transform: `perspective(400px) rotateX(${mousePosition.y * 0.1}deg) rotateY(${mousePosition.x * 0.1}deg) translateZ(10px)`,
+                              }}
+                            >
+                              <IconComponent size={20} className="sm:w-6 sm:h-6 text-white drop-shadow-lg" />
+                            </div>
+                            <div className="flex-1">
+                              <h4 className="font-bold mb-1 sm:mb-2 text-white text-lg sm:text-xl drop-shadow-lg"
+                                  style={{ textShadow: "0 0 20px rgba(255, 255, 255, 0.8)" }}>
+                                {contact.type}
+                              </h4>
+                              <p className="text-blue-300 hover:text-blue-100 transition-colors font-semibold text-base sm:text-lg mb-1"
+                                 style={{ textShadow: "0 0 15px rgba(147, 196, 251, 0.8)" }}>
+                                {contact.value}
+                              </p>
+                              <p className="text-xs sm:text-sm text-blue-200/80"
+                                 style={{ textShadow: "0 0 10px rgba(191, 219, 254, 0.6)" }}>
+                                {contact.description}
+                              </p>
+                            </div>
+                          </div>
+                          <div className="absolute top-3 sm:top-4 right-3 sm:right-4 w-2 sm:w-3 h-2 sm:h-3 bg-blue-400 rounded-full opacity-0 group-hover:opacity-100 animate-ping pointer-events-none" />
+                          <div className="absolute bottom-3 sm:bottom-4 left-3 sm:left-4 w-1.5 sm:w-2 h-1.5 sm:h-2 bg-indigo-400 rounded-full opacity-0 group-hover:opacity-100 animate-pulse delay-300 pointer-events-none" />
                         </div>
                       </div>
-                      <div className="absolute top-3 sm:top-4 right-3 sm:right-4 w-2 sm:w-3 h-2 sm:h-3 bg-blue-400 rounded-full opacity-0 group-hover:opacity-100 animate-ping pointer-events-none" />
-                      <div className="absolute bottom-3 sm:bottom-4 left-3 sm:left-4 w-1.5 sm:w-2 h-1.5 sm:h-2 bg-indigo-400 rounded-full opacity-0 group-hover:opacity-100 animate-pulse delay-300 pointer-events-none" />
-                    </div>
-                  );
-                  return isClickable ? (
-                    <a
-                      key={index}
-                      href={contact.link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="block cursor-pointer group transform-gpu transition-all duration-500"
-                      style={{
-                        textDecoration: 'none',
-                        transform: `perspective(1000px) rotateX(${5 + mousePosition.y * 0.05}deg) rotateY(${mousePosition.x * 0.05}deg) translateZ(${10 + index * 5}px)`,
-                        animation: `float ${3 + index * 0.5}s ease-in-out infinite`,
-                        animationDelay: `${index * 0.2}s`,
-                      }}
-                    >
-                      {cardContent}
-                    </a>
-                  ) : (
-                    <div
-                      key={index}
-                      className="group transform-gpu transition-all duration-500"
-                      style={{
-                        transform: `perspective(1000px) rotateX(${5 + mousePosition.y * 0.05}deg) rotateY(${mousePosition.x * 0.05}deg) translateZ(${10 + index * 5}px)`,
-                        animation: `float ${3 + index * 0.5}s ease-in-out infinite`,
-                        animationDelay: `${index * 0.2}s`,
-                      }}
-                    >
-                      {cardContent}
-                    </div>
-                  );
+                    );
+                  }
                 })}
               </div>
 
@@ -371,7 +428,7 @@ const Contact = () => {
               </h3>
               <form 
                 onSubmit={handleSubmit} 
-                className="bg-gradient-to-r from-slate-800/90 via-indigo-900/90 to-slate-800/90 backdrop-blur-xl p-6 sm:p-8 lg:p-10 rounded-2xl sm:rounded-3xl shadow-2xl border border-indigo-500/30 space-y-6 sm:space-y-8 relative overflow-hidden group hover:border-blue-400/50 transition-all duration-500 transform-gpu"
+                className="bg-gradient-to-r from-slate-800/90 via-indigo-900/90 to-slate-800/90 backdrop-blur-xl p-4 sm:p-8 lg:p-10 rounded-2xl sm:rounded-3xl shadow-2xl border border-indigo-500/30 space-y-6 sm:space-y-8 relative overflow-hidden group hover:border-blue-400/50 transition-all duration-500 transform-gpu mb-8"
                 style={{
                   boxShadow: '0 30px 80px rgba(59, 130, 246, 0.3), inset 0 0 30px rgba(99, 102, 241, 0.1)',
                   transform: `perspective(1000px) rotateX(${5 + mousePosition.y * 0.05}deg) rotateY(${mousePosition.x * -0.05}deg) translateZ(20px)`,
@@ -473,6 +530,37 @@ const Contact = () => {
                 <div className="absolute bottom-8 sm:bottom-12 left-6 sm:left-8 w-2 sm:w-3 h-2 sm:h-3 bg-indigo-400/60 rounded-full opacity-0 group-hover:opacity-100 animate-pulse delay-500" />
                 <div className="absolute top-16 sm:top-20 left-8 sm:left-12 w-1.5 sm:w-2 h-1.5 sm:h-2 bg-purple-400/60 rounded-full opacity-0 group-hover:opacity-100 animate-bounce delay-700" />
               </form>
+
+              {/* Professional Declaration moved below form on mobile */}
+              <div className="block lg:hidden mt-8">
+                {/* Enhanced Professional Declaration */}
+                <div className="p-6 sm:p-8 bg-gradient-to-r from-indigo-900/40 via-blue-900/40 to-indigo-900/40 border border-blue-400/30 rounded-2xl sm:rounded-3xl backdrop-blur-xl shadow-2xl relative overflow-hidden group transform-gpu hover:scale-105"
+                     style={{
+                       boxShadow: '0 20px 50px rgba(59, 130, 246, 0.2), inset 0 0 15px rgba(99, 102, 241, 0.1)',
+                       transform: `perspective(1000px) rotateX(${5 + mousePosition.y * 0.05}deg) rotateY(${mousePosition.x * 0.05}deg) translateZ(15px)`,
+                       animation: 'float 5s ease-in-out infinite'
+                     }}>
+                  <div className="absolute inset-0 bg-gradient-to-r from-blue-400/10 via-indigo-400/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-all duration-500 rounded-2xl sm:rounded-3xl" />
+                  <p className="text-blue-100 font-medium relative z-10 drop-shadow-lg text-sm sm:text-base"
+                     style={{
+                       textShadow: '0 0 15px rgba(147, 196, 251, 0.6)'
+                     }}>
+                    <strong className="flex items-center space-x-2 sm:space-x-3 mb-3 sm:mb-4 text-blue-200">
+                      <Send size={16} className="sm:w-5 sm:h-5 animate-pulse" />
+                      <span>Professional Declaration 📝</span>
+                    </strong>
+                    I, Rahul Kannan, am a dedicated web developer and designer committed to delivering high-quality digital solutions. 
+                    Based in <span className="font-bold text-blue-300">Pollachi, Tamil Nadu</span>, I specialize in creating modern, 
+                    responsive web applications that combine cutting-edge technology with exceptional user experience.
+                    <br />
+                    <span className="text-blue-200 mt-2 block">Ready to transform your ideas into reality! 🚀</span>
+                  </p>
+                  
+                  {/* Declaration Floating Elements */}
+                  <div className="absolute top-3 sm:top-4 right-3 sm:right-4 w-2 sm:w-3 h-2 sm:h-3 bg-blue-400/60 rounded-full opacity-0 group-hover:opacity-100 animate-ping" />
+                  <div className="absolute bottom-3 sm:bottom-4 left-3 sm:left-4 w-1.5 sm:w-2 h-1.5 sm:h-2 bg-indigo-400/60 rounded-full opacity-0 group-hover:opacity-100 animate-pulse delay-300" />
+                </div>
+              </div>
             </div>
           </div>
         </div>
