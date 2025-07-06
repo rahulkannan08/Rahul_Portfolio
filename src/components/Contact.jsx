@@ -565,6 +565,26 @@ const Contact = () => {
           </div>
         </div>
       </section>
+
+      {/* Fixed Bottom GitHub & LinkedIn Nav Buttons - only visible when Contact section is in view */}
+      {isVisible && (
+        <div className="fixed bottom-0 left-0 right-0 z-50 flex justify-center gap-6 border-t border-indigo-700/30 shadow-2xl py-3 bg-transparent">
+          <button
+            onClick={() => window.open('https://github.com/rahulkannan08', '_blank', 'noopener,noreferrer')}
+            className="flex items-center gap-2 px-6 py-2 bg-transparent text-white hover:text-sky-400 font-semibold rounded-xl shadow transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-sky-400 hover:bg-sky-900/20"
+            type="button"
+          >
+            <Github size={20} /> GitHub
+          </button>
+          <button
+            onClick={() => window.open('https://www.linkedin.com/in/rahul-k-031627286/', '_blank', 'noopener,noreferrer')}
+            className="flex items-center gap-2 px-6 py-2 bg-transparent text-white hover:text-sky-400 font-semibold rounded-xl shadow transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-sky-400 hover:bg-sky-900/20"
+            type="button"
+          >
+            <Linkedin size={20} /> LinkedIn
+          </button>
+        </div>
+      )}
     </>
   );
 };
