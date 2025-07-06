@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import { Download, Send, Github, Linkedin, MapPin } from 'lucide-react';
@@ -110,7 +109,7 @@ const Contact = () => {
 
   const downloadResume = () => {
     const link = document.createElement('a');
-    link.href = '/resume.pdf';
+    link.href = 'RAHUL_RESUME_.pdf';
     link.download = 'Rahul_Resume.pdf';
     link.click();
   };
@@ -126,7 +125,7 @@ const Contact = () => {
     },
     {
       type: "GitHub",
-      value: "GitHub",
+      value: "rahulkannan08",
       link: "https://github.com/rahulkannan08",
       description: "Check out my code repositories",
       icon: Github,
@@ -134,8 +133,8 @@ const Contact = () => {
     },
     {
       type: "LinkedIn",
-      value: "LinkedIn",
-      link: "https://www.linkedin.com/in/rahul-k-082k6",
+      value: "Rahul",
+      link: "https://www.linkedin.com/in/rahul-k-031627286/",
       description: "Let's connect professionally",
       icon: Linkedin,
       isClickable: true
@@ -205,6 +204,8 @@ const Contact = () => {
               <span className="bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-400 bg-clip-text text-transparent animate-pulse">
                 Connect With Me 🎨
               </span>
+              <br />
+              <br /><br />
             </h2>
             <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-blue-100 font-medium px-4"
                style={{
@@ -241,54 +242,66 @@ const Contact = () => {
               <div className="space-y-4 md:space-y-6 mb-6 md:mb-10">
                 {contactInfo.map((contact, index) => {
                   const IconComponent = contact.icon;
-                  const isClickable = contact.isClickable;
-                  
-                  const content = (
-                    <div className="bg-gradient-to-r from-slate-800/90 via-indigo-900/90 to-slate-800/90 backdrop-blur-xl p-4 sm:p-6 md:p-8 rounded-2xl sm:rounded-3xl shadow-2xl border border-indigo-500/30 hover:border-blue-400/50 transition-all duration-500 relative overflow-hidden group transform-gpu hover:scale-105 cursor-pointer"
-                         style={{
-                           boxShadow: '0 20px 60px rgba(59, 130, 246, 0.2), inset 0 0 20px rgba(99, 102, 241, 0.1)',
-                           transform: `perspective(1000px) rotateX(${5 + mousePosition.y * 0.05}deg) rotateY(${mousePosition.x * 0.05}deg) translateZ(${10 + index * 5}px)`,
-                           animation: `float ${3 + index * 0.5}s ease-in-out infinite`,
-                           animationDelay: `${index * 0.2}s`
-                         }}>
-                      
-                      <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 via-indigo-500/15 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-all duration-500 rounded-2xl sm:rounded-3xl" />
-                      
+                  const isClickable = contact.link && contact.isClickable;
+                  const cardContent = (
+                    <div className="bg-gradient-to-r from-slate-800/90 via-indigo-900/90 to-slate-800/90 backdrop-blur-xl p-4 sm:p-6 md:p-8 rounded-2xl sm:rounded-3xl shadow-2xl border border-indigo-500/30 hover:border-blue-400/50 transition-all duration-500 relative overflow-hidden group transform-gpu hover:scale-105">
+                      <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 via-indigo-500/15 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-all duration-500 rounded-2xl sm:rounded-3xl pointer-events-none" />
                       <div className="flex items-center space-x-4 sm:space-x-6 relative z-10">
-                        <div className="p-3 sm:p-4 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-xl sm:rounded-2xl shadow-lg group-hover:shadow-blue-400/60 transition-all duration-500 group-hover:scale-125 transform-gpu"
-                             style={{
-                               boxShadow: '0 10px 30px rgba(59, 130, 246, 0.4)',
-                               transform: `perspective(400px) rotateX(${mousePosition.y * 0.1}deg) rotateY(${mousePosition.x * 0.1}deg) translateZ(10px)`
-                             }}>
+                        <div
+                          className="p-3 sm:p-4 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-xl sm:rounded-2xl shadow-lg group-hover:shadow-blue-400/60 transition-all duration-500 group-hover:scale-125 transform-gpu"
+                          style={{
+                            boxShadow: "0 10px 30px rgba(59, 130, 246, 0.4)",
+                            transform: `perspective(400px) rotateX(${mousePosition.y * 0.1}deg) rotateY(${mousePosition.x * 0.1}deg) translateZ(10px)`,
+                          }}
+                        >
                           <IconComponent size={20} className="sm:w-6 sm:h-6 text-white drop-shadow-lg" />
                         </div>
                         <div className="flex-1">
                           <h4 className="font-bold mb-1 sm:mb-2 text-white text-lg sm:text-xl drop-shadow-lg"
-                              style={{textShadow: '0 0 20px rgba(255, 255, 255, 0.8)'}}>{contact.type}</h4>
+                              style={{ textShadow: "0 0 20px rgba(255, 255, 255, 0.8)" }}>
+                            {contact.type}
+                          </h4>
                           <p className="text-blue-300 hover:text-blue-100 transition-colors font-semibold text-base sm:text-lg mb-1"
-                             style={{textShadow: '0 0 15px rgba(147, 196, 251, 0.8)'}}>
+                             style={{ textShadow: "0 0 15px rgba(147, 196, 251, 0.8)" }}>
                             {contact.value}
                           </p>
                           <p className="text-xs sm:text-sm text-blue-200/80"
-                             style={{textShadow: '0 0 10px rgba(191, 219, 254, 0.6)'}}>{contact.description}</p>
+                             style={{ textShadow: "0 0 10px rgba(191, 219, 254, 0.6)" }}>
+                            {contact.description}
+                          </p>
                         </div>
                       </div>
-                      
-                      {/* Floating Particles */}
-                      <div className="absolute top-3 sm:top-4 right-3 sm:right-4 w-2 sm:w-3 h-2 sm:h-3 bg-blue-400 rounded-full opacity-0 group-hover:opacity-100 animate-ping" />
-                      <div className="absolute bottom-3 sm:bottom-4 left-3 sm:left-4 w-1.5 sm:w-2 h-1.5 sm:h-2 bg-indigo-400 rounded-full opacity-0 group-hover:opacity-100 animate-pulse delay-300" />
+                      <div className="absolute top-3 sm:top-4 right-3 sm:right-4 w-2 sm:w-3 h-2 sm:h-3 bg-blue-400 rounded-full opacity-0 group-hover:opacity-100 animate-ping pointer-events-none" />
+                      <div className="absolute bottom-3 sm:bottom-4 left-3 sm:left-4 w-1.5 sm:w-2 h-1.5 sm:h-2 bg-indigo-400 rounded-full opacity-0 group-hover:opacity-100 animate-pulse delay-300 pointer-events-none" />
                     </div>
                   );
-                  
-                  return (
-                    <div key={index} className="group transform-gpu transition-all duration-500">
-                      {isClickable ? (
-                        <a href={contact.link} target="_blank" rel="noopener noreferrer" className="block">
-                          {content}
-                        </a>
-                      ) : (
-                        content
-                      )}
+                  return isClickable ? (
+                    <a
+                      key={index}
+                      href={contact.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block cursor-pointer group transform-gpu transition-all duration-500"
+                      style={{
+                        textDecoration: 'none',
+                        transform: `perspective(1000px) rotateX(${5 + mousePosition.y * 0.05}deg) rotateY(${mousePosition.x * 0.05}deg) translateZ(${10 + index * 5}px)`,
+                        animation: `float ${3 + index * 0.5}s ease-in-out infinite`,
+                        animationDelay: `${index * 0.2}s`,
+                      }}
+                    >
+                      {cardContent}
+                    </a>
+                  ) : (
+                    <div
+                      key={index}
+                      className="group transform-gpu transition-all duration-500"
+                      style={{
+                        transform: `perspective(1000px) rotateX(${5 + mousePosition.y * 0.05}deg) rotateY(${mousePosition.x * 0.05}deg) translateZ(${10 + index * 5}px)`,
+                        animation: `float ${3 + index * 0.5}s ease-in-out infinite`,
+                        animationDelay: `${index * 0.2}s`,
+                      }}
+                    >
+                      {cardContent}
                     </div>
                   );
                 })}

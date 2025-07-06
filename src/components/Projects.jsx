@@ -39,7 +39,9 @@ const Projects = () => {
       description: "Developed using HTML, CSS, JavaScript with touch/keyboard controls, sound effects, and customizable assets. Designed and implemented responsive layout and game logic.",
       technologies: ["HTML", "CSS", "JavaScript"],
       features: ["Touch/Keyboard Controls", "Sound Effects", "Responsive Design", "Game Logic"],
-      gradient: "from-blue-500 to-purple-600"
+      gradient: "from-blue-500 to-purple-600",
+      viewLink: "https://github.com/rahulkannan08/PHOTO-FLAPPY",
+      githubLink: "https://github.com/rahulkannan08/PHOTO-FLAPPY"
     },
     {
       title: "CAMPUS MANAGEMENT SYSTEM",
@@ -47,7 +49,9 @@ const Projects = () => {
       description: "Developed for college administration using advanced CSS and responsive design principles. Enabled efficient handling of student records, staff details, and administrative workflows.",
       technologies: ["HTML", "CSS", "JavaScript", "Responsive Design"],
       features: ["Student Records", "Staff Management", "Admin Dashboard", "Multi-Role Access"],
-      gradient: "from-green-500 to-teal-600"
+      gradient: "from-green-500 to-teal-600",
+      viewLink: "https://github.com/rahulkannan08/CAMPUS-MANAGEMENT",
+      githubLink: "https://github.com/rahulkannan08/CAMPUS-MANAGEMENT"
     }
   ];
 
@@ -189,12 +193,16 @@ const Projects = () => {
                 </div>
                 
                 <div className="flex gap-4 relative z-10">
-                  <button className="px-6 py-2 bg-primary text-primary-foreground rounded-lg hover:scale-110 hover:shadow-lg transition-all duration-500 btn-pulse hover-glow group-hover:bg-amber-600">
-                    View Project
-                  </button>
-                  <button className="px-6 py-2 border border-border rounded-lg hover:bg-accent hover:scale-110 hover:shadow-lg transition-all duration-500 card-hover group-hover:border-amber-300">
-                    GitHub
-                  </button>
+                  <a href={project.viewLink} target="_blank" rel="noopener noreferrer">
+                    <button className="px-6 py-2 bg-primary text-primary-foreground rounded-lg hover:scale-110 hover:shadow-lg transition-all duration-500 btn-pulse hover-glow group-hover:bg-amber-600">
+                      View Project
+                    </button>
+                  </a>
+                  <a href={project.githubLink} target="_blank" rel="noopener noreferrer">
+                    <button className="px-6 py-2 border border-border rounded-lg hover:bg-accent hover:scale-110 hover:shadow-lg transition-all duration-500 card-hover group-hover:border-amber-300">
+                      GitHub
+                    </button>
+                  </a>
                 </div>
               </div>
               
