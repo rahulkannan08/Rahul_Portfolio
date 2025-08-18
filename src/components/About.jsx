@@ -103,9 +103,8 @@ const About = () => {
                 <div className="absolute inset-0 bg-gradient-to-r from-amber-50/50 to-stone-50/50 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                 <h3 className="text-2xl font-semibold mb-4 text-card-foreground relative z-10 group-hover:text-amber-800 transition-colors duration-300">Interests & Focus</h3>
                 <p className="text-muted-foreground leading-relaxed relative z-10 group-hover:text-gray-700 transition-colors duration-300">
-                  I'm passionate about full-stack development, particularly interested in creating user-friendly web applications. 
-                  Currently exploring React ecosystem and prompt engineering to stay ahead in the rapidly evolving tech landscape.
-                </p>
+                  I'm passionate about full-stack development, with a strong interest in creating user-friendly web applications. Alongside coding, I enjoy working on UI/UX design to craft intuitive digital experiences and also explore graphic design (thumbnails, Canva designs, and creative visuals) to strengthen my design sense. Currently, I'm diving deeper into the React ecosystem and prompt engineering, while expanding my skills in UI/UX tools like Figma and planning to learn Miro for collaborative design.
+                  </p>
               </div>
             </div>
             

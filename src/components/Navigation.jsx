@@ -91,7 +91,7 @@ const Navigation = () => {
                 <span className="text-xl sm:text-2xl font-black gradient-text-brown">
                   Rahul
                 </span>
-                <div className="text-xs text-muted-foreground font-medium">Full Stack Developer</div>
+                <div className="text-xs text-muted-foreground font-medium">Full Stack Developer & UI/UX Designer & Graphic Designer</div>
               </div>
             </div>
           </div>

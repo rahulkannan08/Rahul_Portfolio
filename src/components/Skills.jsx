@@ -41,20 +41,38 @@ const Skills = () => {
         { name: "Node.js", level: 70, color: "from-green-400 to-green-600" },
         { name: "Express.js", level: 70, color: "from-gray-400 to-gray-600" },
         { name: "React", level: 60, color: "from-cyan-400 to-cyan-600" },
-        { name: "MongoDB", level: 65, color: "from-green-500 to-green-700" }
+        { name: "MongoDB", level: 65, color: "from-green-500 to-green-700" },
+        { name: "Next.js", level: 55, color: "from-purple-400 to-purple-600" },
+        { name: "Tailwind CSS", level: 75, color: "from-blue-400 to-blue-600" }
+        
       ]
     },
     {
       title: "Databases",
       skills: [
         { name: "MongoDB", level: 65, color: "from-green-400 to-green-600" },
-        { name: "Oracle", level: 55, color: "from-red-400 to-red-600" }
+        { name: "Oracle", level: 50, color: "from-red-400 to-red-600" }
+      ]
+    },
+    {
+      title: "DESIGN & MULTIMEDIA TOOLS ",
+      skills: [
+        { name: "Adobe Premiere Pro", level: 50, color: "from-red-400 to-red-600" },
+        { name: "Blender", level: 65, color: "from-green-400 to-green-600" },
+        { name: "Canva", level: 75, color: "from-red-400 to-red-600" }
+      ]
+    },
+    {
+      title: "UI/UX & Collaboration Tools",
+      skills: [
+        { name: "Figma", level: 60, color: "from-purple-400 to-purple-600" },
+        { name: "Miro", level: 20, color: "from-pink-400 to-pink-600" },
       ]
     },
     {
       title: "Currently Learning",
       skills: [
-        { name: "React", level: 60, color: "from-blue-400 to-blue-600" },
+        { name: "Game Dev", level: 60, color: "from-blue-400 to-blue-600" },
         { name: "Prompt Engineering", level: 50, color: "from-purple-400 to-purple-600" }
       ]
     }
