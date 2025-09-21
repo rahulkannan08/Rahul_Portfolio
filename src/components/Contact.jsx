@@ -64,8 +64,8 @@ const Contact = () => {
 
   const downloadResume = () => {
     const link = document.createElement('a');
-    link.href = 'RAHUL_RESUME_.pdf';
-    link.download = 'Rahul_Resume.pdf';
+    link.href = 'RAHUL RESUME.pdf';
+    link.download = 'RAHUL RESUME.pdf';
     link.click();
   };
 

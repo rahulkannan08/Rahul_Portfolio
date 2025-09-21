@@ -72,7 +72,6 @@ const Skills = () => {
     {
       title: "Currently Learning",
       skills: [
-        { name: "Game Dev", level: 60, color: "from-blue-400 to-blue-600" },
         { name: "Prompt Engineering", level: 50, color: "from-purple-400 to-purple-600" }
       ]
     }

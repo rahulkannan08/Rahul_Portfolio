@@ -60,13 +60,13 @@ const Education = () => {
   const certifications = [
     {
       title: "Joy of Computing using Python",
-      provider: "NPTEL",
-      score: "66%"
+      provider: "NPTEL", 
+      score: "Completed [66%]"
     },
     {
       title: "Database Management System",
       provider: "NPTEL",
-      score: "51%"
+      score: " Completed [51%]"
     },
     {
       title: "VB.NET Fundamentals",
