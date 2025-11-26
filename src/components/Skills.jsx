@@ -59,7 +59,8 @@ const Skills = () => {
       skills: [
         { name: "Adobe Premiere Pro", level: 50, color: "from-red-400 to-red-600" },
         { name: "Blender", level: 65, color: "from-green-400 to-green-600" },
-        { name: "Canva", level: 75, color: "from-red-400 to-red-600" }
+        { name: "Canva", level: 75, color: "from-red-400 to-red-600" },
+        { name:"n8n", level: 40, color: "from-blue-400 to-blue-600" },
       ]
     },
     {
@@ -72,7 +73,9 @@ const Skills = () => {
     {
       title: "Currently Learning",
       skills: [
-        { name: "Prompt Engineering", level: 50, color: "from-purple-400 to-purple-600" }
+        { name: "Prompt Engineering", level: 50, color: "from-purple-400 to-purple-600" },
+        { name: "Deep Learning", level: 40, color: "from-green-400 to-green-600" },
+        { name: "Gen AI", level: 30, color: "from-green-400 to-green-600"},
       ]
     }
   ];

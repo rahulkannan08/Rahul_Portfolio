@@ -12,6 +12,8 @@ const Projects = () => {
           // Stagger card animations
           setTimeout(() => setVisibleCards([0]), 200);
           setTimeout(() => setVisibleCards([0, 1]), 400);
+          setTimeout(() => setVisibleCards([0, 1, 2]), 600);
+          setTimeout(() => setVisibleCards([0, 1, 2, 3]), 800);
         } else {
           setIsVisible(false);
           setVisibleCards([]);
@@ -33,6 +35,28 @@ const Projects = () => {
   }, []);
 
   const projects = [
+    {
+      title: "LOOKBOOKgen - AI Fashion Content Generator",
+      subtitle: "🏆 PixelRiot International Hackathon Finalist",
+      description: "Selected as a finalist in PixelRiot - THE CREATIVE TECH HACKATHON THAT BROKE THE INTERNET! Built an AI-powered fashion platform to reduce clothing waste by enabling market research before mass production. Features interactive aurora canvas animations, AI avatar generation from real model photos, and infinite fashion carousels. Mission: Slow fashion above fast fashion - reducing waste, not jobs.",
+      technologies: ["Next.js", "React", "Framer Motion", "Canvas API", "CSS Modules"],
+      features: ["AI Lookbook Generator", "Interactive Aurora Animation", "Before/After Showcase", "Infinite Fashion Carousel", "Market Validation Tool"],
+      gradient: "from-pink-500 via-purple-600 to-indigo-600",
+      viewLink: "https://lookwand.vercel.app/",
+      githubLink: "https://github.com/rahulkannan08/lookwand",
+      badge: "International Finalist"
+    },
+    {
+      title: "WAME - Tournament & Coaching Management",
+      subtitle: "🎯 Tech4SocialGood Hackathon (OASIS, FOSS United)",
+      description: "Participated in Tech4SocialGood Hackathon by OASIS and FOSS United. Built a comprehensive web application for managing sports tournaments and coaching programs with integrated activity tracking. Implemented Google OAuth for seamless authentication and Google Fit API integration to track player fitness activities. Leveraged Supabase for real-time data sync and SQLite for tournament management (4 teams, 32 players). Full-stack solution combining Django REST Framework backend with Next.js frontend.",
+      technologies: ["Django", "Next.js", "React", "Google OAuth", "Google Fit API", "Supabase", "SQLite"],
+      features: ["Google Fit Activity Tracker", "OAuth Authentication", "Tournament Management", "Player Dashboard", "Real-time Sync", "Match Scheduling"],
+      gradient: "from-emerald-500 to-teal-600",
+      viewLink: "https://github.com/rahulkannan08/wame_frontend",
+      githubLink: "https://github.com/rahulkannan08/wame_frontend",
+      badge: "Social Good"
+    },
     {
       title: "PHOTO FLAPPY",
       subtitle: "Flappy Bird-style Game (Web-Based)",
@@ -146,6 +170,15 @@ const Projects = () => {
             >
               {/* Project header with gradient */}
               <div className={`h-2 bg-gradient-to-r ${project.gradient} group-hover:h-4 transition-all duration-500`}></div>
+              
+              {/* Hackathon Badge */}
+              {project.badge && (
+                <div className="absolute top-6 right-6 z-20">
+                  <div className="px-4 py-2 bg-gradient-to-r from-amber-400 to-orange-500 text-white text-xs font-bold rounded-full shadow-lg animate-pulse">
+                    {project.badge}
+                  </div>
+                </div>
+              )}
               
               <div className="p-8 relative overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-br from-amber-50/30 to-stone-50/30 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
