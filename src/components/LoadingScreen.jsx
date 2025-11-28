@@ -6,6 +6,7 @@ const LoadingScreen = ({ onLoadingComplete }) => {
   const [currentMessage, setCurrentMessage] = useState(0);
   const [showStars, setShowStars] = useState(false);
   const [laptopAngle, setLaptopAngle] = useState(0);
+  const [currentRole, setCurrentRole] = useState(0);
 
   const loadingMessages = [
     "Initializing portfolio...",
@@ -15,6 +16,13 @@ const LoadingScreen = ({ onLoadingComplete }) => {
     "Finalizing details...",
     "Almost ready...",
     "Welcome!"
+  ];
+
+  const roles = [
+    "Full Stack Developer",
+    "UI/UX Designer",
+    "Creative Problem Solver",
+    "Tech Enthusiast"
   ];
 
   useEffect(() => {
@@ -39,7 +47,14 @@ const LoadingScreen = ({ onLoadingComplete }) => {
       setCurrentMessage(prev => (prev + 1) % loadingMessages.length);
     }, 800);
 
-    return () => clearInterval(messageInterval);
+    const roleInterval = setInterval(() => {
+      setCurrentRole(prev => (prev + 1) % roles.length);
+    }, 2000);
+
+    return () => {
+      clearInterval(messageInterval);
+      clearInterval(roleInterval);
+    };
   }, []);
 
   useEffect(() => {
@@ -151,7 +166,23 @@ const LoadingScreen = ({ onLoadingComplete }) => {
               <div className="absolute inset-0 bg-gradient-to-r from-amber-400/30 to-orange-500/30 animate-spin"></div>
             </div>
             <h1 className="text-3xl sm:text-4xl md:text-5xl font-black gradient-text-brown mb-3 animate-pulse">Rahul</h1>
-            <p className="text-lg sm:text-xl text-purple-200 animate-fade-in">Full Stack Developer</p>
+            <div className="relative h-8 sm:h-10 overflow-hidden">
+              <div 
+                className="absolute inset-0 transition-transform duration-500 ease-in-out"
+                style={{ transform: `translateY(-${currentRole * 100}%)` }}
+              >
+                {roles.map((role, index) => (
+                  <p 
+                    key={index}
+                    className="text-lg sm:text-xl text-transparent bg-clip-text bg-gradient-to-r from-purple-300 via-pink-300 to-indigo-300 font-semibold h-8 sm:h-10 flex items-center justify-center"
+                  >
+                    {role}
+                  </p>
+                ))}
+              </div>
+              {/* Glowing underline animation */}
+              <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-32 sm:w-40 h-0.5 bg-gradient-to-r from-transparent via-purple-400 to-transparent animate-pulse"></div>
+            </div>
           </div>
         </div>
 

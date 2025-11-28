@@ -6,6 +6,7 @@ import Hero from '../components/Hero';
 import About from '../components/About';
 import Skills from '../components/Skills';
 import Projects from '../components/Projects';
+import Design from '../components/Design';
 import Education from '../components/Education';
 import Contact from '../components/Contact';
 import CursorFollower from '../components/CursorFollower';
@@ -38,6 +39,7 @@ const Index = () => {
       <About />
       <Skills />
       <Projects />
+      <Design />
       <Education />
       <Contact />
     </div>
