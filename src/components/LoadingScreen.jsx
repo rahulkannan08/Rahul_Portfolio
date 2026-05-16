@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 
 const LoadingScreen = ({ onLoadingComplete }) => {
   const [progress, setProgress] = useState(0);
@@ -7,6 +7,31 @@ const LoadingScreen = ({ onLoadingComplete }) => {
   const [showStars, setShowStars] = useState(false);
   const [laptopAngle, setLaptopAngle] = useState(0);
   const [currentRole, setCurrentRole] = useState(0);
+
+  // Stable positions computed once — avoid position-jumping on every 60ms re-render
+  const orbs = useMemo(
+    () =>
+      Array.from({ length: 8 }, (_, i) => ({
+        id: i,
+        left: `${10 + (i * 11) % 80}%`,
+        top: `${8 + (i * 10.5) % 80}%`,
+        duration: `${8 + (i % 4)}s`,
+        delay: `${(i % 3)}s`,
+      })),
+    []
+  );
+
+  const stars = useMemo(
+    () =>
+      Array.from({ length: 20 }, (_, i) => ({
+        id: i,
+        left: `${4 + (i * 4.8) % 91}%`,
+        top: `${4 + (i * 4.6) % 90}%`,
+        delay: `${(i % 4)}s`,
+        duration: `${2 + (i % 3)}s`,
+      })),
+    []
+  );
 
   const loadingMessages = [
     "Initializing portfolio...",
@@ -86,34 +111,34 @@ const LoadingScreen = ({ onLoadingComplete }) => {
         }}></div>
       </div>
 
-      {/* Slower floating orbs */}
-      <div className="absolute inset-0">
-        {[...Array(8)].map((_, i) => (
+      {/* Slower floating orbs — stable positions */}
+      <div className="absolute inset-0" aria-hidden="true">
+        {orbs.map((orb) => (
           <div
-            key={i}
-            className="absolute w-4 h-4 bg-gradient-to-br from-purple-400 to-pink-500 rounded-full opacity-40 animate-float"
+            key={orb.id}
+            className="absolute w-4 h-4 bg-gradient-to-br from-purple-400 to-pink-500 rounded-full opacity-40"
             style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              animation: `float ${8 + Math.random() * 4}s ease-in-out infinite`,
-              animationDelay: `${Math.random() * 3}s`
+              left: orb.left,
+              top: orb.top,
+              animation: `float ${orb.duration} ease-in-out infinite`,
+              animationDelay: orb.delay,
             }}
           />
         ))}
       </div>
 
-      {/* Twinkling stars */}
+      {/* Twinkling stars — stable positions */}
       {showStars && (
-        <div className="absolute inset-0">
-          {[...Array(20)].map((_, i) => (
+        <div className="absolute inset-0" aria-hidden="true">
+          {stars.map((star) => (
             <div
-              key={i}
+              key={star.id}
               className="absolute w-1 h-1 bg-white rounded-full animate-ping"
               style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-                animationDelay: `${Math.random() * 4}s`,
-                animationDuration: `${2 + Math.random() * 3}s`
+                left: star.left,
+                top: star.top,
+                animationDelay: star.delay,
+                animationDuration: star.duration,
               }}
             />
           ))}

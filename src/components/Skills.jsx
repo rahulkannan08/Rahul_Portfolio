@@ -1,7 +1,21 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 
 const Skills = () => {
   const [isVisible, setIsVisible] = useState(false);
+
+  // Stable binary rain positions — computed once
+  const binaryRain = useMemo(
+    () =>
+      Array.from({ length: 15 }, (_, i) => ({
+        id: i,
+        left: `${4 + (i * 6.2) % 90}%`,
+        top: `${4 + (i * 6.7) % 88}%`,
+        duration: `${3 + (i % 3)}s`,
+        delay: `${(i % 4) * 0.5}s`,
+        char: i % 2 === 0 ? '1' : '0',
+      })),
+    []
+  );
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -71,11 +85,20 @@ const Skills = () => {
       ]
     },
     {
+      title: "AI/ML & Development",
+      skills: [
+        { name: "Machine Learning Fundamentals", level: 55, color: "from-violet-400 to-violet-600" },
+        { name: "AI Application Development", level: 60, color: "from-fuchsia-400 to-fuchsia-600" },
+        { name: "Prompt Engineering", level: 65, color: "from-purple-400 to-purple-600" },
+        { name: "REST API Integration", level: 70, color: "from-indigo-400 to-indigo-600" }
+      ]
+    },
+    {
       title: "Currently Learning",
       skills: [
-        { name: "Prompt Engineering", level: 50, color: "from-purple-400 to-purple-600" },
-        { name: "Deep Learning", level: 40, color: "from-green-400 to-green-600" },
-        { name: "Gen AI", level: 30, color: "from-green-400 to-green-600"},
+        { name: "Deep Learning", level: 45, color: "from-green-400 to-green-600" },
+        { name: "Gen AI", level: 40, color: "from-emerald-400 to-emerald-600" },
+        { name: "LLM Fine-tuning", level: 30, color: "from-teal-400 to-teal-600" }
       ]
     }
   ];
@@ -112,23 +135,23 @@ const Skills = () => {
         }}></div>
 
         {/* Code brackets and symbols */}
-        <div className="absolute top-1/3 left-1/5 text-6xl font-mono text-purple-300 opacity-10 animate-pulse">{'<>'}</div>
-        <div className="absolute bottom-1/3 right-1/4 text-5xl font-mono text-cyan-300 opacity-15 animate-float">{'{}'}</div>
-        <div className="absolute top-1/2 right-1/6 text-4xl font-mono text-green-300 opacity-20 animate-bounce">[]</div>
+        <div className="absolute top-1/3 left-[20%] text-6xl font-mono text-purple-300 opacity-10 animate-pulse select-none">{'<>'}</div>
+        <div className="absolute bottom-1/3 right-1/4 text-5xl font-mono text-cyan-300 opacity-15 select-none" style={{ animation: 'float 5s ease-in-out infinite' }}>{'{}'}</div>
+        <div className="absolute top-1/2 right-[16%] text-4xl font-mono text-green-300 opacity-20 select-none" style={{ animation: 'bounce 4s ease-in-out infinite' }}>[]</div>
 
-        {/* Binary rain effect */}
-        {[...Array(15)].map((_, i) => (
+        {/* Binary rain — stable positions */}
+        {binaryRain.map((item) => (
           <div
-            key={i}
-            className="absolute text-green-400 font-mono text-sm opacity-20"
+            key={item.id}
+            className="absolute text-green-400 font-mono text-sm opacity-20 select-none"
             style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              animation: `float ${3 + Math.random() * 3}s ease-in-out infinite`,
-              animationDelay: `${Math.random() * 2}s`
+              left: item.left,
+              top: item.top,
+              animation: `float ${item.duration} ease-in-out infinite`,
+              animationDelay: item.delay,
             }}
           >
-            {Math.random() > 0.5 ? '1' : '0'}
+            {item.char}
           </div>
         ))}
       </div>

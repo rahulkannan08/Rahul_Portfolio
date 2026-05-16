@@ -38,24 +38,10 @@ const Navigation = () => {
   }, [isMobileMenuOpen]);
 
   const scrollToSection = (sectionId) => {
-    console.log('Scrolling to section:', sectionId);
     const element = document.getElementById(sectionId);
-    console.log('Element found:', element);
-    
     if (element) {
-      // Simple and reliable scroll method
-      element.scrollIntoView({ 
-        behavior: 'smooth',
-        block: 'start'
-      });
-      
-      // Close mobile menu
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
       setIsMobileMenuOpen(false);
-    } else {
-      console.error('Element not found with ID:', sectionId);
-      // List all available section IDs for debugging
-      const allSections = document.querySelectorAll('section[id]');
-      console.log('Available section IDs:', Array.from(allSections).map(s => s.id));
     }
   };
 

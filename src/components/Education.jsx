@@ -1,8 +1,21 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 
 const Education = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [visibleCards, setVisibleCards] = useState([]);
+
+  // Stable particle positions
+  const particles = useMemo(
+    () =>
+      Array.from({ length: 18 }, (_, i) => ({
+        id: i,
+        left: `${3 + (i * 5.3) % 92}%`,
+        top: `${3 + (i * 4.9) % 90}%`,
+        duration: `${3 + (i % 4)}s`,
+        delay: `${(i % 4) * 0.5}s`,
+      })),
+    []
+  );
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -19,6 +32,13 @@ const Education = () => {
           setTimeout(() => setVisibleCards(prev => [...prev, 'cert-2']), 1200);
           setTimeout(() => setVisibleCards(prev => [...prev, 'cert-3']), 1400);
           setTimeout(() => setVisibleCards(prev => [...prev, 'cert-4']), 1600);
+          // Then achievements & OSS
+          setTimeout(() => setVisibleCards(prev => [...prev, 'ach-0']), 1800);
+          setTimeout(() => setVisibleCards(prev => [...prev, 'ach-1']), 2000);
+          setTimeout(() => setVisibleCards(prev => [...prev, 'ach-2']), 2200);
+          setTimeout(() => setVisibleCards(prev => [...prev, 'ach-3']), 2400);
+          setTimeout(() => setVisibleCards(prev => [...prev, 'ach-4']), 2600);
+          setTimeout(() => setVisibleCards(prev => [...prev, 'oss-0']), 2800);
         } else {
           setIsVisible(false);
           setVisibleCards([]);
@@ -85,6 +105,42 @@ const Education = () => {
     }
   ];
 
+  const achievements = [
+    {
+      title: "🥇 First Prize – Online Portfolio Creation Event",
+      badge: "Winner",
+      badgeColor: "bg-amber-400 text-amber-900"
+    },
+    {
+      title: "🚀 Participated – Tech4SocialGood Hackathon (OASIS, FOSS United)",
+      badge: "Hackathon",
+      badgeColor: "bg-blue-400 text-blue-900"
+    },
+    {
+      title: "🔥 Shortlisted for Final Round – PIXEL RIOT International Creative Tech Hackathon",
+      badge: "Finalist",
+      badgeColor: "bg-rose-400 text-rose-900"
+    },
+    {
+      title: "🥉 2nd Runner-up – Inter College Hackathon (Next Gen AI Event)",
+      badge: "Runner-up",
+      badgeColor: "bg-orange-400 text-orange-900"
+    },
+    {
+      title: "💡 Participated – hack2learn Hackathon (Kanpur Institute of Technology)",
+      badge: "Hackathon",
+      badgeColor: "bg-purple-400 text-purple-900"
+    }
+  ];
+
+  const ossContribution = {
+    title: "OSS Tech Community – Website Development",
+    description: "Contributed to the official website of the OSS Tech Community (Digital Dreamers Den), helping build and enhance the community's online presence.",
+    myRepo: "https://github.com/rahulkannan08/community-website",
+    officialRepo: "https://github.com/digitaldreamersden/digitaldreamersden.github.io",
+    hostedSite: "https://digitaldreamersden.github.io/"
+  };
+
   return (
     <section id="education" className="py-20 bg-gradient-to-br from-emerald-900/60 via-teal-900 to-slate-900/80 relative overflow-hidden">
       {/* Gradient blend from previous section */}
@@ -142,16 +198,16 @@ const Education = () => {
           <div className="w-3 h-14 bg-cyan-400 rounded-sm inline-block"></div>
         </div>
 
-        {/* Floating knowledge particles */}
-        {[...Array(18)].map((_, i) => (
+        {/* Floating knowledge particles — stable positions */}
+        {particles.map((p) => (
           <div
-            key={i}
+            key={p.id}
             className="absolute w-2 h-2 bg-teal-300 rounded-full opacity-25"
             style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              animation: `float ${3 + Math.random() * 4}s ease-in-out infinite`,
-              animationDelay: `${Math.random() * 2}s`
+              left: p.left,
+              top: p.top,
+              animation: `float ${p.duration} ease-in-out infinite`,
+              animationDelay: p.delay,
             }}
           />
         ))}
@@ -224,6 +280,72 @@ const Education = () => {
             </div>
           </div>
         </div>
+
+        {/* Achievements & Hackathons */}
+        <div className="mt-16 max-w-6xl mx-auto">
+          <h3 className={`text-2xl font-semibold mb-8 text-center text-white hover:text-amber-300 transition-colors duration-500 cursor-pointer transform ${isVisible ? 'animate-fade-in' : 'opacity-0'}`}>
+            🏆 Achievements & Hackathons
+          </h3>
+          <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {achievements.map((ach, index) => (
+              <div
+                key={index}
+                className={`relative bg-card p-5 rounded-xl shadow-sm border hover:shadow-2xl hover:scale-105 hover:-translate-y-2 transition-all duration-700 group cursor-pointer transform ${
+                  visibleCards.includes(`ach-${index}`)
+                    ? 'opacity-100 translate-y-0'
+                    : 'opacity-0 translate-y-10'
+                }`}
+                style={{ transitionDelay: `${index * 150}ms` }}
+              >
+                <div className="absolute inset-0 bg-gradient-to-r from-amber-50/40 to-stone-50/40 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <div className="flex items-start justify-between gap-3 relative z-10">
+                  <p className="text-sm font-medium text-card-foreground group-hover:text-amber-800 transition-colors duration-300 leading-relaxed">{ach.title}</p>
+                  <span className={`shrink-0 px-2 py-1 ${ach.badgeColor} rounded-full text-xs font-bold`}>{ach.badge}</span>
+                </div>
+                <div className="absolute top-3 right-3 w-1.5 h-1.5 bg-amber-400 rounded-full opacity-0 group-hover:opacity-100 group-hover:animate-ping transition-all duration-500"></div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Open Source Contribution */}
+        <div className="mt-12 max-w-6xl mx-auto">
+          <h3 className={`text-2xl font-semibold mb-8 text-center text-white hover:text-teal-300 transition-colors duration-500 cursor-pointer transform ${isVisible ? 'animate-fade-in' : 'opacity-0'}`}>
+            🌐 Open Source Contribution
+          </h3>
+          <div
+            className={`relative bg-card p-8 rounded-xl shadow-sm border hover:shadow-2xl hover:scale-[1.02] hover:-translate-y-2 transition-all duration-700 group cursor-pointer transform ${
+              visibleCards.includes('oss-0')
+                ? 'opacity-100 translate-y-0'
+                : 'opacity-0 translate-y-10'
+            }`}
+          >
+            <div className="absolute inset-0 bg-gradient-to-r from-teal-50/30 to-emerald-50/30 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+            <div className="relative z-10">
+              <div className="flex flex-wrap items-center gap-3 mb-3">
+                <h4 className="text-xl font-semibold text-card-foreground group-hover:text-teal-700 transition-colors duration-300">{ossContribution.title}</h4>
+                <span className="px-3 py-1 bg-teal-100 text-teal-800 rounded-full text-xs font-bold">Open Source</span>
+              </div>
+              <p className="text-muted-foreground leading-relaxed mb-6 group-hover:text-gray-700 transition-colors duration-300">{ossContribution.description}</p>
+              <div className="flex flex-wrap gap-3">
+                <a href={ossContribution.myRepo} target="_blank" rel="noopener noreferrer"
+                  className="px-4 py-2 bg-teal-600 text-white rounded-lg text-sm font-medium hover:bg-teal-700 hover:scale-105 transition-all duration-300 shadow-md">
+                  My Contribution ↗
+                </a>
+                <a href={ossContribution.officialRepo} target="_blank" rel="noopener noreferrer"
+                  className="px-4 py-2 border border-teal-400 text-teal-300 rounded-lg text-sm font-medium hover:bg-teal-900/40 hover:scale-105 transition-all duration-300">
+                  Official Repo ↗
+                </a>
+                <a href={ossContribution.hostedSite} target="_blank" rel="noopener noreferrer"
+                  className="px-4 py-2 border border-emerald-400 text-emerald-300 rounded-lg text-sm font-medium hover:bg-emerald-900/40 hover:scale-105 transition-all duration-300">
+                  🌍 Live Site ↗
+                </a>
+              </div>
+            </div>
+            <div className="absolute top-4 right-4 w-2 h-2 bg-teal-400 rounded-full opacity-0 group-hover:opacity-100 group-hover:animate-pulse transition-all duration-500"></div>
+          </div>
+        </div>
+
       </div>
 
       {/* Gradient blend to next section */}

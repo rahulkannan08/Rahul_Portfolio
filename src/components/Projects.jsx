@@ -1,8 +1,21 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 
 const Projects = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [visibleCards, setVisibleCards] = useState([]);
+
+  // Stable decorative dots — computed once, never on re-render
+  const floatingDots = useMemo(
+    () =>
+      Array.from({ length: 20 }, (_, i) => ({
+        id: i,
+        left: `${3 + (i * 4.7) % 92}%`,
+        top: `${3 + (i * 5.1) % 91}%`,
+        duration: `${4 + (i % 3)}s`,
+        delay: `${(i % 4) * 0.5}s`,
+      })),
+    []
+  );
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -14,6 +27,9 @@ const Projects = () => {
           setTimeout(() => setVisibleCards([0, 1]), 400);
           setTimeout(() => setVisibleCards([0, 1, 2]), 600);
           setTimeout(() => setVisibleCards([0, 1, 2, 3]), 800);
+          setTimeout(() => setVisibleCards([0, 1, 2, 3, 4]), 1000);
+          setTimeout(() => setVisibleCards([0, 1, 2, 3, 4, 5]), 1200);
+          setTimeout(() => setVisibleCards([0, 1, 2, 3, 4, 5, 6]), 1400);
         } else {
           setIsVisible(false);
           setVisibleCards([]);
@@ -35,6 +51,39 @@ const Projects = () => {
   }, []);
 
   const projects = [
+    {
+      title: "VoiceShield AI – Multilingual AI Voice Detection System",
+      subtitle: "🤖 AI-Powered Audio Forensics Platform",
+      description: "AI-powered audio forensics platform that detects whether a voice sample is AI-generated or human-spoken across Tamil, English, Hindi, Malayalam, and Telugu. Built a REST API pipeline for multilingual deepfake voice detection with real-time inference, confidence scoring, and robust audio preprocessing for noisy and compressed recordings.",
+      technologies: ["Python", "FastAPI", "Postman", "gTTS", "Pydub", "NumPy", "FFmpeg"],
+      features: ["Multilingual Voice Detection", "Deepfake Audio Forensics", "Real-time Inference", "Confidence Scoring", "REST API Pipeline", "Noise-robust Preprocessing"],
+      gradient: "from-rose-500 via-red-600 to-orange-600",
+      viewLink: "https://github.com/rahulkannan08",
+      githubLink: "https://github.com/rahulkannan08",
+      badge: "AI Forensics"
+    },
+    {
+      title: "AgriVision AI (AgriGuard) – Crop Disease Detection & Advisory",
+      subtitle: "🌱 AI-Powered Agricultural Intelligence Platform",
+      description: "AI-driven agricultural intelligence platform that detects crop diseases from leaf images and provides treatment recommendations, multilingual voice guidance, and outbreak heatmap analytics for farmers and field teams.",
+      technologies: ["Python", "PyTorch", "OpenCV", "ElevenLabs", "LiveKit", "FastAPI", "Node.js", "TypeScript", "Next.js", "MongoDB", "NVIDIA AI APIs", "Gemini API"],
+      features: ["Crop Disease Detection", "AI Treatment Recommendations", "Multilingual Voice Guidance", "Outbreak Heatmap Analytics", "Farmer Dashboard", "Real-time Advisory"],
+      gradient: "from-green-500 via-emerald-600 to-teal-600",
+      viewLink: "https://github.com/rahulkannan08/agriGuard-Ai",
+      githubLink: "https://github.com/rahulkannan08/agriGuard-Ai",
+      badge: "AgriTech AI"
+    },
+    {
+      title: "Smart Scheme – Government Scheme Information Portal",
+      subtitle: "📋 AI Chatbot for Scheme Discovery",
+      description: "A web application that provides information about government and organizational schemes. Users can view scheme details, eligibility, and how to apply. An integrated AI chatbot powered by Gemini API helps answer user questions in real-time.",
+      technologies: ["HTML", "CSS", "JavaScript", "Node.js", "Express.js", "MongoDB", "Gemini API"],
+      features: ["Scheme Discovery", "Eligibility Checker", "AI Chatbot (Gemini)", "Application Guide", "Responsive Design", "Real-time Q&A"],
+      gradient: "from-sky-500 via-blue-600 to-indigo-600",
+      viewLink: "https://smartscheme.vercel.app/",
+      githubLink: "https://github.com/rahulkannan08/smartscheme",
+      badge: "GovTech"
+    },
     {
       title: "LOOKBOOKgen - AI Fashion Content Generator",
       subtitle: "🏆 PixelRiot International Hackathon Finalist",
@@ -101,7 +150,7 @@ const Projects = () => {
         <div className="absolute top-20 left-10 w-32 h-20 bg-gradient-to-br from-violet-400 via-purple-500 to-pink-500 rounded-2xl opacity-25 animate-float shadow-2xl" style={{
           animation: 'float 7s ease-in-out infinite, glow 4s ease-in-out infinite alternate'
         }}></div>
-        
+
         <div className="absolute top-40 right-16 w-24 h-24 bg-gradient-to-br from-cyan-400 via-indigo-500 to-purple-600 rounded-full opacity-30 animate-bounce shadow-xl" style={{
           animation: 'bounce 4s ease-in-out infinite, pulse 3s ease-in-out infinite'
         }}></div>
@@ -132,19 +181,19 @@ const Projects = () => {
         </div>
 
         {/* Code snippets */}
-        <div className="absolute top-1/2 left-1/6 text-3xl font-mono text-indigo-300 opacity-15 animate-pulse">{'</>'}</div>
-        <div className="absolute bottom-1/4 right-1/5 text-2xl font-mono text-violet-300 opacity-20 animate-float">{'()'}</div>
+        <div className="absolute top-1/2 left-[16%] text-3xl font-mono text-indigo-300 opacity-15 animate-pulse select-none">{'</>'}</div>
+        <div className="absolute bottom-1/4 right-[20%] text-2xl font-mono text-violet-300 opacity-20 select-none" style={{ animation: 'float 5s ease-in-out infinite' }}>{'()'}</div>
 
-        {/* Floating dots */}
-        {[...Array(20)].map((_, i) => (
+        {/* Floating dots — stable positions via useMemo */}
+        {floatingDots.map((dot) => (
           <div
-            key={i}
+            key={dot.id}
             className="absolute w-1 h-1 bg-purple-300 rounded-full opacity-30"
             style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              animation: `float ${4 + Math.random() * 3}s ease-in-out infinite`,
-              animationDelay: `${Math.random() * 2}s`
+              left: dot.left,
+              top: dot.top,
+              animation: `float ${dot.duration} ease-in-out infinite`,
+              animationDelay: dot.delay,
             }}
           />
         ))}
@@ -156,21 +205,20 @@ const Projects = () => {
           <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-0 h-1 bg-gradient-to-r from-violet-400 to-pink-600 group-hover:w-44 transition-all duration-500 ease-out rounded-full shadow-lg"></div>
           <div className="absolute -inset-4 bg-gradient-to-r from-violet-100/20 to-pink-100/20 rounded-2xl opacity-0 group-hover:opacity-100 transition-all duration-500 blur-xl"></div>
         </h2>
-        
+
         <div className="grid sm:grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 max-w-6xl mx-auto">
           {projects.map((project, index) => (
-            <div 
-              key={index} 
-              className={`group bg-card rounded-xl shadow-sm border overflow-hidden hover:shadow-2xl hover:scale-105 hover:-translate-y-4 transition-all duration-700 cursor-pointer transform ${
-                visibleCards.includes(index) 
-                  ? 'opacity-100 translate-y-0 rotate-0' 
+            <div
+              key={index}
+              className={`relative group bg-card rounded-xl shadow-sm border overflow-hidden hover:shadow-2xl hover:scale-105 hover:-translate-y-4 transition-all duration-700 cursor-pointer transform ${visibleCards.includes(index)
+                  ? 'opacity-100 translate-y-0 rotate-0'
                   : 'opacity-0 translate-y-10 rotate-1'
-              }`}
-              style={{ transitionDelay: `${index * 200}ms` }}
+                }`}
+              style={{ transitionDelay: `${index * 150}ms` }}
             >
               {/* Project header with gradient */}
               <div className={`h-2 bg-gradient-to-r ${project.gradient} group-hover:h-4 transition-all duration-500`}></div>
-              
+
               {/* Hackathon Badge */}
               {project.badge && (
                 <div className="absolute top-4 sm:top-6 right-4 sm:right-6 z-20">
@@ -179,27 +227,27 @@ const Projects = () => {
                   </div>
                 </div>
               )}
-              
+
               <div className="p-4 sm:p-6 md:p-8 relative overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-br from-amber-50/30 to-stone-50/30 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                
+
                 <div className="mb-4 sm:mb-6 relative z-10">
                   <h3 className="text-lg sm:text-xl md:text-2xl font-bold mb-2 text-card-foreground group-hover:text-primary group-hover:scale-105 transition-all duration-500 transform-gpu">
                     {project.title}
                   </h3>
                   <p className="text-sm sm:text-base text-amber-600 font-medium group-hover:text-amber-700 transition-colors duration-300">{project.subtitle}</p>
                 </div>
-                
+
                 <p className="text-sm sm:text-base text-muted-foreground mb-4 sm:mb-6 leading-relaxed relative z-10 group-hover:text-gray-700 transition-colors duration-300">
                   {project.description}
                 </p>
-                
+
                 <div className="mb-6 relative z-10">
                   <h4 className="font-semibold mb-3 text-card-foreground group-hover:text-amber-800 transition-colors duration-300">Technologies Used:</h4>
                   <div className="flex flex-wrap gap-2">
                     {project.technologies.map((tech, techIndex) => (
-                      <span 
-                        key={techIndex} 
+                      <span
+                        key={techIndex}
                         className="px-3 py-1 bg-amber-100 text-amber-800 rounded-full text-sm hover:bg-amber-200 hover:scale-110 transition-all duration-300 cursor-default group-hover:shadow-lg"
                         style={{ transitionDelay: `${techIndex * 50}ms` }}
                       >
@@ -208,13 +256,13 @@ const Projects = () => {
                     ))}
                   </div>
                 </div>
-                
+
                 <div className="mb-6 relative z-10">
                   <h4 className="font-semibold mb-3 text-card-foreground group-hover:text-amber-800 transition-colors duration-300">Key Features:</h4>
                   <ul className="space-y-2">
                     {project.features.map((feature, featureIndex) => (
-                      <li 
-                        key={featureIndex} 
+                      <li
+                        key={featureIndex}
                         className="flex items-center text-sm text-muted-foreground group-hover:text-gray-700 transition-all duration-300 transform group-hover:translate-x-2"
                         style={{ transitionDelay: `${featureIndex * 100}ms` }}
                       >
@@ -224,7 +272,7 @@ const Projects = () => {
                     ))}
                   </ul>
                 </div>
-                
+
                 <div className="flex gap-2 sm:gap-3 md:gap-4 relative z-10 flex-wrap">
                   <a href={project.viewLink} target="_blank" rel="noopener noreferrer">
                     <button className="px-3 sm:px-4 md:px-6 py-1.5 sm:py-2 text-xs sm:text-sm md:text-base bg-primary text-primary-foreground rounded-lg hover:scale-110 hover:shadow-lg transition-all duration-500 btn-pulse hover-glow group-hover:bg-amber-600">
@@ -238,10 +286,10 @@ const Projects = () => {
                   </a>
                 </div>
               </div>
-              
+
               {/* Enhanced hover overlay effect */}
               <div className="absolute inset-0 bg-gradient-to-br from-transparent via-amber-50/20 to-amber-100/30 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
-              
+
               {/* Floating particles on hover */}
               <div className="absolute top-4 right-4 w-2 h-2 bg-amber-400 rounded-full opacity-0 group-hover:opacity-100 group-hover:animate-bounce transition-all duration-500" style={{ animationDelay: '0.2s' }}></div>
               <div className="absolute top-8 right-8 w-1 h-1 bg-amber-500 rounded-full opacity-0 group-hover:opacity-100 group-hover:animate-ping transition-all duration-500" style={{ animationDelay: '0.5s' }}></div>

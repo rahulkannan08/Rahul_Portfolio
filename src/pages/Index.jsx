@@ -1,15 +1,21 @@
-
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, lazy, Suspense } from 'react';
 import LoadingScreen from '../components/LoadingScreen';
 import Navigation from '../components/Navigation';
-import Hero from '../components/Hero';
-import About from '../components/About';
-import Skills from '../components/Skills';
-import Projects from '../components/Projects';
-import Design from '../components/Design';
-import Education from '../components/Education';
-import Contact from '../components/Contact';
-import CursorFollower from '../components/CursorFollower';
+
+// Lazy-load all below-the-fold sections for better initial load time
+const Hero           = lazy(() => import('../components/Hero'));
+const About          = lazy(() => import('../components/About'));
+const Skills         = lazy(() => import('../components/Skills'));
+const Projects       = lazy(() => import('../components/Projects'));
+const Design         = lazy(() => import('../components/Design'));
+const Education      = lazy(() => import('../components/Education'));
+const Contact        = lazy(() => import('../components/Contact'));
+const CursorFollower = lazy(() => import('../components/CursorFollower'));
+
+// Invisible placeholder so layout doesn't jump while chunks load
+const SectionFallback = () => (
+  <div aria-hidden="true" style={{ minHeight: '200px' }} />
+);
 
 const Index = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -18,12 +24,8 @@ const Index = () => {
     setIsLoading(false);
   };
 
-  // Simulate minimum loading time for better UX
   useEffect(() => {
-    const minLoadTime = setTimeout(() => {
-      // This ensures the loading screen shows for at least 2 seconds
-    }, 2000);
-
+    const minLoadTime = setTimeout(() => {}, 2000);
     return () => clearTimeout(minLoadTime);
   }, []);
 
@@ -33,15 +35,33 @@ const Index = () => {
 
   return (
     <div className="min-h-screen">
-      <CursorFollower />
+      <Suspense fallback={null}>
+        <CursorFollower />
+      </Suspense>
       <Navigation />
-      <Hero />
-      <About />
-      <Skills />
-      <Projects />
-      <Design />
-      <Education />
-      <Contact />
+      <main>
+        <Suspense fallback={<SectionFallback />}>
+          <Hero />
+        </Suspense>
+        <Suspense fallback={<SectionFallback />}>
+          <About />
+        </Suspense>
+        <Suspense fallback={<SectionFallback />}>
+          <Skills />
+        </Suspense>
+        <Suspense fallback={<SectionFallback />}>
+          <Projects />
+        </Suspense>
+        <Suspense fallback={<SectionFallback />}>
+          <Design />
+        </Suspense>
+        <Suspense fallback={<SectionFallback />}>
+          <Education />
+        </Suspense>
+        <Suspense fallback={<SectionFallback />}>
+          <Contact />
+        </Suspense>
+      </main>
     </div>
   );
 };
