@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 
 const Education = () => {
   const [isVisible, setIsVisible] = useState(false);
-  const [visibleCards, setVisibleCards] = useState([]);
+  const hasAnimated = useRef(false);
 
   // Stable particle positions
   const particles = useMemo(
@@ -20,31 +20,14 @@ const Education = () => {
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
+        if (entry.isIntersecting && !hasAnimated.current) {
+          hasAnimated.current = true;
           setIsVisible(true);
-          // Stagger animations for education cards
-          setTimeout(() => setVisibleCards(['edu-0']), 200);
-          setTimeout(() => setVisibleCards(['edu-0', 'edu-1']), 400);
-          setTimeout(() => setVisibleCards(['edu-0', 'edu-1', 'edu-2']), 600);
-          // Then certifications
-          setTimeout(() => setVisibleCards(prev => [...prev, 'cert-0']), 800);
-          setTimeout(() => setVisibleCards(prev => [...prev, 'cert-1']), 1000);
-          setTimeout(() => setVisibleCards(prev => [...prev, 'cert-2']), 1200);
-          setTimeout(() => setVisibleCards(prev => [...prev, 'cert-3']), 1400);
-          setTimeout(() => setVisibleCards(prev => [...prev, 'cert-4']), 1600);
-          // Then achievements & OSS
-          setTimeout(() => setVisibleCards(prev => [...prev, 'ach-0']), 1800);
-          setTimeout(() => setVisibleCards(prev => [...prev, 'ach-1']), 2000);
-          setTimeout(() => setVisibleCards(prev => [...prev, 'ach-2']), 2200);
-          setTimeout(() => setVisibleCards(prev => [...prev, 'ach-3']), 2400);
-          setTimeout(() => setVisibleCards(prev => [...prev, 'ach-4']), 2600);
-          setTimeout(() => setVisibleCards(prev => [...prev, 'oss-0']), 2800);
-        } else {
-          setIsVisible(false);
-          setVisibleCards([]);
+          // Disconnect after first trigger — no more resets
+          observer.disconnect();
         }
       },
-      { threshold: 0.3 }
+      { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }
     );
 
     const element = document.getElementById('education');
@@ -52,11 +35,7 @@ const Education = () => {
       observer.observe(element);
     }
 
-    return () => {
-      if (element) {
-        observer.unobserve(element);
-      }
-    };
+    return () => observer.disconnect();
   }, []);
 
   const education = [
@@ -229,11 +208,11 @@ const Education = () => {
                 <div 
                   key={index} 
                   className={`bg-card p-6 rounded-xl shadow-sm border hover:shadow-2xl hover:scale-105 hover:-translate-y-2 transition-all duration-700 group cursor-pointer transform ${
-                    visibleCards.includes(`edu-${index}`)
+                    isVisible
                       ? 'opacity-100 translate-x-0'
                       : 'opacity-0 -translate-x-10'
                   }`}
-                  style={{ transitionDelay: `${index * 200}ms` }}
+                  style={{ transitionDelay: isVisible ? `${index * 200}ms` : '0ms' }}
                 >
                   <div className="absolute inset-0 bg-gradient-to-r from-amber-50/50 to-stone-50/50 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                   <h4 className="text-lg font-semibold mb-2 text-card-foreground relative z-10 group-hover:text-amber-800 transition-colors duration-300">{edu.degree}</h4>
@@ -256,11 +235,11 @@ const Education = () => {
                 <div 
                   key={index} 
                   className={`bg-card p-6 rounded-xl shadow-sm border hover:shadow-2xl hover:scale-105 hover:-translate-y-2 transition-all duration-700 group cursor-pointer transform ${
-                    visibleCards.includes(`cert-${index}`)
+                    isVisible
                       ? 'opacity-100 translate-x-0'
                       : 'opacity-0 translate-x-10'
                   }`}
-                  style={{ transitionDelay: `${(index + 3) * 200}ms` }}
+                  style={{ transitionDelay: isVisible ? `${(index + 3) * 200}ms` : '0ms' }}
                 >
                   <div className="absolute inset-0 bg-gradient-to-r from-amber-50/50 to-stone-50/50 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                   <h4 className="text-lg font-semibold mb-2 text-card-foreground relative z-10 group-hover:text-amber-800 transition-colors duration-300">{cert.title}</h4>
@@ -291,11 +270,11 @@ const Education = () => {
               <div
                 key={index}
                 className={`relative bg-card p-5 rounded-xl shadow-sm border hover:shadow-2xl hover:scale-105 hover:-translate-y-2 transition-all duration-700 group cursor-pointer transform ${
-                  visibleCards.includes(`ach-${index}`)
+                  isVisible
                     ? 'opacity-100 translate-y-0'
                     : 'opacity-0 translate-y-10'
                 }`}
-                style={{ transitionDelay: `${index * 150}ms` }}
+                style={{ transitionDelay: isVisible ? `${(index + 8) * 150}ms` : '0ms' }}
               >
                 <div className="absolute inset-0 bg-gradient-to-r from-amber-50/40 to-stone-50/40 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                 <div className="flex items-start justify-between gap-3 relative z-10">
@@ -315,10 +294,11 @@ const Education = () => {
           </h3>
           <div
             className={`relative bg-card p-8 rounded-xl shadow-sm border hover:shadow-2xl hover:scale-[1.02] hover:-translate-y-2 transition-all duration-700 group cursor-pointer transform ${
-              visibleCards.includes('oss-0')
+              isVisible
                 ? 'opacity-100 translate-y-0'
                 : 'opacity-0 translate-y-10'
             }`}
+            style={{ transitionDelay: isVisible ? '1800ms' : '0ms' }}
           >
             <div className="absolute inset-0 bg-gradient-to-r from-teal-50/30 to-emerald-50/30 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
             <div className="relative z-10">

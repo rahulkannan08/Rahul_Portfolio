@@ -5,7 +5,6 @@ const LoadingScreen = ({ onLoadingComplete }) => {
   const [progress, setProgress] = useState(0);
   const [currentMessage, setCurrentMessage] = useState(0);
   const [showStars, setShowStars] = useState(false);
-  const [laptopAngle, setLaptopAngle] = useState(0);
   const [currentRole, setCurrentRole] = useState(0);
 
   // Stable positions computed once — avoid position-jumping on every 60ms re-render
@@ -57,12 +56,12 @@ const LoadingScreen = ({ onLoadingComplete }) => {
           clearInterval(interval);
           setTimeout(() => {
             onLoadingComplete();
-          }, 800);
+          }, 300);
           return 100;
         }
-        return prev + 1.5;
+        return prev + 2.5;
       });
-    }, 60);
+    }, 30);
 
     return () => clearInterval(interval);
   }, [onLoadingComplete]);
@@ -70,11 +69,11 @@ const LoadingScreen = ({ onLoadingComplete }) => {
   useEffect(() => {
     const messageInterval = setInterval(() => {
       setCurrentMessage(prev => (prev + 1) % loadingMessages.length);
-    }, 800);
+    }, 300);
 
     const roleInterval = setInterval(() => {
       setCurrentRole(prev => (prev + 1) % roles.length);
-    }, 2000);
+    }, 1500);
 
     return () => {
       clearInterval(messageInterval);
@@ -85,15 +84,10 @@ const LoadingScreen = ({ onLoadingComplete }) => {
   useEffect(() => {
     const starsTimer = setTimeout(() => {
       setShowStars(true);
-    }, 1000);
-
-    const laptopTimer = setInterval(() => {
-      setLaptopAngle(prev => (prev + 2) % 360);
-    }, 100);
+    }, 600);
 
     return () => {
       clearTimeout(starsTimer);
-      clearInterval(laptopTimer);
     };
   }, []);
 
@@ -145,14 +139,22 @@ const LoadingScreen = ({ onLoadingComplete }) => {
         </div>
       )}
 
+      <style>{`
+        @keyframes spin-laptop {
+          0% { transform: rotateY(0deg) rotateX(4deg); }
+          50% { transform: rotateY(180deg) rotateX(-4deg); }
+          100% { transform: rotateY(360deg) rotateX(4deg); }
+        }
+        .animate-spin-laptop {
+          animation: spin-laptop 12s linear infinite;
+        }
+      `}</style>
+
       <div className="text-center space-y-8 sm:space-y-12 px-4 sm:px-6 relative z-10 max-w-md mx-auto">
         {/* 3D Laptop Animation */}
         <div className="relative perspective-1000">
           <div 
-            className="w-24 h-18 sm:w-32 sm:h-24 mx-auto relative transform-gpu"
-            style={{
-              transform: `rotateY(${laptopAngle * 0.5}deg) rotateX(${Math.sin(laptopAngle * 0.02) * 10}deg)`
-            }}
+            className="w-24 h-18 sm:w-32 sm:h-24 mx-auto relative transform-gpu animate-spin-laptop"
           >
             {/* Laptop base */}
             <div className="absolute bottom-0 w-24 h-3 sm:w-32 sm:h-4 bg-gradient-to-r from-gray-600 to-gray-800 rounded-lg shadow-2xl transform rotateX(60deg)"></div>

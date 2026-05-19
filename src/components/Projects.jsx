@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 
 const Projects = () => {
   const [isVisible, setIsVisible] = useState(false);
-  const [visibleCards, setVisibleCards] = useState([]);
+  const hasAnimated = useRef(false);
 
   // Stable decorative dots — computed once, never on re-render
   const floatingDots = useMemo(
@@ -20,22 +20,14 @@ const Projects = () => {
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
+        if (entry.isIntersecting && !hasAnimated.current) {
+          hasAnimated.current = true;
           setIsVisible(true);
-          // Stagger card animations
-          setTimeout(() => setVisibleCards([0]), 200);
-          setTimeout(() => setVisibleCards([0, 1]), 400);
-          setTimeout(() => setVisibleCards([0, 1, 2]), 600);
-          setTimeout(() => setVisibleCards([0, 1, 2, 3]), 800);
-          setTimeout(() => setVisibleCards([0, 1, 2, 3, 4]), 1000);
-          setTimeout(() => setVisibleCards([0, 1, 2, 3, 4, 5]), 1200);
-          setTimeout(() => setVisibleCards([0, 1, 2, 3, 4, 5, 6]), 1400);
-        } else {
-          setIsVisible(false);
-          setVisibleCards([]);
+          // Disconnect after first trigger — no more resets
+          observer.disconnect();
         }
       },
-      { threshold: 0.3 }
+      { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }
     );
 
     const element = document.getElementById('projects');
@@ -43,11 +35,7 @@ const Projects = () => {
       observer.observe(element);
     }
 
-    return () => {
-      if (element) {
-        observer.unobserve(element);
-      }
-    };
+    return () => observer.disconnect();
   }, []);
 
   const projects = [
@@ -210,11 +198,12 @@ const Projects = () => {
           {projects.map((project, index) => (
             <div
               key={index}
-              className={`relative group bg-card rounded-xl shadow-sm border overflow-hidden hover:shadow-2xl hover:scale-105 hover:-translate-y-4 transition-all duration-700 cursor-pointer transform ${visibleCards.includes(index)
-                  ? 'opacity-100 translate-y-0 rotate-0'
-                  : 'opacity-0 translate-y-10 rotate-1'
-                }`}
-              style={{ transitionDelay: `${index * 150}ms` }}
+              className={`relative group bg-card rounded-xl shadow-sm border overflow-hidden hover:shadow-2xl hover:scale-105 hover:-translate-y-4 transition-all duration-700 cursor-pointer transform ${
+                isVisible
+                  ? 'opacity-100 translate-y-0'
+                  : 'opacity-0 translate-y-10'
+              }`}
+              style={{ transitionDelay: isVisible ? `${index * 150}ms` : '0ms' }}
             >
               {/* Project header with gradient */}
               <div className={`h-2 bg-gradient-to-r ${project.gradient} group-hover:h-4 transition-all duration-500`}></div>

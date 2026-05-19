@@ -353,7 +353,7 @@ const Contact = () => {
                     <Send size={16} className="sm:w-5 sm:h-5 animate-pulse" />
                     <span>Professional Declaration 📝</span>
                   </strong>
-                  I, Rahul Kannan, am a dedicated web developer and designer committed to delivering high-quality digital solutions. 
+                  I, Rahul, am a dedicated web developer and designer committed to delivering high-quality digital solutions. 
                   Based in <span className="font-bold text-blue-300">Pollachi, Tamil Nadu</span>, I specialize in creating modern, 
                   responsive web applications that combine cutting-edge technology with exceptional user experience.
                   <br />
@@ -487,7 +487,7 @@ const Contact = () => {
                       <Send size={16} className="sm:w-5 sm:h-5 animate-pulse" />
                       <span>Professional Declaration 📝</span>
                     </strong>
-                    I, Rahul Kannan, am a dedicated web developer and designer committed to delivering high-quality digital solutions. 
+                    I, Rahul, am a dedicated web developer and designer committed to delivering high-quality digital solutions. 
                     Based in <span className="font-bold text-blue-300">Pollachi, Tamil Nadu</span>, I specialize in creating modern, 
                     responsive web applications that combine cutting-edge technology with exceptional user experience.
                     <br />
